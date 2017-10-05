@@ -17,9 +17,9 @@
     [super awakeFromNib];
     self.eventsImageView.layer.cornerRadius = 60.0f;
     self.eventsImageView.clipsToBounds = YES;
+  
     
     
-
     
 }
 -(void)fillEvent:(NSString*)title eventImage:(UIImage*)image{

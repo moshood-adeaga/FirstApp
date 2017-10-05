@@ -9,7 +9,6 @@
 #import "MediaController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define ROUND_BUTTON_WIDTH_HEIGHT 80
 
 @interface MediaController ()
 
@@ -19,20 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-   
-    [self.propButton setImage:[UIImage imageNamed:@"viewCamera.png"] forState:UIControlStateNormal];
-    [self.propButton setBackgroundColor:[UIColor blackColor]];
-    self.propButton.frame = CGRectMake(164,553, ROUND_BUTTON_WIDTH_HEIGHT, ROUND_BUTTON_WIDTH_HEIGHT);
-    self.propButton.clipsToBounds = YES;
-    self.propButton.layer.cornerRadius = ROUND_BUTTON_WIDTH_HEIGHT/2.0f;
-    self.propButton.layer.borderColor=[UIColor whiteColor].CGColor;
-    self.propButton.layer.borderWidth=2.0f;
-    
-    
-    
-    
+    [self.propButton setBackgroundColor:[UIColor clearColor]];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -55,7 +41,7 @@
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
-    [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
 
     
     [picker dismissViewControllerAnimated:YES completion:NULL];

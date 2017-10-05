@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */; };
+		03EB2FC21F86934B00FE539D /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0001F83F73E001F83A5 /* AppDelegate.m */; };
 		706AD00A1F83F73F001F83A5 /* FinalProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */; };
 		706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706AD00B1F83F73F001F83A5 /* Assets.xcassets */; };
@@ -49,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03EB2FB41F8648F200FE539D /* icons8-Camera-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-Camera-100.png"; sourceTree = "<group>"; };
+		03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		03EB2FC01F86934900FE539D /* cameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cameraView.h; sourceTree = "<group>"; };
+		03EB2FC11F86934A00FE539D /* cameraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cameraView.m; sourceTree = "<group>"; };
 		706ACFFC1F83F73E001F83A5 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		706ACFFF1F83F73E001F83A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		706AD0001F83F73E001F83A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				70841BB41F852E7A00238258 /* FBSDKPlacesKit.framework in Frameworks */,
 				70841BB51F852E7A00238258 /* FBNotifications.framework in Frameworks */,
 				70841BB61F852E7A00238258 /* AccountKit.framework in Frameworks */,
@@ -123,6 +130,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03EB2FBF1F8687A900FE539D /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				03EB2FB41F8648F200FE539D /* icons8-Camera-100.png */,
+				70841BA61F85227D00238258 /* sharebutton.png */,
+				706AD0421F840EE5001F83A5 /* status.png */,
+				706AD0531F841558001F83A5 /* myCamera.png */,
+				706AD0541F84167F001F83A5 /* viewCamera.png */,
+				70841B9E1F84D5E200238258 /* noimage.png */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		706ACFF31F83F73E001F83A5 = {
 			isa = PBXGroup;
 			children = (
@@ -154,15 +174,11 @@
 				706AD03F1F840159001F83A5 /* ImageCaching.h */,
 				706AD0401F840159001F83A5 /* ImageCaching.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
-				70841BA61F85227D00238258 /* sharebutton.png */,
-				706AD0421F840EE5001F83A5 /* status.png */,
-				706AD0531F841558001F83A5 /* myCamera.png */,
-				706AD0541F84167F001F83A5 /* viewCamera.png */,
-				70841B9E1F84D5E200238258 /* noimage.png */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
 				706AD0111F83F73F001F83A5 /* main.m */,
 				706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */,
+				03EB2FBF1F8687A900FE539D /* Others */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -204,6 +220,8 @@
 				706AD04E1F841421001F83A5 /* MediaController.h */,
 				706AD04F1F841421001F83A5 /* MediaController.m */,
 				706AD0501F841421001F83A5 /* MediaController.xib */,
+				03EB2FC01F86934900FE539D /* cameraView.h */,
+				03EB2FC11F86934A00FE539D /* cameraView.m */,
 			);
 			path = "SECOND TAB";
 			sourceTree = "<group>";
@@ -211,6 +229,7 @@
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */,
 				70841BB21F852E7900238258 /* AccountKit.framework */,
 				70841BB11F852E7900238258 /* FBNotifications.framework */,
 				70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */,
@@ -362,6 +381,7 @@
 				706AD0511F841421001F83A5 /* MediaController.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
+				03EB2FC21F86934B00FE539D /* cameraView.m in Sources */,
 				706AD03D1F83F831001F83A5 /* EventsViewController.m in Sources */,
 				706AD0121F83F73F001F83A5 /* main.m in Sources */,
 				706AD0411F840159001F83A5 /* ImageCaching.m in Sources */,
@@ -524,7 +544,7 @@
 				DEVELOPMENT_TEAM = ZFD4Q5EMC6;
 				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDKs";
 				INFOPLIST_FILE = FinalProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adeaga.FinalProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -540,7 +560,7 @@
 				DEVELOPMENT_TEAM = ZFD4Q5EMC6;
 				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDKs";
 				INFOPLIST_FILE = FinalProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adeaga.FinalProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";

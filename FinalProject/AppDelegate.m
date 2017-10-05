@@ -13,7 +13,6 @@
 
 
 
-
 @interface AppDelegate ()
 
 @end
@@ -30,8 +29,11 @@
     
     
     
+    
+    
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+   
     
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
