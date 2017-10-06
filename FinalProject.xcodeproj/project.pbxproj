@@ -118,7 +118,6 @@
 		70841B9A1F842DE700238258 /* EventsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsCell.xib; sourceTree = "<group>"; };
 		70841B9E1F84D5E200238258 /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
 		70841BA01F84E27700238258 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		70841BA61F85227D00238258 /* sharebutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharebutton.png; sourceTree = "<group>"; };
 		70841BA91F8529AB00238258 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		70841BAA1F8529AB00238258 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
 		70841BAB1F8529AB00238258 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -127,6 +126,8 @@
 		70841BB11F852E7900238258 /* FBNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBNotifications.framework; path = ../../../Documents/FacebookSDKs/FBNotifications.framework; sourceTree = "<group>"; };
 		70841BB21F852E7900238258 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccountKit.framework; path = ../../../Documents/FacebookSDKs/AccountKit.framework; sourceTree = "<group>"; };
 		70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
+		70C439771F882FE00054288D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		70C439781F883BE90054288D /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,9 +198,10 @@
 		03EB2FBF1F8687A900FE539D /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				70C439781F883BE90054288D /* addImage.png */,
+				70C439771F882FE00054288D /* share.png */,
 				03EF6F021F88045400128917 /* person.png */,
 				03EB2FB41F8648F200FE539D /* icons8-Camera-100.png */,
-				70841BA61F85227D00238258 /* sharebutton.png */,
 				706AD0421F840EE5001F83A5 /* status.png */,
 				706AD0531F841558001F83A5 /* myCamera.png */,
 				706AD0541F84167F001F83A5 /* viewCamera.png */,

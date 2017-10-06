@@ -48,7 +48,7 @@
         registerControl.title = @"LOG-IN";
         self.segmentedControl.selected =NO;
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:registerControl];
-        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         nav.navigationBar.barStyle = UIBarStyleBlack;
          [self presentViewController:nav animated:YES completion:nil];
         //[self presentModalViewController:registerControl animated:YES];

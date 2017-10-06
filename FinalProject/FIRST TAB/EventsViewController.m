@@ -10,6 +10,8 @@
 #import "ImageCaching.h"
 #import "EventsCell.h"
 #import <Social/Social.h>
+#import <QuartzCore/QuartzCore.h>
+
 
 
 @interface EventsViewController ()
@@ -33,7 +35,7 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.dataSource =self;
     
     //Setting Appearance.
-    self.collectionView.backgroundColor =[UIColor whiteColor];
+    self.collectionView.backgroundColor =[UIColor blackColor];
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
@@ -55,15 +57,10 @@ static NSString * const reuseIdentifier = @"Cell";
     
     NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRightMargin multiplier:1.03 constant:0];
     
-    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTopMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.13 constant:0];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTopMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.125 constant:0];
     [self.view addConstraints:@[leftConstraint,rightConstraint,topConstraint]];
    
-    
     [self.collectionView reloadData];
-    
-    
-    
-    
     
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -112,7 +109,9 @@ static NSString * const reuseIdentifier = @"Cell";
     });
     CGRect btnRect = CGRectMake(352,263, 45, 29);
     UIButton *cellBtn = [[UIButton alloc] initWithFrame:btnRect];
-    [cellBtn setBackgroundImage:[UIImage imageNamed:@"sharebutton.png"] forState:UIControlStateNormal];
+    [cellBtn setBackgroundImage:[UIImage imageNamed:@"myshare"] forState:UIControlStateNormal];
+    cellBtn.layer.cornerRadius = 5.0f;
+    cellBtn.clipsToBounds =YES;
     [cellBtn setTitle:@"" forState:UIControlStateNormal];
     [cell.contentView addSubview:cellBtn];
     [cellBtn addTarget:self action:@selector(shareButtonTapped:) forControlEvents:UIControlEventTouchUpInside];

@@ -39,7 +39,7 @@
         LoginViewController *loginControl = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
         loginControl.title = @"REGISTER";
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginControl];
-        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         nav.navigationBar.barStyle = UIBarStyleBlack;
         [self presentViewController:nav animated:YES completion:nil];
     }
@@ -63,11 +63,14 @@
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
-        UINavigationController *nav4
-        = [[UINavigationController alloc]initWithRootViewController:profileView];
+    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
     
-    nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav1.navigationBar.barStyle = UIBarStyleBlack;
+        nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav2.navigationBar.barStyle = UIBarStyleBlack;
+        nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav4.navigationBar.barStyle = UIBarStyleBlack;
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
     [tabBarController setViewControllers:@[nav1,nav2,nav4]];
@@ -82,6 +85,18 @@
     [[tabBarController.tabBar.items objectAtIndex:2] setImage :profileTabImage];
         
      [self presentViewController:tabBarController animated:YES completion:nil];
+    }
+    else {
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Incorrect UserName/Password Try Again !!!"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+        [self.userIDTextField setText:nil];
+        [self.passWordTextField setText:nil];
+        
     }
         
     
