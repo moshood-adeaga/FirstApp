@@ -10,7 +10,7 @@
 #import "ImageCaching.h"
 #import "EventsCell.h"
 #import <Social/Social.h>
-#import <objc/runtime.h>
+
 
 @interface EventsViewController ()
 {
@@ -27,21 +27,40 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.imageCache = [ImageCaching sharedInstance];
     image =[[UIImage alloc]init];
     self.collectionView.delegate = self;
     self.collectionView.dataSource =self;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    //Setting Appearance.
+    self.collectionView.backgroundColor =[UIColor whiteColor];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    [self.tabBarController.tabBar setBarTintColor:[UIColor blackColor]];
+    
     // Register Nib classes
     [self.collectionView registerNib:[UINib nibWithNibName:@"EventsCell" bundle:nil] forCellWithReuseIdentifier:[EventsCell cell_ID]];
     
     //Creating A Search Bar
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, 415, 44)];
-    self.searchBar.placeholder = @"Enter Location for Events";
+    self.searchBar.placeholder = @"Enter Topic for Events";
     self.searchBar.delegate =self;
-    [self.view addSubview:self.searchBar];
+    self.searchBar.barStyle = UIBarStyleBlack;
+     [self.view addSubview:self.searchBar];
+    
+    //Adding constraint to SearchBar
+    self.searchBar.translatesAutoresizingMaskIntoConstraints=NO;
+    NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeLeftMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeftMargin multiplier:0.4 constant:0];
+    
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRightMargin multiplier:1.03 constant:0];
+    
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTopMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.13 constant:0];
+    [self.view addConstraints:@[leftConstraint,rightConstraint,topConstraint]];
+   
+    
     [self.collectionView reloadData];
+    
     
     
     
@@ -67,7 +86,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     EventsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[EventsCell cell_ID] forIndexPath:indexPath];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
     // Image Caching
     if(![[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])

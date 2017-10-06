@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
+    <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -12,50 +12,162 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaController">
             <connections>
-                <outlet property="imageView" destination="5Al-P6-gMj" id="kM0-0B-73R"/>
-                <outlet property="propButton" destination="msJ-cp-RfF" id="P1g-NA-oFr"/>
+                <outlet property="cameraButton" destination="YZw-bO-I6s" id="zd1-Dc-cBf"/>
+                <outlet property="cameraUnavailableLabel" destination="bJF-ka-yKZ" id="dps-Fp-Nsd"/>
+                <outlet property="captureModeControl" destination="d9r-5M-cCq" id="QvK-xw-E5T"/>
+                <outlet property="capturingLivePhotoLabel" destination="eP4-Gf-J93" id="8xY-UP-9Jn"/>
+                <outlet property="depthDataDeliveryButton" destination="lFJ-dQ-2AW" id="5Fh-1x-edO"/>
+                <outlet property="livePhotoModeButton" destination="SU3-Lm-irz" id="Qjh-Tu-DiL"/>
+                <outlet property="photoButton" destination="M07-lA-ySW" id="GQN-aW-PEG"/>
+                <outlet property="previewView" destination="i5M-Pr-FkT" id="Spr-jS-2G3"/>
+                <outlet property="recordButton" destination="zw3-1J-6Bv" id="nKs-I9-2Mt"/>
+                <outlet property="resumeButton" destination="y7a-0T-YnS" id="747-o1-ITt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="cameraView">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Al-P6-gMj">
-                    <rect key="frame" x="0.0" y="10" width="1024" height="1346"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msJ-cp-RfF">
-                    <rect key="frame" x="162.66666666666666" y="617" width="50" height="50"/>
-                    <state key="normal" image="icons8-Camera-50"/>
-                    <connections>
-                        <action selector="takePhoto:" destination="-1" eventType="touchUpInside" id="UgB-rP-AsG"/>
-                    </connections>
+                <label hidden="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJF-ka-yKZ" userLabel="Camera Unavailable">
+                    <rect key="frame" x="408" y="1038" width="208" height="29"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d9r-5M-cCq" userLabel="Capture Mode">
+                    <rect key="frame" x="460" y="1288" width="103" height="29"/>
+                    <segments>
+                        <segment title="Photo"/>
+                        <segment title="Movie"/>
+                    </segments>
+                </segmentedControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SU3-Lm-irz" userLabel="Live Photo Mode">
+                    <rect key="frame" x="421" y="61" width="182" height="25"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="QbJ-mx-5U1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Live Photo Mode: On"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ny6-ua-hAl">
-                    <rect key="frame" x="0.0" y="625" width="113" height="34"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                    <state key="normal" title="Select Image">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zw3-1J-6Bv" userLabel="Record">
+                    <rect key="frame" x="372" y="1336" width="80" height="30"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Record">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
-                    <connections>
-                        <action selector="selectPhoto:" destination="-1" eventType="touchUpInside" id="Iao-od-fA1"/>
-                    </connections>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFJ-dQ-2AW" userLabel="Depth Data Delivery">
+                    <rect key="frame" x="407" y="28" width="210" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="cxq-hh-C7y"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Depth Data Delivery: On"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7a-0T-YnS" userLabel="Resume">
+                    <rect key="frame" x="429" y="1033" width="165" height="39"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                    <state key="normal" title="Tap to resume">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZw-bO-I6s" userLabel="Camera">
+                    <rect key="frame" x="572" y="1336" width="80" height="30"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Camera">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Live" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP4-Gf-J93" userLabel="Capturing Live Photo">
+                    <rect key="frame" x="496" y="94" width="31" height="21"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M07-lA-ySW" userLabel="Photo">
+                    <rect key="frame" x="472" y="1336" width="80" height="30"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="SXC-WK-VWt"/>
+                        <constraint firstAttribute="width" constant="80" id="ucn-XR-Lnb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Photo">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="msJ-cp-RfF" firstAttribute="centerX" secondItem="zvG-RT-PWF" secondAttribute="centerX" id="0C3-T8-X2W"/>
-                <constraint firstItem="Ny6-ua-hAl" firstAttribute="leading" secondItem="zvG-RT-PWF" secondAttribute="leading" id="L2z-mx-VSh"/>
-                <constraint firstItem="zvG-RT-PWF" firstAttribute="bottom" secondItem="Ny6-ua-hAl" secondAttribute="bottom" constant="119" id="bgP-Y3-Dr6"/>
-                <constraint firstItem="zvG-RT-PWF" firstAttribute="bottom" secondItem="msJ-cp-RfF" secondAttribute="bottom" constant="111" id="z6Y-bx-zIG"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="top" secondItem="zvG-RT-PWF" secondAttribute="top" constant="8" id="0Jd-zV-DL8"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="height" secondItem="YZw-bO-I6s" secondAttribute="height" id="7yL-eQ-jGc"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="SU3-Lm-irz" secondAttribute="centerX" id="EEf-0e-VmA"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="GdJ-Hg-ewQ"/>
+                <constraint firstItem="y7a-0T-YnS" firstAttribute="baseline" secondItem="bJF-ka-yKZ" secondAttribute="baseline" id="Hfo-tp-HTj"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="width" secondItem="YZw-bO-I6s" secondAttribute="width" id="LpB-hk-ojq"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="height" secondItem="zw3-1J-6Bv" secondAttribute="height" id="MHn-Qq-yZX"/>
+                <constraint firstItem="SU3-Lm-irz" firstAttribute="top" secondItem="lFJ-dQ-2AW" secondAttribute="bottom" constant="8" id="Pjz-Z4-Atj"/>
+                <constraint firstItem="YZw-bO-I6s" firstAttribute="leading" secondItem="M07-lA-ySW" secondAttribute="trailing" constant="20" id="Qle-RK-GXt"/>
+                <constraint firstItem="zw3-1J-6Bv" firstAttribute="bottom" secondItem="zvG-RT-PWF" secondAttribute="bottom" id="W47-Wq-jm9"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="bJF-ka-yKZ" secondAttribute="centerX" id="ZJi-2G-TrX"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="leading" secondItem="zw3-1J-6Bv" secondAttribute="trailing" constant="20" id="dQB-sU-p6T"/>
+                <constraint firstAttribute="bottom" secondItem="y7a-0T-YnS" secondAttribute="bottom" constant="294" id="gmU-oh-qE3"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="d9r-5M-cCq" secondAttribute="centerX" id="i9w-50-aSo"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="top" secondItem="zw3-1J-6Bv" secondAttribute="top" id="iII-kz-ora"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="top" secondItem="YZw-bO-I6s" secondAttribute="top" id="iZn-K3-xUA"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="eP4-Gf-J93" secondAttribute="centerX" id="lGv-oG-lAT"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="top" secondItem="d9r-5M-cCq" secondAttribute="bottom" constant="20" id="s4o-ff-QBQ"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="M07-lA-ySW" secondAttribute="centerX" id="sL6-o8-GsT"/>
+                <constraint firstItem="eP4-Gf-J93" firstAttribute="top" secondItem="SU3-Lm-irz" secondAttribute="bottom" constant="8" id="tQ6-9L-g30"/>
+                <constraint firstItem="lFJ-dQ-2AW" firstAttribute="centerX" secondItem="y7a-0T-YnS" secondAttribute="centerX" id="vPV-jP-svR"/>
+                <constraint firstItem="M07-lA-ySW" firstAttribute="width" secondItem="zw3-1J-6Bv" secondAttribute="width" id="wTR-VS-oSk"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="zvG-RT-PWF"/>
             <point key="canvasLocation" x="35" y="54"/>
         </view>
     </objects>
-    <resources>
-        <image name="icons8-Camera-50" width="50" height="50"/>
-    </resources>
 </document>

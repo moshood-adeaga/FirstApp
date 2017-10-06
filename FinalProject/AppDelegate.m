@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "EventsViewController.h"
 #import "MediaController.h"
+#import "RegisterViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
@@ -22,6 +23,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    RegisterViewController *loginView = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
+    loginView.title = @"LOG-IN";
+    
     EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
     eventsView.title = @"EVENTS";
     MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
@@ -33,6 +37,9 @@
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:loginView];
+    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav3.navigationBar.barStyle = UIBarStyleBlack;
    
     
     
@@ -49,7 +56,7 @@
     
     
     self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
-    [self.window setRootViewController:tabBarController];
+    [self.window setRootViewController:nav3];
     [self.window makeKeyAndVisible];
     
     [[FBSDKApplicationDelegate sharedInstance] application:application
