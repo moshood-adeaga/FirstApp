@@ -12,6 +12,7 @@
 #import "CoreDataManager.h"
 #import "EventsViewController.h"
 #import "MediaController.h"
+#import "ProfileViewController.h"
 #import <SAMKeychainQuery.h>
 #import <SAMKeychain.h>
 
@@ -50,26 +51,36 @@
     if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
     {
         NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
+        
     EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
     eventsView.title = @"EVENTS";
     MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
-    mediaView.title= @"Camera";
+    mediaView.title= @"CAMERA";
+        
+        ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
+        profileView.title = @"PROFILE";
+        
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+        UINavigationController *nav4
+        = [[UINavigationController alloc]initWithRootViewController:profileView];
     
     nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav1.navigationBar.barStyle = UIBarStyleBlack;
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
-    [tabBarController setViewControllers:@[nav1,nav2]];
+    [tabBarController setViewControllers:@[nav1,nav2,nav4]];
     
     UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
     [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
     
     UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
     [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
-    
+        
+    UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
+    [[tabBarController.tabBar.items objectAtIndex:2] setImage :profileTabImage];
+        
      [self presentViewController:tabBarController animated:YES completion:nil];
     }
         

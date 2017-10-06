@@ -7,6 +7,8 @@
 //
 
 #import "ProfileViewController.h"
+#import "RegisterViewController.h"
+
 
 @interface ProfileViewController ()
 
@@ -14,16 +16,23 @@
 
 @implementation ProfileViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.logOutButton.layer.borderWidth = 3.0f;
 }
 
 
 
+
+
+- (IBAction)logOutButton:(UIButton *)sender
+{
+    RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
+    registerControl.title = @"LOG-IN";
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:registerControl];
+    nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav.navigationBar.barStyle = UIBarStyleBlack;
+    [self presentViewController:nav animated:YES completion:nil];
+}
 @end
