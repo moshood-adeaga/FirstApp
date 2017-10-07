@@ -8,11 +8,17 @@
 
 #import "ProfileViewController.h"
 #import "RegisterViewController.h"
-#import  <QuartzCore/QuartzCore.h>
+#import "ImageCaching.h"
+#import <QuartzCore/QuartzCore.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "RNDecryptor.h"
+#import "RNEncryptor.h"
+
 
 
 @interface ProfileViewController ()
-
+@property (copy, nonatomic) NSString *filePath;
+@property (strong, nonatomic) ImageCaching *dataTransfer;
 @end
 
 @implementation ProfileViewController
@@ -20,19 +26,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"username:%@",self.userName.text);
+    self.dataTransfer = [ImageCaching sharedInstance];
+    
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
     self.profileImageViewer.layer.borderColor =[UIColor blackColor].CGColor;
     self.profileImageViewer.layer.borderWidth =5.0f;
     self.profileImageViewer.layer.cornerRadius =50.0f;
     self.profileImageViewer.clipsToBounds = YES;
-
+    self.userName.text = self.dataTransfer.userID;
     
+    [self setupUserDirectory];
+    [self prepareData];
 }
-
-
-
-
-
 - (IBAction)logOutButton:(UIButton *)sender
 {
     RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
@@ -83,7 +89,10 @@
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         picker.allowsEditing = YES;
+#if TARGET_IPHONE_SIMULATOR
+#else
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+#endif
         
         [self presentViewController:picker animated:YES completion:NULL];
         
@@ -97,6 +106,13 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    if (!chosenImage) {
+        [info objectForKey: UIImagePickerControllerOriginalImage];
+    }
+    NSData *imageData = UIImagePNGRepresentation(chosenImage);
+    NSString *imageName =@"profileImage.securedData";
+    NSData *encryptedImage = [RNEncryptor encryptData:imageData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+    [encryptedImage writeToFile:[self.filePath stringByAppendingPathComponent:imageName] atomically:YES];
     self.profilePicture.image = chosenImage;
     
     
@@ -107,5 +123,108 @@
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
+}
+
+#pragma Setting Up USER
+- (void)setupUserDirectory {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [paths objectAtIndex:0];
+    self.filePath = [documents stringByAppendingPathComponent:self.userName.text];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:self.filePath]) {
+        NSLog(@"Directory already present.");
+        
+    } else {
+        NSError *error = nil;
+        [fileManager createDirectoryAtPath:self.filePath withIntermediateDirectories:YES attributes:nil error:&error];
+        
+        if (error) {
+            NSLog(@"Unable to create directory for user.");
+        }
+    }
+}
+
+- (void)prepareData {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.filePath error:&error];
+    
+    if ([contents count] && !error){
+        NSLog(@"Contents of the user's directory. %@", contents);
+        // Reading USER profile image from Directory //
+        for (NSString *fileName in contents) {
+            if ([fileName rangeOfString:@".securedData"].length > 0) {
+                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+                UIImage *image = [UIImage imageWithData:decryptedData];
+                self.profileImageViewer.image = image;
+                
+                
+            } else {
+                NSLog(@"This file is not secured.");
+            }
+        }
+        // Reading USER First Name from Directory //
+        for (NSString *fileName in contents) {
+            if ([fileName rangeOfString:@".securedFirstName"].length > 0) {
+                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+                NSString *firstName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+                self.firstName.text = firstName;
+                
+                
+            } else {
+                NSLog(@"This file is not secured.");
+            }
+        }
+        // Reading USER Last Name from Directory //
+        for (NSString *fileName in contents) {
+            if ([fileName rangeOfString:@".securedLastName"].length > 0) {
+                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+                NSString *lastName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+                self.lastName.text = lastName;
+                
+                
+            } else {
+                NSLog(@"This file is not secured.");
+            }
+        }
+        // Reading USER Email from Directory //
+        for (NSString *fileName in contents) {
+            if ([fileName rangeOfString:@".securedEmail"].length > 0) {
+                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+                NSString *userEmail = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+                self.emailLabel.text = userEmail;
+                
+                
+            } else {
+                NSLog(@"This file is not secured.");
+            }
+        }
+        // Reading USER Phone Number from Directory //
+        for (NSString *fileName in contents) {
+            if ([fileName rangeOfString:@".securedPhoneNumber"].length > 0) {
+                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+                NSString *userPhoneNumber = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+                self.phoneNumberLabel.text = userPhoneNumber;
+                
+                
+            } else {
+                NSLog(@"This file is not secured.");
+            }
+        }
+        
+    } else if (![contents count]) {
+        if (error) {
+            NSLog(@"Unable to read the contents of the user's directory.");
+        } else {
+            NSLog(@"The user's directory is empty.");
+        }
+    }
 }
 @end

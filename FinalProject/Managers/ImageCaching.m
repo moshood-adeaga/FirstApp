@@ -24,7 +24,7 @@ static ImageCaching *sharedInstance;
     self = [super init];
     if (self) {
         self.imageCache = [[NSCache alloc] init];
-        
+        self.userID = [[NSMutableString alloc]init];
     }
     return self;
 }

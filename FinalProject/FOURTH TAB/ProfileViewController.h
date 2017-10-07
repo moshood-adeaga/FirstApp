@@ -18,6 +18,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *profileImageViewer;
 - (IBAction)logOutButton:(UIButton *)sender;
 - (IBAction)profileImagePicker:(UIButton *)sender;
+@property (strong, nonatomic) IBOutlet UILabel *userName;
+@property (strong, nonatomic) IBOutlet UILabel *phoneNumberLabel;
+@property (strong, nonatomic) IBOutlet UIButton *editProfile;
 
 
 @end

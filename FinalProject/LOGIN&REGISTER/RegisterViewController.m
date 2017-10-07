@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "UserDetail+CoreDataClass.h"
 #import "CoreDataManager.h"
+#import "ImageCaching.h"
 #import "EventsViewController.h"
 #import "MediaController.h"
 #import "ProfileViewController.h"
@@ -18,6 +19,7 @@
 
 @interface RegisterViewController ()
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
+@property (strong, nonatomic) ImageCaching *dataTransfer;
 
 @end
 
@@ -25,7 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.myCoreManager = [CoreDataManager sharedManager];
+self.myCoreManager = [CoreDataManager sharedManager];
+self.dataTransfer =[ImageCaching sharedInstance];
     
     
 }
@@ -56,9 +59,9 @@
     eventsView.title = @"EVENTS";
     MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
     mediaView.title= @"CAMERA";
-        
-        ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
-        profileView.title = @"PROFILE";
+    ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
+    profileView.title = @"PROFILE";
+    [self.dataTransfer.userID setString:self.userIDTextField.text];
         
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];

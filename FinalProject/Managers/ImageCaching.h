@@ -13,4 +13,7 @@
 +(ImageCaching*)sharedInstance;
 -(void)cacheImage:(UIImage*)image forKey:(NSString*)key;
 -(UIImage*)getCachedImageForKey:(NSString*)key;
+
+@property(strong,nonatomic) NSMutableString *userID;
+
 @end

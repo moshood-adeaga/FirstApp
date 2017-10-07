@@ -19,6 +19,10 @@
 		03EF6F001F87E37D00128917 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EF6EFE1F87E37D00128917 /* ProfileViewController.m */; };
 		03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03EF6EFF1F87E37D00128917 /* ProfileViewController.xib */; };
 		45F1B7E98BABEE23E8FE8F6C /* libPods-FinalProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CE6EB6A2258C41E875BBE2E /* libPods-FinalProject.a */; };
+		7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397F1F88F8EF0054288D /* RNCryptor.m */; };
+		7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C439841F88F8EF0054288D /* RNCryptorEngine.m */; };
+		7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397C1F88F8EE0054288D /* RNDecryptor.m */; };
+		7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397E1F88F8EE0054288D /* RNEncryptor.m */; };
 		706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0001F83F73E001F83A5 /* AppDelegate.m */; };
 		706AD00A1F83F73F001F83A5 /* FinalProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */; };
 		706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706AD00B1F83F73F001F83A5 /* Assets.xcassets */; };
@@ -41,6 +45,7 @@
 		70841BB51F852E7A00238258 /* FBNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB11F852E7900238258 /* FBNotifications.framework */; };
 		70841BB61F852E7A00238258 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB21F852E7900238258 /* AccountKit.framework */; };
 		70841BB71F852E7A00238258 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */; };
+		70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C439791F88ED5E0054288D /* MobileCoreServices.framework */; };
 		76412E9880C70A36BABE6B37 /* libPods-FinalProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */; };
 		9D19C71555F57AE2473510F5 /* libPods-FinalProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6753087E8D65A1DE395901B9 /* libPods-FinalProjectTests.a */; };
 /* End PBXBuildFile section */
@@ -128,6 +133,17 @@
 		70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		70C439771F882FE00054288D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		70C439781F883BE90054288D /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
+		70C439791F88ED5E0054288D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		70C4397C1F88F8EE0054288D /* RNDecryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
+		70C4397D1F88F8EE0054288D /* RNEncryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
+		70C4397E1F88F8EE0054288D /* RNEncryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
+		70C4397F1F88F8EF0054288D /* RNCryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptor.m; sourceTree = "<group>"; };
+		70C439801F88F8EF0054288D /* RNCryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
+		70C439811F88F8EF0054288D /* RNCryptor+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
+		70C439821F88F8EF0054288D /* RNCryptorEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNCryptorEngine.h; sourceTree = "<group>"; };
+		70C439831F88F8EF0054288D /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNCryptor-Prefix.pch"; sourceTree = "<group>"; };
+		70C439841F88F8EF0054288D /* RNCryptorEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
+		70C439851F88F8EF0054288D /* RNDecryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */,
 				032DA26E1F87CE4B00E73F2F /* Security.framework in Frameworks */,
 				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				70841BB41F852E7A00238258 /* FBSDKPlacesKit.framework in Frameworks */,
@@ -245,6 +262,7 @@
 		706ACFFE1F83F73E001F83A5 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */,
 				03E353221F878776005539A2 /* LOGIN&REGISTER */,
 				706AD0341F83F7B9001F83A5 /* FIRST TAB */,
 				706AD0431F841353001F83A5 /* SECOND TAB */,
@@ -310,6 +328,7 @@
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70C439791F88ED5E0054288D /* MobileCoreServices.framework */,
 				032DA26D1F87CE4B00E73F2F /* Security.framework */,
 				03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */,
 				70841BB21F852E7900238258 /* AccountKit.framework */,
@@ -326,6 +345,23 @@
 				94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */ = {
+			isa = PBXGroup;
+			children = (
+				70C439831F88F8EF0054288D /* RNCryptor-Prefix.pch */,
+				70C439801F88F8EF0054288D /* RNCryptor.h */,
+				70C4397F1F88F8EF0054288D /* RNCryptor.m */,
+				70C439811F88F8EF0054288D /* RNCryptor+Private.h */,
+				70C439821F88F8EF0054288D /* RNCryptorEngine.h */,
+				70C439841F88F8EF0054288D /* RNCryptorEngine.m */,
+				70C439851F88F8EF0054288D /* RNDecryptor.h */,
+				70C4397C1F88F8EE0054288D /* RNDecryptor.m */,
+				70C4397D1F88F8EE0054288D /* RNEncryptor.h */,
+				70C4397E1F88F8EE0054288D /* RNEncryptor.m */,
+			);
+			path = "ENCRYPTOR&DECRYPTOR";
 			sourceTree = "<group>";
 		};
 		C61E6B719398C0088233EC46 /* Pods */ = {
@@ -641,6 +677,10 @@
 				03E3532B1F878C59005539A2 /* RegisterViewController.m in Sources */,
 				706AD0511F841421001F83A5 /* MediaController.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
+				7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */,
+				7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */,
+				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
+				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
 				03EB2FC21F86934B00FE539D /* cameraView.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
