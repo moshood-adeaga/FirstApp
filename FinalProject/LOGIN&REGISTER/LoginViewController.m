@@ -12,6 +12,9 @@
 #import "UserDetail+CoreDataClass.h"
 #import <SAMKeychainQuery.h>
 #import <SAMKeychain.h>
+#import <AFNetworking.h>
+#import <AFHTTPSessionManager.h>
+
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "RNDecryptor.h"
 #import "RNEncryptor.h"
@@ -23,7 +26,7 @@
 @interface LoginViewController ()
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
 @property (copy, nonatomic) NSString *filePath;
-
+@property (copy, nonatomic) NSString *dataBasePath;
 
 @end
 
@@ -34,6 +37,8 @@
     
     self.myCoreManager = [CoreDataManager sharedManager];
     [self.registrationLabel setHidden:!self.registrationLabel.hidden];
+    self.passWordTextField.secureTextEntry =YES;
+    self.dataBasePath = @"http://localhost/~moshoodadeaga/MyWebservice/v1/register.php";
     
     
 }
@@ -87,7 +92,20 @@
                                    selector:@selector(labelMethod:)
                                    userInfo:nil
                                     repeats:NO];
-    
+    //Saving to database
+    NSDictionary *databaseParameter = @{@"username":self.userNameTextField.text,
+                                        @"password":self.passWordTextField.text,
+                                        @"email":self.emailTextField.text,
+                                        @"firstname":self.firstNameTextField.text,
+                                        @"lastname":self.lastNameTextField.text,
+                                        @"phone":self.phoneNumberTextField.text
+                                        };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:self.dataBasePath parameters:databaseParameter progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 -(void)labelMethod:(NSTimer*)timer
 {
