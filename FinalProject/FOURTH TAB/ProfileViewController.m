@@ -34,10 +34,16 @@
     self.profileImageViewer.layer.borderWidth =5.0f;
     self.profileImageViewer.layer.cornerRadius =50.0f;
     self.profileImageViewer.clipsToBounds = YES;
-    self.userName.text = self.dataTransfer.userID;
+   // self.userName.text = self.dataTransfer.userID;
     
-    [self setupUserDirectory];
-    [self prepareData];
+   // [self setupUserDirectory];
+   // [self prepareData];
+    
+    self.userName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
+    self.lastName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
+    self.firstName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
+    self.emailLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
+    self.phoneNumberLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
 }
 - (IBAction)logOutButton:(UIButton *)sender
 {

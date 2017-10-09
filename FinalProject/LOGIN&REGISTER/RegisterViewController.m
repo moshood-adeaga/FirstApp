@@ -16,10 +16,22 @@
 #import "ProfileViewController.h"
 #import <SAMKeychainQuery.h>
 #import <SAMKeychain.h>
+#import <AFNetworking.h>
+#import <AFHTTPSessionManager.h>
 
 @interface RegisterViewController ()
+    {
+        NSString *userName;
+        NSString *firstName;
+        NSString *lastName;
+        NSString *email;
+        NSString *phoneNumber;
+        NSUserDefaults *standardUserDefaults;
+    }
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
 @property (strong, nonatomic) ImageCaching *dataTransfer;
+@property (copy, nonatomic) NSString *dataBasePath;
+    @property (strong, nonatomic) NSDictionary *userData;
 
 @end
 
@@ -29,6 +41,9 @@
     [super viewDidLoad];
 self.myCoreManager = [CoreDataManager sharedManager];
 self.dataTransfer =[ImageCaching sharedInstance];
+self.dataBasePath= @"http://localhost/~moshoodadeaga/MyWebservice/v1/login.php";
+standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    self.passWordTextField.secureTextEntry = YES;
     
     
 }
@@ -50,10 +65,51 @@ self.dataTransfer =[ImageCaching sharedInstance];
 - (IBAction)logInButton:(UIButton *)sender
 {
     NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
-
-    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
+    NSDictionary *databaseParameter= @{@"username":self.userIDTextField.text,
+                                       @"password":self.passWordTextField.text};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"HTTP Success: %@", responseObject);
+        self.userData = responseObject;
+        userName = [self.userData valueForKeyPath:@"user.username"];
+        [standardUserDefaults setObject:userName forKey:@"userName"];
+        
+        firstName = [self.userData valueForKeyPath:@"user.firstname"];
+        [standardUserDefaults setObject:firstName forKey:@"firstName"];
+        
+        lastName = [self.userData valueForKeyPath:@"user.lastname"];
+        [standardUserDefaults setObject:lastName forKey:@"lastName"];
+        
+        email = [self.userData valueForKeyPath:@"user.email"];
+        [standardUserDefaults setObject:email forKey:@"email"];
+        
+        phoneNumber = [self.userData valueForKeyPath:@"user.phone"];
+        [standardUserDefaults setObject:phoneNumber forKey:@"phoneNumber"];
+        
+        [standardUserDefaults synchronize];
+        
+        
+        
+        NSLog(@"operation Success: %@", operation);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
+    if([self.userData valueForKeyPath:@"error"] == 0)
     {
-        NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
+        //NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
         
     EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
     eventsView.title = @"EVENTS";

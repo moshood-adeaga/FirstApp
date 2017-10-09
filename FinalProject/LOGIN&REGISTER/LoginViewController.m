@@ -72,16 +72,12 @@
     
     [SAMKeychain setPassword:self.passWordTextField.text forService:@"FinalProject" account:self.userNameTextField.text];
     NSLog(@"READING VALUE %@", [SAMKeychain passwordForService:@"FinalProject" account:self.userNameTextField.text]);
-    [self setupUserDirectory];
-    [self storeUserDetail];
+//    [self setupUserDirectory];
+//    [self storeUserDetail];
    
     //Saving the User//
 //    [self.myCoreManager saveContext];
-    self.userNameTextField.text =nil;
-    self.firstNameTextField.text = nil;
-    self.lastNameTextField.text = nil;
-    self.emailTextField.text = nil;
-    self.passWordTextField.text = nil;
+   
     
     
     [self.registrationLabel setEnabled:YES];
@@ -93,18 +89,23 @@
                                    userInfo:nil
                                     repeats:NO];
     //Saving to database
-    NSDictionary *databaseParameter = @{@"username":self.userNameTextField.text,
+    
+   NSDictionary *databaseParameter= @{@"username":self.userNameTextField.text,
                                         @"password":self.passWordTextField.text,
                                         @"email":self.emailTextField.text,
                                         @"firstname":self.firstNameTextField.text,
                                         @"lastname":self.lastNameTextField.text,
                                         @"phone":self.phoneNumberTextField.text
                                         };
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:self.dataBasePath parameters:databaseParameter progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON Successsss: %@", responseObject);
+        NSLog(@"operation Successsss: %@", operation);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error laaa: %@", error);
     }];
 }
 -(void)labelMethod:(NSTimer*)timer
