@@ -10,6 +10,9 @@
 #import "RegisterViewController.h"
 #import "ImageCaching.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
+
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "RNDecryptor.h"
 #import "RNEncryptor.h"
@@ -19,6 +22,7 @@
 @interface ProfileViewController ()
 @property (copy, nonatomic) NSString *filePath;
 @property (strong, nonatomic) ImageCaching *dataTransfer;
+@property (strong, nonatomic) NSString *dataBasePath;
 @end
 
 @implementation ProfileViewController
@@ -28,6 +32,8 @@
     [super viewDidLoad];
     NSLog(@"username:%@",self.userName.text);
     self.dataTransfer = [ImageCaching sharedInstance];
+    self.dataBasePath =@"http://localhost/~moshoodadeaga/MyWebservice/v1/imageupload.php";
+    
     
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
     self.profileImageViewer.layer.borderColor =[UIColor blackColor].CGColor;
@@ -120,6 +126,22 @@
     NSData *encryptedImage = [RNEncryptor encryptData:imageData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
     [encryptedImage writeToFile:[self.filePath stringByAppendingPathComponent:imageName] atomically:YES];
     self.profilePicture.image = chosenImage;
+    
+    NSDictionary *databaseParameter= @{@"username":imageData,
+                                       @"text": @"userProfilePic",
+                                       
+                                       };
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON Successsss: %@", responseObject);
+        NSLog(@"operation Successsss: %@", operation);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error laaa: %@", error);
+    }];
     
     
     [picker dismissViewControllerAnimated:YES completion:NULL];

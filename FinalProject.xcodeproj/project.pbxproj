@@ -18,7 +18,7 @@
 		03EB2FC21F86934B00FE539D /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		03EF6F001F87E37D00128917 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EF6EFE1F87E37D00128917 /* ProfileViewController.m */; };
 		03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03EF6EFF1F87E37D00128917 /* ProfileViewController.xib */; };
-		45F1B7E98BABEE23E8FE8F6C /* libPods-FinalProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CE6EB6A2258C41E875BBE2E /* libPods-FinalProject.a */; };
+		6E97294A67476CAA41A3AB38 /* libPods-FinalProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */; };
 		7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397F1F88F8EF0054288D /* RNCryptor.m */; };
 		7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C439841F88F8EF0054288D /* RNCryptorEngine.m */; };
 		7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397C1F88F8EE0054288D /* RNDecryptor.m */; };
@@ -38,16 +38,17 @@
 		70841B9B1F842DE700238258 /* EventsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70841B991F842DE700238258 /* EventsCell.m */; };
 		70841B9C1F842DE700238258 /* EventsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70841B9A1F842DE700238258 /* EventsCell.xib */; };
 		70841BA11F84E27700238258 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BA01F84E27700238258 /* Social.framework */; };
-		70841BAD1F852E7800238258 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BA91F8529AB00238258 /* FBSDKCoreKit.framework */; };
-		70841BAE1F852E7800238258 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BAC1F8529AB00238258 /* FBSDKLoginKit.framework */; };
-		70841BAF1F852E7800238258 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BAB1F8529AB00238258 /* FBSDKShareKit.framework */; };
-		70841BB41F852E7A00238258 /* FBSDKPlacesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB01F852E7900238258 /* FBSDKPlacesKit.framework */; };
-		70841BB51F852E7A00238258 /* FBNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB11F852E7900238258 /* FBNotifications.framework */; };
-		70841BB61F852E7A00238258 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB21F852E7900238258 /* AccountKit.framework */; };
-		70841BB71F852E7A00238258 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */; };
 		70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C439791F88ED5E0054288D /* MobileCoreServices.framework */; };
-		76412E9880C70A36BABE6B37 /* libPods-FinalProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */; };
-		9D19C71555F57AE2473510F5 /* libPods-FinalProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6753087E8D65A1DE395901B9 /* libPods-FinalProjectTests.a */; };
+		89294999A5724D8DE4D8AAD1 /* libPods-FinalProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8909A549B79CE25114846 /* libPods-FinalProject.a */; };
+		BABD9CBA1F8CE708009A97DA /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */; };
+		BABD9CBC1F8CE746009A97DA /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */; };
+		BABD9CBE1F8CE770009A97DA /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */; };
+		BABD9CC01F8CE77C009A97DA /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */; };
+		BABD9CC21F8CE789009A97DA /* FirebaseStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */; };
+		BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */; };
+		BAC02E491F8BB0F5006E9CB5 /* ChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC02E471F8BB0F5006E9CB5 /* ChatView.m */; };
+		BAC02E4A1F8BB0F5006E9CB5 /* ChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */; };
+		EB4018BEAF17CBDAE3DB3275 /* libPods-FinalProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,9 +90,9 @@
 		03EF6F021F88045400128917 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		08E0849A7D1B7E8B798C7EE1 /* Pods-FinalProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EB3D9D6F60F718CD5F4C13E /* Pods-FinalProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		5CE6EB6A2258C41E875BBE2E /* libPods-FinalProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DA8909A549B79CE25114846 /* libPods-FinalProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6650EF94E7523E4FCBA1E80C /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
-		6753087E8D65A1DE395901B9 /* libPods-FinalProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ABADF84DBB28C427981FB33 /* Pods-FinalProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		706ACFFC1F83F73E001F83A5 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		706ACFFF1F83F73E001F83A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -123,14 +124,6 @@
 		70841B9A1F842DE700238258 /* EventsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsCell.xib; sourceTree = "<group>"; };
 		70841B9E1F84D5E200238258 /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
 		70841BA01F84E27700238258 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		70841BA91F8529AB00238258 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		70841BAA1F8529AB00238258 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
-		70841BAB1F8529AB00238258 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		70841BAC1F8529AB00238258 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		70841BB01F852E7900238258 /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKPlacesKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKPlacesKit.framework; sourceTree = "<group>"; };
-		70841BB11F852E7900238258 /* FBNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBNotifications.framework; path = ../../../Documents/FacebookSDKs/FBNotifications.framework; sourceTree = "<group>"; };
-		70841BB21F852E7900238258 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccountKit.framework; path = ../../../Documents/FacebookSDKs/AccountKit.framework; sourceTree = "<group>"; };
-		70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../Documents/FacebookSDKs/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		70C439771F882FE00054288D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		70C439781F883BE90054288D /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		70C439791F88ED5E0054288D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -145,8 +138,18 @@
 		70C439841F88F8EF0054288D /* RNCryptorEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
 		70C439851F88F8EF0054288D /* RNDecryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
-		94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
+		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
+		BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
+		BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorage.framework; path = Pods/FirebaseStorage/Frameworks/FirebaseStorage.framework; sourceTree = "<group>"; };
+		BAC02E461F8BB0F5006E9CB5 /* ChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatView.h; sourceTree = "<group>"; };
+		BAC02E471F8BB0F5006E9CB5 /* ChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
+		BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
+		BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,18 +157,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABD9CC21F8CE789009A97DA /* FirebaseStorage.framework in Frameworks */,
+				BABD9CC01F8CE77C009A97DA /* FirebaseInstanceID.framework in Frameworks */,
+				BABD9CBE1F8CE770009A97DA /* FirebaseDatabase.framework in Frameworks */,
+				BABD9CBC1F8CE746009A97DA /* FirebaseCore.framework in Frameworks */,
+				BABD9CBA1F8CE708009A97DA /* FirebaseAnalytics.framework in Frameworks */,
 				70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */,
 				032DA26E1F87CE4B00E73F2F /* Security.framework in Frameworks */,
 				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
-				70841BB41F852E7A00238258 /* FBSDKPlacesKit.framework in Frameworks */,
-				70841BB51F852E7A00238258 /* FBNotifications.framework in Frameworks */,
-				70841BB61F852E7A00238258 /* AccountKit.framework in Frameworks */,
-				70841BB71F852E7A00238258 /* FBSDKMessengerShareKit.framework in Frameworks */,
-				70841BAD1F852E7800238258 /* FBSDKCoreKit.framework in Frameworks */,
-				70841BAE1F852E7800238258 /* FBSDKLoginKit.framework in Frameworks */,
-				70841BAF1F852E7800238258 /* FBSDKShareKit.framework in Frameworks */,
 				70841BA11F84E27700238258 /* Social.framework in Frameworks */,
-				45F1B7E98BABEE23E8FE8F6C /* libPods-FinalProject.a in Frameworks */,
+				89294999A5724D8DE4D8AAD1 /* libPods-FinalProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D19C71555F57AE2473510F5 /* libPods-FinalProjectTests.a in Frameworks */,
+				EB4018BEAF17CBDAE3DB3275 /* libPods-FinalProjectTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76412E9880C70A36BABE6B37 /* libPods-FinalProjectUITests.a in Frameworks */,
+				6E97294A67476CAA41A3AB38 /* libPods-FinalProjectUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +263,7 @@
 		706ACFFE1F83F73E001F83A5 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */,
 				70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */,
 				03E353221F878776005539A2 /* LOGIN&REGISTER */,
 				706AD0341F83F7B9001F83A5 /* FIRST TAB */,
@@ -273,6 +275,7 @@
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
+				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
 				706AD0111F83F73F001F83A5 /* main.m */,
 				706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */,
 				03EB2FBF1F8687A900FE539D /* Others */,
@@ -328,21 +331,19 @@
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */,
+				BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */,
+				BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */,
+				BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */,
+				BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */,
+				BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */,
 				70C439791F88ED5E0054288D /* MobileCoreServices.framework */,
 				032DA26D1F87CE4B00E73F2F /* Security.framework */,
 				03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */,
-				70841BB21F852E7900238258 /* AccountKit.framework */,
-				70841BB11F852E7900238258 /* FBNotifications.framework */,
-				70841BB31F852E7900238258 /* FBSDKMessengerShareKit.framework */,
-				70841BB01F852E7900238258 /* FBSDKPlacesKit.framework */,
-				70841BAA1F8529AB00238258 /* Bolts.framework */,
-				70841BA91F8529AB00238258 /* FBSDKCoreKit.framework */,
-				70841BAC1F8529AB00238258 /* FBSDKLoginKit.framework */,
-				70841BAB1F8529AB00238258 /* FBSDKShareKit.framework */,
 				70841BA01F84E27700238258 /* Social.framework */,
-				5CE6EB6A2258C41E875BBE2E /* libPods-FinalProject.a */,
-				6753087E8D65A1DE395901B9 /* libPods-FinalProjectTests.a */,
-				94F6C26F85C6B226427F2A23 /* libPods-FinalProjectUITests.a */,
+				2DA8909A549B79CE25114846 /* libPods-FinalProject.a */,
+				D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */,
+				5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -362,6 +363,16 @@
 				70C4397E1F88F8EE0054288D /* RNEncryptor.m */,
 			);
 			path = "ENCRYPTOR&DECRYPTOR";
+			sourceTree = "<group>";
+		};
+		BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */ = {
+			isa = PBXGroup;
+			children = (
+				BAC02E461F8BB0F5006E9CB5 /* ChatView.h */,
+				BAC02E471F8BB0F5006E9CB5 /* ChatView.m */,
+				BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */,
+			);
+			path = "THIRD TAB";
 			sourceTree = "<group>";
 		};
 		C61E6B719398C0088233EC46 /* Pods */ = {
@@ -499,7 +510,9 @@
 				706AD00F1F83F73F001F83A5 /* LaunchScreen.storyboard in Resources */,
 				706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */,
 				706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */,
+				BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */,
 				03E353211F87876E005539A2 /* LoginViewController.xib in Resources */,
+				BAC02E4A1F8BB0F5006E9CB5 /* ChatView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +576,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject-resources.sh",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Assets/JSQMessagesAssets.bundle",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Controllers/JSQMessagesViewController.xib",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellIncoming.xib",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellOutgoing.xib",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesLoadEarlierHeaderView.xib",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesToolbarContentView.xib",
+				"${PODS_ROOT}/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesTypingIndicatorFooterView.xib",
 				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -643,9 +663,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-Defines-NSData+zlib/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -658,9 +685,26 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-f0850809/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -674,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAC02E491F8BB0F5006E9CB5 /* ChatView.m in Sources */,
 				03E3532B1F878C59005539A2 /* RegisterViewController.m in Sources */,
 				706AD0511F841421001F83A5 /* MediaController.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
@@ -848,7 +893,37 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZFD4Q5EMC6;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDKs";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Pods/FirebaseAuth/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseCore/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseStorage/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)${PODS_ROOT}/Firebase/Core/Sources",
+					"\"${PODS_ROOT}/leveldb-library/\"",
+					"\"${PODS_ROOT}/leveldb-library/include\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuth\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseStorage\"",
+					"\"${PODS_ROOT}/Headers/Public/GTMSessionFetcher\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleToolboxForMac\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
+					"\"${PODS_ROOT}/Headers/Public/SAMKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/leveldb-library\"",
+					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
+				);
 				INFOPLIST_FILE = FinalProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -865,7 +940,37 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZFD4Q5EMC6;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDKs";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Pods/FirebaseAuth/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseCore/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseStorage/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)${PODS_ROOT}/Firebase/Core/Sources",
+					"\"${PODS_ROOT}/leveldb-library/\"",
+					"\"${PODS_ROOT}/leveldb-library/include\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuth\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseStorage\"",
+					"\"${PODS_ROOT}/Headers/Public/GTMSessionFetcher\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleToolboxForMac\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
+					"\"${PODS_ROOT}/Headers/Public/SAMKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/leveldb-library\"",
+					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
+				);
 				INFOPLIST_FILE = FinalProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

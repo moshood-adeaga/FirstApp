@@ -13,14 +13,16 @@
 #import "ImageCaching.h"
 #import "EventsViewController.h"
 #import "MediaController.h"
+#import "ChatView.h"
 #import "ProfileViewController.h"
-#import <SAMKeychainQuery.h>
-#import <SAMKeychain.h>
-#import <AFNetworking.h>
-#import <AFHTTPSessionManager.h>
+#import "SAMKeychainQuery.h"
+#import "SAMKeychain.h"
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
 
 @interface RegisterViewController ()
     {
+        NSString *userID;
         NSString *userName;
         NSString *firstName;
         NSString *lastName;
@@ -60,11 +62,13 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
         nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         nav.navigationBar.barStyle = UIBarStyleBlack;
         [self presentViewController:nav animated:YES completion:nil];
+        
     }
 }
 - (IBAction)logInButton:(UIButton *)sender
 {
-    NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
+    
+    //NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
     NSDictionary *databaseParameter= @{@"username":self.userIDTextField.text,
                                        @"password":self.passWordTextField.text};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -88,6 +92,9 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
         phoneNumber = [self.userData valueForKeyPath:@"user.phone"];
         [standardUserDefaults setObject:phoneNumber forKey:@"phoneNumber"];
         
+        userID = [self.userData valueForKey:@"user.id"];
+        [standardUserDefaults setObject:[NSString stringWithFormat:@"%@", userID] forKey:@"userID"];
+        
         [standardUserDefaults synchronize];
         
         
@@ -107,7 +114,7 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     
 //    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
-    if([self.userData valueForKeyPath:@"error"] == 0)
+    if(![self.userData valueForKeyPath:@"message"])
     {
         //NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
         
@@ -115,6 +122,8 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
     eventsView.title = @"EVENTS";
     MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
     mediaView.title= @"CAMERA";
+    ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
+    chatsView.title = @"CHATS";
     ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
     profileView.title = @"PROFILE";
     [self.dataTransfer.userID setString:self.userIDTextField.text];
@@ -122,26 +131,29 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
     UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
     
     nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav1.navigationBar.barStyle = UIBarStyleBlack;
-        nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-        nav2.navigationBar.barStyle = UIBarStyleBlack;
-        nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-        nav4.navigationBar.barStyle = UIBarStyleBlack;
+    nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav2.navigationBar.barStyle = UIBarStyleBlack;
+    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav3.navigationBar.barStyle = UIBarStyleBlack;
+    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav4.navigationBar.barStyle = UIBarStyleBlack;
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
-    [tabBarController setViewControllers:@[nav1,nav2,nav4]];
+    [tabBarController setViewControllers:@[nav1,nav2,nav3,nav4]];
     
     UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
     [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
-    
     UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
     [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
-        
+    UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
+    [[tabBarController.tabBar.items objectAtIndex:2] setImage :chatsTabImage];
     UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
-    [[tabBarController.tabBar.items objectAtIndex:2] setImage :profileTabImage];
+    [[tabBarController.tabBar.items objectAtIndex:3] setImage :profileTabImage];
         
      [self presentViewController:tabBarController animated:YES completion:nil];
     }

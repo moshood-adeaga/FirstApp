@@ -10,7 +10,9 @@
 #import "EventsViewController.h"
 #import "MediaController.h"
 #import "RegisterViewController.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <Firebase.h>
+#import "ChatView.h"
+
 
 
 
@@ -30,6 +32,8 @@
     eventsView.title = @"EVENTS";
     MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
     mediaView.title= @"Camera";
+    ChatView *chatView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
+    chatView.title= @"Chats";
     
     
     
@@ -40,6 +44,9 @@
     UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:loginView];
     nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav3.navigationBar.barStyle = UIBarStyleBlack;
+    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:chatView];
+    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav4.navigationBar.barStyle = UIBarStyleBlack;
    
     
     
@@ -56,27 +63,13 @@
     
     
     self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
-    [self.window setRootViewController:nav3];
+    [self.window setRootViewController:loginView];
     [self.window makeKeyAndVisible];
-    
-    [[FBSDKApplicationDelegate sharedInstance] application:application
-                             didFinishLaunchingWithOptions:launchOptions];
-    
-    
+    [FIRApp configure];
+   
     return YES;
 }
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    
-    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                  openURL:url
-                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-                    ];
-    // Add any custom logic here.
-    return handled;
-}
+
 
 
 
@@ -98,7 +91,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [FBSDKAppEvents activateApp];
+   
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -10,10 +10,10 @@
 #import "RegisterViewController.h"
 #import "CoreDataManager.h"
 #import "UserDetail+CoreDataClass.h"
-#import <SAMKeychainQuery.h>
-#import <SAMKeychain.h>
-#import <AFNetworking.h>
-#import <AFHTTPSessionManager.h>
+#import "SAMKeychainQuery.h"
+#import "SAMKeychain.h"
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "RNDecryptor.h"
@@ -70,8 +70,8 @@
 //    [newUser setEmail:self.emailTextField.text];
 //    [newUser setPassword:self.passWordTextField.text];
     
-    [SAMKeychain setPassword:self.passWordTextField.text forService:@"FinalProject" account:self.userNameTextField.text];
-    NSLog(@"READING VALUE %@", [SAMKeychain passwordForService:@"FinalProject" account:self.userNameTextField.text]);
+   // [SAMKeychain setPassword:self.passWordTextField.text forService:@"FinalProject" account:self.userNameTextField.text];
+   // NSLog(@"READING VALUE %@", [SAMKeychain passwordForService:@"FinalProject" account:self.userNameTextField.text]);
 //    [self setupUserDirectory];
 //    [self storeUserDetail];
    
