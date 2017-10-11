@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <JSQMessagesViewController.h>
+
 @interface ChatView : JSQMessagesViewController
 
 

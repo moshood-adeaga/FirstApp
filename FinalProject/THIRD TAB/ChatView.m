@@ -9,13 +9,20 @@
 #import "ChatView.h"
 #import <JSQMessagesViewController.h>
 #import <JSQMessage.h>
+#import <JSQMessagesCollectionViewCell.h>
 #import <JSQMessagesBubbleImage.h>
 #import <JSQMessagesBubbleImageFactory.h>
+#import <JSQMessageBubbleImageDataSource.h>
 #import <FirebaseDatabase/FirebaseDatabase.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 
 @interface ChatView ()
+{
+    FIRDatabaseHandle refHandle;
+
+}
 @property(strong,nonatomic)NSMutableArray  <JSQMessage*> *messages;
 @property (nonatomic, strong) JSQMessagesBubbleImage *sendingBubble;
 @property (nonatomic, strong) JSQMessagesBubbleImage *receivingBubble;
@@ -34,30 +41,36 @@
     self.inputToolbar.contentView.leftBarButtonItem =nil;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize =CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize =CGSizeZero;
+    self.collectionView.delegate =self;
+    self.collectionView.dataSource= self;
+    self.messages =[NSMutableArray new];
     self.ref = [[FIRDatabase database] reference];
-    
+    _colorBubble =[[JSQMessagesBubbleImageFactory alloc]init];
     _sendingBubble = [_colorBubble outgoingMessagesBubbleImageWithColor:[UIColor grayColor]];
     _receivingBubble = [_colorBubble incomingMessagesBubbleImageWithColor:[UIColor blueColor]];
     
     
     FIRDatabaseQuery *recentPostsQuery = [[self.ref child:@"posts"] queryLimitedToFirst:10];
     [recentPostsQuery observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot *snapshot) {
-      for(FIRDataSnapshot *snap in snapshot )
-           {
-               NSString *userId = [snap valueForKey:@"userId"];
-               NSString *userName = [snap valueForKey:@"user"];
-               NSString *textSent = [snap valueForKey:@"message"];
-               
-               JSQMessage *messageContent = [JSQMessage messageWithSenderId:userId displayName:userName text:textSent];
-               [self.messages addObject:messageContent];
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   [self finishSendingMessageAnimated:YES];
-               });
-           }
+     if(!snapshot.exists){return;}
+        NSLog(@"%@",snapshot.value);
+        JSQMessage *messageContent = [JSQMessage messageWithSenderId:snapshot.value[@"userId"] displayName:snapshot.value[@"user"]  text:snapshot.value[@"message"]];
+        [self.messages addObject:messageContent];
+        [self finishReceivingMessageAnimated:YES];
+            [self.collectionView reloadData];
+
+       
+        
     }];
 
     
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+
+}
+
 #pragma - JSQMessages CollectionView DataSource
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -69,18 +82,16 @@
     return [self.messages count];
 }
 
--(id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    JSQMessage *data = [self.messages objectAtIndex:indexPath.row];
-    if ([data.senderId isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]])
-    {
+    if (message.senderId == self.senderId) {
         return self.sendingBubble;
     }
-    else
-    {
-        return self.receivingBubble;
-    }
-    return nil;
+    
+    return self.receivingBubble;
 }
 -(id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -88,7 +99,7 @@
 }
 -(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
-    if ([currentMessage.senderId isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]])
+    if (currentMessage.senderId == self.senderId)
     {
         return nil;
     }
@@ -105,11 +116,6 @@
 }
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date
 {
-//    NSDictionary *messageContent = @{
-//                                     @"sender" :senderId,
-//                                     @"name"   :senderDisplayName,
-//                                     @"text"   :text
-//                                     };
     NSString *key = [[_ref child:@"posts"] childByAutoId].key;
     NSDictionary *post = @{@"userId": senderId,
                            @"user": senderDisplayName,
@@ -118,15 +124,15 @@
     NSDictionary *childUpdates = @{[@"/posts/" stringByAppendingString:key]: post,
                                    [NSString stringWithFormat:@"/user-posts/%@/%@/", senderId, key]: post};
     [_ref updateChildValues:childUpdates];
-    JSQMessage *messageContent = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
-    [self.messages addObject:messageContent];
-    dispatch_async(dispatch_get_main_queue(), ^{
-            [self finishSendingMessageAnimated:YES];
-        });
-   
-   
-    
+    [_ref setValue:post];
+  // JSQMessage *messageContent = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
+  // [self.messages addObject:messageContent];
+   [self finishSendingMessageAnimated:YES];
 }
+
+
+
+
 @end
 
 

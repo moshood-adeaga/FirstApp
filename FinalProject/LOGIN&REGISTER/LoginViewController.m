@@ -38,7 +38,7 @@
     self.myCoreManager = [CoreDataManager sharedManager];
     [self.registrationLabel setHidden:!self.registrationLabel.hidden];
     self.passWordTextField.secureTextEntry =YES;
-    self.dataBasePath = @"http://localhost/~moshoodadeaga/MyWebservice/v1/register.php";
+    self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/register.php";
     
     
 }

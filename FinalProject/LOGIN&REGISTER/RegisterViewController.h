@@ -14,5 +14,5 @@
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passWordTextField;
 - (IBAction)logInButton:(UIButton *)sender;
-
+@property (strong, nonatomic) NSDictionary *userData;
 @end

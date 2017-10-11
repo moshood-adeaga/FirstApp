@@ -19,10 +19,11 @@
 #import "SAMKeychain.h"
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
+#import "ViewController.h"
 
 @interface RegisterViewController ()
     {
-        NSString *userID;
+        int userID;
         NSString *userName;
         NSString *firstName;
         NSString *lastName;
@@ -33,26 +34,23 @@
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
 @property (strong, nonatomic) ImageCaching *dataTransfer;
 @property (copy, nonatomic) NSString *dataBasePath;
-    @property (strong, nonatomic) NSDictionary *userData;
+
 
 @end
 
 @implementation RegisterViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewDidLoad
+{
+[super viewDidLoad];
 self.myCoreManager = [CoreDataManager sharedManager];
 self.dataTransfer =[ImageCaching sharedInstance];
-self.dataBasePath= @"http://localhost/~moshoodadeaga/MyWebservice/v1/login.php";
+self.dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
 standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    self.passWordTextField.secureTextEntry = YES;
+self.passWordTextField.secureTextEntry = YES;
     
     
 }
-
-
-
-
 - (IBAction)segmentControl:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 1)
     {
@@ -72,8 +70,11 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *databaseParameter= @{@"username":self.userIDTextField.text,
                                        @"password":self.passWordTextField.text};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
     [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"HTTP Success: %@", responseObject);
         self.userData = responseObject;
@@ -92,84 +93,77 @@ standardUserDefaults = [NSUserDefaults standardUserDefaults];
         phoneNumber = [self.userData valueForKeyPath:@"user.phone"];
         [standardUserDefaults setObject:phoneNumber forKey:@"phoneNumber"];
         
-        userID = [self.userData valueForKey:@"user.id"];
-        [standardUserDefaults setObject:[NSString stringWithFormat:@"%@", userID] forKey:@"userID"];
+        userID =[[self.userData valueForKeyPath:@"user.id"]intValue];
+        [standardUserDefaults setObject:[NSString stringWithFormat:@"%d",userID] forKey:@"userID"];
         
         [standardUserDefaults synchronize];
-        
+        int myErrorCode =[[self.userData valueForKeyPath:@"error"] intValue];
+        if(myErrorCode == 0)
+        {
+            //NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
+            
+            EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
+            eventsView.title = @"EVENTS";
+            MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
+            mediaView.title= @"CAMERA";
+            ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
+            chatsView.title = @"CHATS";
+            ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
+            profileView.title = @"PROFILE";
+            [self.dataTransfer.userID setString:self.userIDTextField.text];
+            ViewController *View = [[ViewController alloc]initWithNibName:@"ViewController" bundle:nil];
+            
+            UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
+            UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+            UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:View];
+            UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
+            
+            nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav1.navigationBar.barStyle = UIBarStyleBlack;
+            nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav2.navigationBar.barStyle = UIBarStyleBlack;
+            nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav3.navigationBar.barStyle = UIBarStyleBlack;
+            nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav4.navigationBar.barStyle = UIBarStyleBlack;
+            
+            UITabBarController *tabBarController = [[UITabBarController alloc]init];
+            [tabBarController setViewControllers:@[nav1,nav2,nav3,nav4]];
+            
+            UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
+            [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
+            UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
+            [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
+            UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
+            [[tabBarController.tabBar.items objectAtIndex:2] setImage :chatsTabImage];
+            UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
+            [[tabBarController.tabBar.items objectAtIndex:3] setImage :profileTabImage];
+            
+            [self presentViewController:tabBarController animated:YES completion:nil];
+        }
+        else {
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                  message:@"Incorrect UserName/Password Try Again !!!"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+            [self.userIDTextField setText:nil];
+            [self.passWordTextField setText:nil];
+            
+        }
         
         
         NSLog(@"operation Success: %@", operation);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-    
-    
-    
-    
-    
-    
-    
-    
+         });
     
 //    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
-    if(![self.userData valueForKeyPath:@"message"])
-    {
-        //NSLog(@"Result:%@",[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text]);
-        
-    EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
-    eventsView.title = @"EVENTS";
-    MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
-    mediaView.title= @"CAMERA";
-    ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
-    chatsView.title = @"CHATS";
-    ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
-    profileView.title = @"PROFILE";
-    [self.dataTransfer.userID setString:self.userIDTextField.text];
-        
     
-    UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
-    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
-    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
-    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
     
-    nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav1.navigationBar.barStyle = UIBarStyleBlack;
-    nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav2.navigationBar.barStyle = UIBarStyleBlack;
-    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav3.navigationBar.barStyle = UIBarStyleBlack;
-    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav4.navigationBar.barStyle = UIBarStyleBlack;
-    
-    UITabBarController *tabBarController = [[UITabBarController alloc]init];
-    [tabBarController setViewControllers:@[nav1,nav2,nav3,nav4]];
-    
-    UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
-    [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
-    UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
-    [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
-    UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
-    [[tabBarController.tabBar.items objectAtIndex:2] setImage :chatsTabImage];
-    UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
-    [[tabBarController.tabBar.items objectAtIndex:3] setImage :profileTabImage];
-        
-     [self presentViewController:tabBarController animated:YES completion:nil];
-    }
-    else {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                              message:@"Incorrect UserName/Password Try Again !!!"
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles: nil];
-        
-        [myAlertView show];
-        [self.userIDTextField setText:nil];
-        [self.passWordTextField setText:nil];
-        
-    }
-        
     
 }
 @end

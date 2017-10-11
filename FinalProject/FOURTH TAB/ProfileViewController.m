@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
+#import <FirebaseStorage/FirebaseStorage.h>
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "RNDecryptor.h"
@@ -32,7 +33,7 @@
     [super viewDidLoad];
     NSLog(@"username:%@",self.userName.text);
     self.dataTransfer = [ImageCaching sharedInstance];
-    self.dataBasePath =@"http://localhost/~moshoodadeaga/MyWebservice/v1/imageupload.php";
+    
     
     
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
@@ -127,21 +128,24 @@
     [encryptedImage writeToFile:[self.filePath stringByAppendingPathComponent:imageName] atomically:YES];
     self.profilePicture.image = chosenImage;
     
-    NSDictionary *databaseParameter= @{@"username":imageData,
-                                       @"text": @"userProfilePic",
-                                       
-                                       };
+    FIRStorageReference *storageRef = [[FIRStorage storage] reference];
+    FIRStorageReference *riversRef = [storageRef child:@"images/rivers.jpg"];
+    FIRStorageUploadTask *uploadTask = [riversRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata,NSError *error) {
+   if (error != nil)
+   {
+       NSLog(@"for fuck sake :%@",[error localizedDescription]);
+   } else
+   {
+     NSLog(@"YAyyyyyyyyy");
+   NSURL *downloadURL = metadata.downloadURL;
+   NSLog(@"my image download%@",downloadURL);
+       
+   }
+   }];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
-    [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON Successsss: %@", responseObject);
-        NSLog(@"operation Successsss: %@", operation);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error laaa: %@", error);
-    }];
+
+    
+
     
     
     [picker dismissViewControllerAnimated:YES completion:NULL];

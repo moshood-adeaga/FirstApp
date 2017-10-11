@@ -46,6 +46,10 @@
 		BABD9CC01F8CE77C009A97DA /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */; };
 		BABD9CC21F8CE789009A97DA /* FirebaseStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */; };
 		BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */; };
+		BABD9CC71F8D8CEC009A97DA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CC51F8D8CEC009A97DA /* ViewController.m */; };
+		BABD9CC81F8D8CEC009A97DA /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABD9CC61F8D8CEC009A97DA /* ViewController.xib */; };
+		BABD9CD11F8E5512009A97DA /* usersAndChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */; };
+		BABD9CD21F8E5512009A97DA /* usersAndChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */; };
 		BAC02E491F8BB0F5006E9CB5 /* ChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC02E471F8BB0F5006E9CB5 /* ChatView.m */; };
 		BAC02E4A1F8BB0F5006E9CB5 /* ChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */; };
 		EB4018BEAF17CBDAE3DB3275 /* libPods-FinalProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */; };
@@ -144,6 +148,12 @@
 		BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
 		BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
 		BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorage.framework; path = Pods/FirebaseStorage/Frameworks/FirebaseStorage.framework; sourceTree = "<group>"; };
+		BABD9CC41F8D8CEC009A97DA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		BABD9CC51F8D8CEC009A97DA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BABD9CC61F8D8CEC009A97DA /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		BABD9CCE1F8E5512009A97DA /* usersAndChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = usersAndChatViewController.h; sourceTree = "<group>"; };
+		BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = usersAndChatViewController.m; sourceTree = "<group>"; };
+		BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = usersAndChatViewController.xib; sourceTree = "<group>"; };
 		BAC02E461F8BB0F5006E9CB5 /* ChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatView.h; sourceTree = "<group>"; };
 		BAC02E471F8BB0F5006E9CB5 /* ChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
 		BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
@@ -371,6 +381,12 @@
 				BAC02E461F8BB0F5006E9CB5 /* ChatView.h */,
 				BAC02E471F8BB0F5006E9CB5 /* ChatView.m */,
 				BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */,
+				BABD9CC41F8D8CEC009A97DA /* ViewController.h */,
+				BABD9CC51F8D8CEC009A97DA /* ViewController.m */,
+				BABD9CC61F8D8CEC009A97DA /* ViewController.xib */,
+				BABD9CCE1F8E5512009A97DA /* usersAndChatViewController.h */,
+				BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */,
+				BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */,
 			);
 			path = "THIRD TAB";
 			sourceTree = "<group>";
@@ -503,6 +519,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABD9CC81F8D8CEC009A97DA /* ViewController.xib in Resources */,
 				70841B9C1F842DE700238258 /* EventsCell.xib in Resources */,
 				706AD0521F841421001F83A5 /* MediaController.xib in Resources */,
 				03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */,
@@ -513,6 +530,7 @@
 				BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */,
 				03E353211F87876E005539A2 /* LoginViewController.xib in Resources */,
 				BAC02E4A1F8BB0F5006E9CB5 /* ChatView.xib in Resources */,
+				BABD9CD21F8E5512009A97DA /* usersAndChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,12 +744,14 @@
 				7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */,
 				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
 				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
+				BABD9CC71F8D8CEC009A97DA /* ViewController.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
 				03EB2FC21F86934B00FE539D /* cameraView.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
 				032DA26C1F879F3700E73F2F /* CoreDataManager.m in Sources */,
 				706AD03D1F83F831001F83A5 /* EventsViewController.m in Sources */,
 				706AD0121F83F73F001F83A5 /* main.m in Sources */,
+				BABD9CD11F8E5512009A97DA /* usersAndChatViewController.m in Sources */,
 				03EF6F001F87E37D00128917 /* ProfileViewController.m in Sources */,
 				706AD0411F840159001F83A5 /* ImageCaching.m in Sources */,
 				706AD00A1F83F73F001F83A5 /* FinalProject.xcdatamodeld in Sources */,
