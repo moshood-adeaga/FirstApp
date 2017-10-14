@@ -39,6 +39,7 @@
 		89294999A5724D8DE4D8AAD1 /* libPods-FinalProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8909A549B79CE25114846 /* libPods-FinalProject.a */; };
 		BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143C1F91131000D84F00 /* EventKit.framework */; };
 		BA18143F1F91131100D84F00 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143D1F91131000D84F00 /* EventKitUI.framework */; };
+		BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1814441F924E5E00D84F00 /* AVKit.framework */; };
 		BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */; };
 		BA24F4201F90BC4100990D4E /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		BA24F4211F90BC4500990D4E /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD04F1F841421001F83A5 /* MediaController.m */; };
@@ -150,9 +151,10 @@
 		70C439841F88F8EF0054288D /* RNCryptorEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
 		70C439851F88F8EF0054288D /* RNDecryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
-		BA18143B1F910F6100D84F00 /* barButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barButton.png; sourceTree = "<group>"; };
 		BA18143C1F91131000D84F00 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA18143D1F91131000D84F00 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		BA1814431F92472300D84F00 /* barButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barButton.png; sourceTree = "<group>"; };
+		BA1814441F924E5E00D84F00 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
 		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
@@ -186,6 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */,
+				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */,
 				BA18143F1F91131100D84F00 /* EventKitUI.framework in Frameworks */,
 				BABD9CDB1F8EC4AF009A97DA /* MapKit.framework in Frameworks */,
@@ -197,7 +201,6 @@
 				BABD9CBA1F8CE708009A97DA /* FirebaseAnalytics.framework in Frameworks */,
 				70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */,
 				032DA26E1F87CE4B00E73F2F /* Security.framework in Frameworks */,
-				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				70841BA11F84E27700238258 /* Social.framework in Frameworks */,
 				89294999A5724D8DE4D8AAD1 /* libPods-FinalProject.a in Frameworks */,
 			);
@@ -306,10 +309,10 @@
 				706ACFFF1F83F73E001F83A5 /* AppDelegate.h */,
 				706AD0001F83F73E001F83A5 /* AppDelegate.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
+				BA1814431F92472300D84F00 /* barButton.png */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
 				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
-				BA18143B1F910F6100D84F00 /* barButton.png */,
 				706AD0111F83F73F001F83A5 /* main.m */,
 				706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */,
 				03EB2FBF1F8687A900FE539D /* Others */,
@@ -371,6 +374,7 @@
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA1814441F924E5E00D84F00 /* AVKit.framework */,
 				BA18143C1F91131000D84F00 /* EventKit.framework */,
 				BA18143D1F91131000D84F00 /* EventKitUI.framework */,
 				BABD9CDA1F8EC4AF009A97DA /* MapKit.framework */,

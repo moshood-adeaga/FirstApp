@@ -151,7 +151,9 @@
     // Uploading user Profile pic to datbase//
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
     FIRStorageReference *riversRef = [storageRef child:[NSString stringWithFormat:@"images/%@.jpg",self.userName.text]];
-    FIRStorageUploadTask *uploadTask = [riversRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata,NSError *error) {
+    FIRStorageMetadata *metaData;
+    metaData.contentType = @"image/jpg";
+    FIRStorageUploadTask *uploadTask = [riversRef putData:imageData metadata:metaData completion:^(FIRStorageMetadata *metadata,NSError *error) {
    if (error != nil)
    {
        NSLog(@"ERROR :%@",[error localizedDescription]);
