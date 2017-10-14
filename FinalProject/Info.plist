@@ -88,5 +88,11 @@
     <string>Final Project needs access to use your photo library</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Final Project Would like to access your Mic for Audio</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This application requires location services to work</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This application requires location services to work</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>FinalProject would like to access Your calendar</string>
 </dict>
 </plist>

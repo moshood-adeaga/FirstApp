@@ -25,6 +25,15 @@ static ImageCaching *sharedInstance;
     if (self) {
         self.imageCache = [[NSCache alloc] init];
         self.userID = [[NSMutableString alloc]init];
+        self.venueID = [[NSMutableString alloc]init];
+        self.eventsDescription = [[NSMutableString alloc]init];
+        self.ticketUrl = [[NSMutableString alloc]init];
+        self.startTime = [[NSMutableString alloc]init];
+        self.endTime = [[NSMutableString alloc]init];
+        self.eventName = [[NSMutableString alloc]init];
+        self.eventPic = [[NSMutableString alloc]init];
+         self.eventID = [[NSMutableString alloc]init];
+
     }
     return self;
 }

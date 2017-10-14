@@ -51,13 +51,13 @@
     
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
-    [tabBarController setViewControllers:@[nav1,nav2]];
+    [tabBarController setViewControllers:@[nav1]];
     
     UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
     [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
     
-    UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
-    [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
+//    UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
+//    [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
     
     
     

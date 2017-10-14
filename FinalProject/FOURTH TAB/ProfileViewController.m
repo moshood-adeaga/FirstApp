@@ -21,9 +21,16 @@
 
 
 @interface ProfileViewController ()
+{
+    NSUserDefaults *standardDefault;
+}
 @property (copy, nonatomic) NSString *filePath;
 @property (strong, nonatomic) ImageCaching *dataTransfer;
 @property (strong, nonatomic) NSString *dataBasePath;
+@property (strong, nonatomic) NSString *profilePicDownloadLink;
+@property (strong, nonatomic) NSString *profilePicLink;
+@property (strong, nonatomic) UIImage *image;
+
 @end
 
 @implementation ProfileViewController
@@ -33,7 +40,7 @@
     [super viewDidLoad];
     NSLog(@"username:%@",self.userName.text);
     self.dataTransfer = [ImageCaching sharedInstance];
-    
+    self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
     
     
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
@@ -51,6 +58,21 @@
     self.firstName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
     self.emailLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
     self.phoneNumberLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
+    self.profilePicLink =[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Image Caching
+        NSURL *imageURL = [NSURL URLWithString:self.profilePicLink];
+        self.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageURL]];
+       if(self.image)
+        {
+            NSLog(@"Caching ....");
+            [[ImageCaching sharedInstance] cacheImage:self.image forKey:self.profilePicLink];
+            self.profilePicture.image=[[ImageCaching sharedInstance] getCachedImageForKey:self.profilePicLink];
+            [[NSUserDefaults standardUserDefaults]setObject:self.profilePicLink forKey:@"avatar"];
+            
+
+        }
+    });
 }
 - (IBAction)logOutButton:(UIButton *)sender
 {
@@ -64,7 +86,7 @@
 
 - (IBAction)profileImagePicker:(UIButton *)sender
 {
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Select Profile Picture" message:@"Using the alert controller" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Select Profile Picture" message:@"Using Your Camera or Gallery" preferredStyle:UIAlertControllerStyleActionSheet];
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         
@@ -88,14 +110,12 @@
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Take New Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Error" message:@"Device has no camera" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet2 animated:YES completion:nil];
             
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                  message:@"Device has no camera"
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil];
-            
-            [myAlertView show];
             
         }
         
@@ -128,26 +148,40 @@
     [encryptedImage writeToFile:[self.filePath stringByAppendingPathComponent:imageName] atomically:YES];
     self.profilePicture.image = chosenImage;
     
+    // Uploading user Profile pic to datbase//
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
-    FIRStorageReference *riversRef = [storageRef child:@"images/rivers.jpg"];
+    FIRStorageReference *riversRef = [storageRef child:[NSString stringWithFormat:@"images/%@.jpg",self.userName.text]];
     FIRStorageUploadTask *uploadTask = [riversRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata,NSError *error) {
    if (error != nil)
    {
-       NSLog(@"for fuck sake :%@",[error localizedDescription]);
+       NSLog(@"ERROR :%@",[error localizedDescription]);
    } else
    {
-     NSLog(@"YAyyyyyyyyy");
+   NSLog(@"SUCESS");
    NSURL *downloadURL = metadata.downloadURL;
    NSLog(@"my image download%@",downloadURL);
-       
+   self.profilePicDownloadLink =[NSString stringWithFormat:@"%@", downloadURL];
    }
+        
+        NSDictionary *databaseParameter= @{@"imageLink":self.profilePicDownloadLink,
+                                           @"id":[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"]
+                                           };
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+        [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"JSON Successsss: %@", responseObject);
+            NSLog(@"operation Successsss: %@", operation);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error laaa: %@", error);
+        }];
    }];
-    
-
-    
-
-    
-    
+  
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }

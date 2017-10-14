@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <JSQMessagesViewController.h>
 
-@interface ChatView : JSQMessagesViewController
+@interface ChatView : JSQMessagesViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate>
 
 
 @end

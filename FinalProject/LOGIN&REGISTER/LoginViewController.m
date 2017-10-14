@@ -40,6 +40,9 @@
     self.passWordTextField.secureTextEntry =YES;
     self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/register.php";
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
     
 }
 
@@ -158,6 +161,15 @@
     
     
    
+    
+}
+-(void)dismissKeyboard {
+    [self.userNameTextField resignFirstResponder];
+    [self.passWordTextField resignFirstResponder];
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
+    [self.phoneNumberTextField resignFirstResponder];
     
 }
 @end

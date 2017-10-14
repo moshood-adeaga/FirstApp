@@ -38,6 +38,10 @@
 - (IBAction)chatTrigger:(id)sender {
     ChatView *eventsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
     eventsView.title = @"EVENTS";
-     [self presentViewController:eventsView animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:eventsView];
+    
+    nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav.navigationBar.barStyle = UIBarStyleBlack;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 @end

@@ -8,7 +8,9 @@
 
 #import "EventsViewController.h"
 #import "ImageCaching.h"
+#import "mapViewController.h"
 #import "EventsCell.h"
+#import "eventDetailController.h"
 #import <Social/Social.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -18,7 +20,7 @@
 {
     NSString * imageUrl;
     UIImage *image;
-    
+    NSUserDefaults *standardUserDefaults;
 }
 @property (strong,nonatomic) ImageCaching *imageCache;
 @end
@@ -29,10 +31,13 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     self.imageCache = [ImageCaching sharedInstance];
     image =[[UIImage alloc]init];
     self.collectionView.delegate = self;
     self.collectionView.dataSource =self;
+    self.collectionView.allowsSelection=YES;
+    [self.collectionView setExclusiveTouch:YES];
     
     //Setting Appearance.
     self.collectionView.backgroundColor =[UIColor blackColor];
@@ -42,6 +47,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.tabBarController.tabBar setBarTintColor:[UIColor blackColor]];
     
     // Register Nib classes
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:@"EventsCell" bundle:nil] forCellWithReuseIdentifier:[EventsCell cell_ID]];
     
     //Creating A Search Bar
@@ -49,19 +55,30 @@ static NSString * const reuseIdentifier = @"Cell";
     self.searchBar.placeholder = @"Enter Topic for Events";
     self.searchBar.delegate =self;
     self.searchBar.barStyle = UIBarStyleBlack;
-     [self.view addSubview:self.searchBar];
+     [self.collectionView addSubview:self.searchBar];
     
     //Adding constraint to SearchBar
     self.searchBar.translatesAutoresizingMaskIntoConstraints=NO;
     NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeLeftMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeftMargin multiplier:0.4 constant:0];
     
-    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRightMargin multiplier:1.03 constant:0];
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRightMargin multiplier:1.019 constant:0];
     
-    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTopMargin relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.125 constant:0];
-    [self.view addConstraints:@[leftConstraint,rightConstraint,topConstraint]];
+   
+    [self.view addConstraints:@[leftConstraint,rightConstraint]];
    
     [self.collectionView reloadData];
     
+   
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.collectionView reloadData];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
@@ -73,7 +90,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark <UICollectionViewDataSource>&<UICollectionViewDelegate>
 
 
 
@@ -83,7 +100,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     EventsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[EventsCell cell_ID] forIndexPath:indexPath];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
     // Image Caching
     if(![[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
     {
@@ -101,12 +119,11 @@ static NSString * const reuseIdentifier = @"Cell";
         NSLog(@"Caching ....");
         [[ImageCaching sharedInstance] cacheImage:image forKey:[self.picOfEvent objectAtIndex:indexPath.row]];
     }
-       
-    });
+       });
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [cell fillEvent:[self.nameOfEvent objectAtIndex:indexPath.row] eventImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:indexPath.row]]];
-    });
+    
+    [cell fillEvent:[self.nameOfEvent objectAtIndex:indexPath.row] eventImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:indexPath.row]]];
+ 
     CGRect btnRect = CGRectMake(352,263, 45, 29);
     UIButton *cellBtn = [[UIButton alloc] initWithFrame:btnRect];
     [cellBtn setBackgroundImage:[UIImage imageNamed:@"myshare"] forState:UIControlStateNormal];
@@ -116,6 +133,14 @@ static NSString * const reuseIdentifier = @"Cell";
     [cell.contentView addSubview:cellBtn];
     [cellBtn addTarget:self action:@selector(shareButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [cellBtn setTag:indexPath.row];
+    
+    UILongPressGestureRecognizer *longPressGestureRecognizer= [[UILongPressGestureRecognizer alloc]
+                                                               initWithTarget:self action:@selector(handleLongPress:)];
+    longPressGestureRecognizer.delegate = self;
+    longPressGestureRecognizer.delaysTouchesBegan = YES;
+    longPressGestureRecognizer.cancelsTouchesInView =YES;
+    [cell addGestureRecognizer:longPressGestureRecognizer];
+    
     
     return cell;
 }
@@ -135,50 +160,51 @@ static NSString * const reuseIdentifier = @"Cell";
     }
     else
     {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Sorry"
-                                  message:@"You Cant make a Post right now, make sure your device has an internet connection and you have at least one Facebook account setup"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
+        UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Sorry" message:@"You Cant make a Post right now, make sure your device has an internet connection and you have at least one Facebook account setup" preferredStyle:UIAlertControllerStyleAlert];
+        [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        // Present action sheet.
+        [self presentViewController:actionSheet2 animated:YES completion:nil];
+       
     }
 }
-#pragma mark <UICollectionViewDelegate>
+- (void)collectionView:(UICollectionView *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 -(CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(400, 300);
 }
-
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-
-
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-
-
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
--(BOOL)collectionView:(UICollectionView *)collectionView canEditItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    eventDetailController *eventDetail =[[eventDetailController alloc]initWithNibName:@"eventDetailController" bundle:nil];
+    if(![[self.venueIdOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.venueID setString:[self.venueIdOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.nameOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.eventName setString:[self.nameOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.descriptionOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.eventsDescription setString:[self.descriptionOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.startOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.startTime setString:[self.startOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.endOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.endTime setString:[self.endOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.urlOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.ticketUrl setString:[self.urlOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.eventPic setString:[self.picOfEvent objectAtIndex:indexPath.row]];
+    if(![[self.eventID objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.eventID setString:[self.eventID objectAtIndex:indexPath.row]];
+    
+    
+   [self.navigationController pushViewController: eventDetail animated:YES];
+
     return YES;
 }
+
+
+
+
 #pragma mark DATA PARSING
 -(void)initParse:(NSString*)link
 {
@@ -214,10 +240,71 @@ static NSString * const reuseIdentifier = @"Cell";
         self.nameOfEvent= eventTitle;
         NSMutableArray *eventPic = [root valueForKeyPath:@"events.logo.original.url"];
         self.picOfEvent= eventPic;
-        NSMutableArray *eventUrl = [root valueForKeyPath:@"events.url"];
-        self.urlOfEvent= eventUrl;
+        NSMutableArray *eventTicketUrl = [root valueForKeyPath:@"events.url"];
+        self.urlOfEvent= eventTicketUrl;
+        NSMutableArray *venueID = [root valueForKeyPath:@"events.venue_id"];
+        self.venueIdOfEvent = venueID;
+        NSMutableArray *eventDescription =[root valueForKeyPath:@"events.description.text"];
+        self.descriptionOfEvent =eventDescription;
+        NSMutableArray *eventStart =[root valueForKeyPath:@"events.start.local"];
+        self.startOfEvent=eventStart;
+        NSMutableArray *eventEnd =[root valueForKeyPath:@"events.end.local"];
+        self.endOfEvent=eventEnd;
+        NSMutableArray *idOfEvent = [root valueForKeyPath:@"events.id"];
+        self.eventID =idOfEvent;
+
+
+        
+        
     } else {
         NSLog(@"Error: %@", [error localizedDescription]);
     }
+}
+#pragma Gesture Recognizer Delegate
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+        return;
+    }
+    CGPoint tappedPoint = [gestureRecognizer locationInView:self.collectionView];
+    NSIndexPath *tappedCellPath = [self.collectionView indexPathForItemAtPoint:tappedPoint];
+    if (tappedCellPath)
+    {
+    EventsCell* cell =(EventsCell*)[self.collectionView cellForItemAtIndexPath:tappedCellPath];
+        mapViewController *mapView = [[mapViewController alloc]initWithNibName:@"mapViewController" bundle:nil];
+        mapView.title = cell.eventTitleLabel.text;
+        if(![[self.venueIdOfEvent objectAtIndex:tappedCellPath.row] isKindOfClass:[NSNull class]])
+        [self.imageCache.venueID setString:[self.venueIdOfEvent objectAtIndex:tappedCellPath.row]];
+        NSLog(@"%@",[self.venueIdOfEvent objectAtIndex:tappedCellPath.row]);
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mapView];
+        nav.title =cell.eventTitleLabel.text;
+        nav.modalPresentationStyle = UIModalPresentationPopover;
+        nav.popoverPresentationController.delegate =self;
+        nav.preferredContentSize = CGSizeMake(480, 400);
+        nav.popoverPresentationController.sourceRect =[[gestureRecognizer valueForKey:@"view"] bounds];
+        nav.popoverPresentationController.sourceView =self.view;
+        
+        UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
+        popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverController.delegate = self;
+        
+        
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
+    }
+}
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    
+    return UIModalPresentationNone;
+}
+- (UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    return navController;
+}
+-(BOOL)textFieldShouldReturn:(UITextField*)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+-(void)dismissKeyboard {
+    [self.searchBar resignFirstResponder];
 }
 @end

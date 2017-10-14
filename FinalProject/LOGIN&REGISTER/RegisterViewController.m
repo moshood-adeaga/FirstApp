@@ -29,6 +29,8 @@
         NSString *lastName;
         NSString *email;
         NSString *phoneNumber;
+        NSString *userImageLink;
+        
         NSUserDefaults *standardUserDefaults;
     }
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
@@ -48,6 +50,8 @@ self.dataTransfer =[ImageCaching sharedInstance];
 self.dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
 standardUserDefaults = [NSUserDefaults standardUserDefaults];
 self.passWordTextField.secureTextEntry = YES;
+UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+[self.view addGestureRecognizer:tap];
     
     
 }
@@ -93,6 +97,9 @@ self.passWordTextField.secureTextEntry = YES;
         phoneNumber = [self.userData valueForKeyPath:@"user.phone"];
         [standardUserDefaults setObject:phoneNumber forKey:@"phoneNumber"];
         
+        userImageLink = [self.userData valueForKeyPath:@"user.image"];
+        [standardUserDefaults setObject:userImageLink forKey:@"userImage"];
+        
         userID =[[self.userData valueForKeyPath:@"user.id"]intValue];
         [standardUserDefaults setObject:[NSString stringWithFormat:@"%d",userID] forKey:@"userID"];
         
@@ -112,12 +119,14 @@ self.passWordTextField.secureTextEntry = YES;
             profileView.title = @"PROFILE";
             [self.dataTransfer.userID setString:self.userIDTextField.text];
             ViewController *View = [[ViewController alloc]initWithNibName:@"ViewController" bundle:nil];
+            View.title =@"CHAT ROOM";
             
             UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
             UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
-            UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:View];
+            UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
             UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
-            
+            UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:View];
+
             nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav1.navigationBar.barStyle = UIBarStyleBlack;
             nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
@@ -126,9 +135,11 @@ self.passWordTextField.secureTextEntry = YES;
             nav3.navigationBar.barStyle = UIBarStyleBlack;
             nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav4.navigationBar.barStyle = UIBarStyleBlack;
+            nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav5.navigationBar.barStyle = UIBarStyleBlack;
             
             UITabBarController *tabBarController = [[UITabBarController alloc]init];
-            [tabBarController setViewControllers:@[nav1,nav2,nav3,nav4]];
+            [tabBarController setViewControllers:@[nav1,nav2,nav5,nav4]];
             
             UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
             [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
@@ -142,13 +153,12 @@ self.passWordTextField.secureTextEntry = YES;
             [self presentViewController:tabBarController animated:YES completion:nil];
         }
         else {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                  message:@"Incorrect UserName/Password Try Again !!!"
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil];
+            UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Error" message:@"Incorrect UserName/Password Try Again !!!" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet animated:YES completion:nil];
             
-            [myAlertView show];
             [self.userIDTextField setText:nil];
             [self.passWordTextField setText:nil];
             
@@ -163,6 +173,12 @@ self.passWordTextField.secureTextEntry = YES;
     
 //    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
     
+    
+    
+}
+-(void)dismissKeyboard {
+    [self.userIDTextField resignFirstResponder];
+    [self.passWordTextField resignFirstResponder];
     
     
 }

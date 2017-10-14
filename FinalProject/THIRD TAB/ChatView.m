@@ -7,14 +7,20 @@
 //
 
 #import "ChatView.h"
+#import "ImageCaching.h"
 #import <JSQMessagesViewController.h>
 #import <JSQMessage.h>
 #import <JSQMessagesCollectionViewCell.h>
 #import <JSQMessagesBubbleImage.h>
 #import <JSQMessagesBubbleImageFactory.h>
 #import <JSQMessageBubbleImageDataSource.h>
+#import <JSQMediaItem.h>
+#import <JSQMessageMediaData.h>
+#import <JSQPhotoMediaItem.h>
 #import <FirebaseDatabase/FirebaseDatabase.h>
+#import <FirebaseStorage/FirebaseStorage.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 
 
@@ -38,7 +44,7 @@
     [super viewDidLoad];
     self.senderId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
     self.senderDisplayName = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
-    self.inputToolbar.contentView.leftBarButtonItem =nil;
+    //self.inputToolbar.contentView.leftBarButtonItem =nil;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize =CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize =CGSizeZero;
     self.collectionView.delegate =self;
@@ -81,7 +87,44 @@
 {
     return [self.messages count];
 }
-
+-(void)didPressAccessoryButton:(UIButton *)sender
+{
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Select Media" message:@"Using Your Library" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+    }]];
+    
+    
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Choose Picture" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Choose Video" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.mediaTypes = [NSArray arrayWithObjects: (NSString *) kUTTypeMovie, nil];
+        picker.delegate = self;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+        
+    }]];
+    actionSheet.modalPresentationStyle = UIModalPresentationPopover;
+    actionSheet.popoverPresentationController.delegate =self;
+    actionSheet.preferredContentSize = CGSizeMake(480, 400);
+    actionSheet.popoverPresentationController.sourceRect = sender.bounds;
+    actionSheet.popoverPresentationController.sourceView =self.view;
+    
+    UIPopoverPresentationController *popoverController = actionSheet.popoverPresentationController;
+    popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popoverController.delegate = self;
+    
+    // Present action sheet.
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    
+}
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -93,8 +136,11 @@
     
     return self.receivingBubble;
 }
+
 -(id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     return nil;
 }
 -(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath{
@@ -125,11 +171,29 @@
                                    [NSString stringWithFormat:@"/user-posts/%@/%@/", senderId, key]: post};
     [_ref updateChildValues:childUpdates];
     [_ref setValue:post];
-  // JSQMessage *messageContent = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
-  // [self.messages addObject:messageContent];
+    JSQMessage *messageContent = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
+    [self.messages addObject:messageContent];
    [self finishSendingMessageAnimated:YES];
 }
-
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+   
+        UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+        
+        JSQPhotoMediaItem *jsqImage =[[JSQPhotoMediaItem alloc]initWithImage:chosenImage];
+        // NSString *key = [[_ref child:@"posts"] childByAutoId].key;
+        JSQMessage *messageContent = [JSQMessage messageWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] displayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] media:jsqImage];
+        
+        [self.messages addObject:messageContent];
+        
+        [self finishSendingMessageAnimated:YES];
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
 
 
 
