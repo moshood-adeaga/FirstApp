@@ -12,6 +12,7 @@
 #import "RegisterViewController.h"
 #import <Firebase.h>
 #import "ChatView.h"
+#import "usersAndChatViewController.h"
 
 
 
@@ -35,17 +36,18 @@
     ChatView *chatView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
     chatView.title= @"Chats";
     
-    
+    usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
+    View.title =@"CHAT ROOM";
     
     
     
     UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
     UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:loginView];
-    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav3.navigationBar.barStyle = UIBarStyleBlack;
     UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:chatView];
-    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav4.navigationBar.barStyle = UIBarStyleBlack;
    
     

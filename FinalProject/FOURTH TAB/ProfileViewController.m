@@ -59,7 +59,8 @@
     self.emailLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
     self.phoneNumberLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
     self.profilePicLink =[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
         // Image Caching
         NSURL *imageURL = [NSURL URLWithString:self.profilePicLink];
         self.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageURL]];

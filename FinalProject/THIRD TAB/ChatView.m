@@ -20,26 +20,37 @@
 #import <JSQVideoMediaItem.h>
 #import <JSQMessageMediaData.h>
 #import <JSQMessageData.h>
+#import <JSQSystemSoundPlayer.h>
+#import <JSQMessagesTimestampFormatter.h>
+#import <JSQSystemSoundPlayer+JSQMessages.h>
+#import <JSQMessagesAvatarImageFactory.h>
 #import <FirebaseDatabase/FirebaseDatabase.h>
 #import <FirebaseStorage/FirebaseStorage.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
+#import <math.h>
 
 
 
 @interface ChatView ()
 {
     FIRDatabaseHandle refHandle;
+    NSUserDefaults *standardDefault;
+    
 
 }
 @property (strong,nonatomic)NSMutableArray  <JSQMessage*> *messages;
 @property (nonatomic, strong) JSQMessagesBubbleImage *sendingBubble;
 @property (nonatomic, strong) JSQMessagesBubbleImage *receivingBubble;
+@property (nonatomic, strong) JSQMessagesAvatarImage *outgoing;
+@property (nonatomic, strong) JSQMessagesAvatarImage *incoming;
+
 @property (nonatomic, strong) JSQMessagesBubbleImageFactory *colorBubble;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong,nonatomic) NSString *imageDownloadLink;
+
 
 
 @end
@@ -48,27 +59,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /// π(a,b)=1/2(a+b)(a+b+1)+b///
     self.senderId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
     self.senderDisplayName = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
     //self.inputToolbar.contentView.leftBarButtonItem =nil;
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize =CGSizeZero;
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize =CGSizeZero;
+    //self.collectionView.collectionViewLayout.incomingAvatarViewSize =CGSizeZero;
+   // self.collectionView.collectionViewLayout.outgoingAvatarViewSize =CGSizeZero;
     self.collectionView.delegate =self;
     self.collectionView.dataSource= self;
     self.messages =[NSMutableArray new];
-    self.ref = [[[FIRDatabase database] reference] child:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]];
+    NSString *currentUser = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
+    NSString *selectedUser =[[ImageCaching sharedInstance]selectedUsersName];
+    NSString *chatIdentifier;
+    if(![selectedUser  isEqual: @"0"])
+    {
+        UIBarButtonItem *optionBarButton = [[UIBarButtonItem alloc] initWithImage:[[ImageCaching sharedInstance]getCachedImageForKey:[[ImageCaching sharedInstance]selectedImageLink]]
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(optionButton:)];
+        
+        self.navigationItem.rightBarButtonItem = optionBarButton;
+        NSInteger String = [currentUser hash];
+        NSInteger String2 = [selectedUser hash];
+        
+        NSInteger uniqueIDComp = (String)*(String2);
+        NSInteger uniqueID = uniqueIDComp/100;
+        chatIdentifier = [NSString stringWithFormat:@"%ld",(long)uniqueID];
+        
+    } else{
+        chatIdentifier = @"0";
+    }
+   // NSString *chatIdentifier = [NSString stringWithFormat:@"%d",uniqueID];
+    self.ref = [[[FIRDatabase database] reference] child:chatIdentifier];
     _colorBubble =[[JSQMessagesBubbleImageFactory alloc]init];
+    
     _sendingBubble = [_colorBubble outgoingMessagesBubbleImageWithColor:[UIColor grayColor]];
     _receivingBubble = [_colorBubble incomingMessagesBubbleImageWithColor:[UIColor blueColor]];
-    
-    
+//  UIImage *outGoingAvatar = [[ImageCaching sharedInstance]getCachedImageForKey:[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"]];
+_outgoing=[ JSQMessagesAvatarImageFactory  avatarImageWithImage : [UIImage imageNamed:@"outgoing"] diameter : 64 ];
+//    UIImage *incomingAvatar = [[ImageCaching sharedInstance]getCachedImageForKey:[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"]];
+    _incoming=[ JSQMessagesAvatarImageFactory  avatarImageWithImage:[UIImage imageNamed:@"incoming"]  diameter : 64 ];
+
+
     [self observeMessages];
     
 }
--(void)viewDidAppear:(BOOL)animated
+-(void)optionButton:(UIBarButtonItem*)sender
 {
-    [super viewDidAppear:YES];
-
+    
 }
 
 #pragma - JSQMessages CollectionView DataSource
@@ -183,15 +221,22 @@
     
     return self.receivingBubble;
 }
+-  (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView*)collectionView
+                           avatarImageDataForItemAtIndexPath:(NSIndexPath*)indexPath {
 
--(id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
-    return nil;
+    JSQMessage *message = [ _messages objectAtIndex:indexPath.item];
+    if  (message.senderId == self.senderId)
+    {
+        return  _outgoing ;
+    }
+    return  _incoming ;
+
 }
+
+
 -(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
+   
     if (currentMessage.senderId == self.senderId)
     {
         return nil;
@@ -203,10 +248,75 @@
     return nil;
     
 }
--(CGFloat)collectionView :(JSQMessagesCollectionView*)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+-(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.messages[indexPath.item].senderId == self.senderId ? 0 : 15;
+    JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
+    
+    if (currentMessage.senderId == self.senderId)
+    {
+        return nil;
+    }
+    if(indexPath.item > 0) {
+        JSQMessage *prevMessage = [self.messages objectAtIndex:indexPath.item-1];
+        if(prevMessage.senderId == currentMessage.senderId)
+            return nil;
+    }
+    return [[NSAttributedString alloc] initWithString:_messages[indexPath.item].senderDisplayName];
+   
 }
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if(message.senderId ==self.senderId)
+    {
+         return 0.0f;
+    }
+     if (indexPath.item > 0)
+     {
+         JSQMessage *prevMessage = [self.messages objectAtIndex:indexPath.item-1];
+         if(prevMessage.senderId == message.senderId)
+             return 0.0f;
+     }
+    return kJSQMessagesCollectionViewCellLabelHeightDefault;
+}
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    
+    if (indexPath.item == 0) {
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    }
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        
+        if ([message.date timeIntervalSinceDate:previousMessage.date] / 60 > 1) {
+            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+        }
+    }
+    
+    return nil;
+}
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.item == 0) {
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    }
+    
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+        
+        if ([message.date timeIntervalSinceDate:previousMessage.date] / 60 > 1) {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault;
+        }
+    }
+    
+    return 0.0f;
+}
+
+
 -(void)observeMessages
 {
     //FIRDatabaseQuery *recentPostsQuery = [[self.ref child:@"posts"] queryLimitedToFirst:10];
@@ -217,7 +327,7 @@
         
         if ([snapshot.value[@"Data-Type"] isEqual:@"TEXT"])
         {
-            JSQMessage *messageContent = [JSQMessage messageWithSenderId:snapshot.value[@"userId"] displayName:snapshot.value[@"user"]  text:snapshot.value[@"message"]];
+            JSQMessage *messageContent = [[JSQMessage alloc]initWithSenderId:snapshot.value[@"userId"] senderDisplayName:snapshot.value[@"user"]  date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] text:snapshot.value[@"message"]];
             [self.messages addObject:messageContent];
         }else
         if ([snapshot.value[@"Data-Type"] isEqual:@"PHOTO"])
@@ -226,7 +336,7 @@
             NSURL *urlWithString = [NSURL URLWithString:urlString];
             UIImage *imageFromServer = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:urlWithString]];
             JSQPhotoMediaItem *jsqImage = [[JSQPhotoMediaItem alloc]initWithImage:imageFromServer];
-            JSQMessage *messageContent = [JSQMessage messageWithSenderId:snapshot.value[@"userId"] displayName:snapshot.value[@"user"] media:jsqImage];
+            JSQMessage *messageContent =[[JSQMessage alloc]initWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] senderDisplayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] media:jsqImage];
             [self.messages addObject:messageContent];
             
         }else
@@ -235,24 +345,25 @@
             NSString *urlString = snapshot.value[@"Video"];
             NSURL *urlWithString = [NSURL URLWithString:urlString];
             JSQVideoMediaItem *jsqVideo =  [[JSQVideoMediaItem alloc]initWithFileURL:urlWithString isReadyToPlay:YES];
-            JSQMessage *messageContent = [JSQMessage messageWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] displayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] media:jsqVideo];
+            JSQMessage *messageContent =[[JSQMessage alloc]initWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] senderDisplayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] media:jsqVideo];
                 [self.messages addObject:messageContent];
         }
         [self finishReceivingMessageAnimated:YES];
         [self.collectionView reloadData];
         
-        JSQMessage *messageContent = [JSQMessage messageWithSenderId:snapshot.value[@"userId"] displayName:snapshot.value[@"user"]  text:snapshot.value[@"message"]];
-        [self.messages addObject:messageContent];
+        
         
         
     }];
 }
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date
 {
+   [JSQSystemSoundPlayer jsq_playMessageSentSound];
     FIRDatabaseReference *messageRef = _ref.childByAutoId;
     NSDictionary *post = @{@"userId": senderId,
                            @"user": senderDisplayName,
                            @"message": text,
+                           @"Time":[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]],
                            @"Data-Type":@"TEXT"
                            };
     [messageRef setValue:post];
@@ -263,26 +374,17 @@
    
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImagePNGRepresentation(chosenImage);
-    [self sendingMedia:imageData videoData:nil];
+   
 
         if(chosenImage == info[UIImagePickerControllerOriginalImage])
         {
-       
-            NSURL *imageURL = [NSURL URLWithString:self.imageDownloadLink];
-            UIImage *imageFromServer = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageURL]];
-            JSQPhotoMediaItem *jsqImage =[[JSQPhotoMediaItem alloc]initWithImage:imageFromServer];
-            JSQMessage *messageContent = [JSQMessage messageWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] displayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] media:jsqImage];
-            [self.messages addObject:messageContent];
-            
-            
-        [self finishSendingMessageAnimated:YES];
+            [self sendingMedia:imageData videoData:nil];
+    
         }
-        NSURL *video = info[UIImagePickerControllerMediaURL];
+     NSURL *video = info[UIImagePickerControllerMediaURL];
     if (video == info[UIImagePickerControllerMediaURL]) {
-        JSQVideoMediaItem *videoContent = [[JSQVideoMediaItem alloc]initWithFileURL:video isReadyToPlay:YES];
-        JSQMessage *messageContent = [JSQMessage messageWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] displayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] media:videoContent];
+        
         [self sendingMedia:nil videoData:video];
-        [self.messages addObject:messageContent];
     }
     
         [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -334,6 +436,7 @@ if (imageData != nil && video == nil)
                     NSDictionary *post = @{@"userId": [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
                                            @"user": [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],
                                            @"Image": self.imageDownloadLink,
+                                           @"Time":[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]],
                                            @"Data-Type":@"PHOTO"
                                            };
                     [messageRef setValue:post];
@@ -362,6 +465,7 @@ if (imageData != nil && video == nil)
             NSDictionary *post = @{@"userId": [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
                                    @"user": [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],
                                    @"Video": self.imageDownloadLink,
+                                   @"Time":[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]],
                                    @"Data-Type":@"VIDEO"
                                    };
             [messageRef setValue:post];

@@ -14,6 +14,7 @@
 -(void)cacheImage:(UIImage*)image forKey:(NSString*)key;
 -(UIImage*)getCachedImageForKey:(NSString*)key;
 
+/////EVENTS////
 @property(strong,nonatomic) NSMutableString *eventName;
 @property(strong,nonatomic) NSMutableString *userID;
 @property(strong,nonatomic) NSMutableString *venueID;
@@ -23,5 +24,14 @@
 @property(strong,nonatomic) NSMutableString *endTime;
 @property(strong,nonatomic) NSMutableString *eventPic;
 @property(strong,nonatomic) NSMutableString *eventID;
+
+//////PROFILE/////
+@property(strong,nonatomic) NSMutableString *selectedUsersName;
+@property(strong,nonatomic) NSMutableString *selectedFirstName;
+@property(strong,nonatomic) NSMutableString *selectedLastName;
+@property(strong,nonatomic) NSMutableString *selectedEmail;
+@property(strong,nonatomic) NSMutableString *selectedPhoneNumber;
+@property(strong,nonatomic) NSMutableString *selectedImageLink;
+
 
 @end

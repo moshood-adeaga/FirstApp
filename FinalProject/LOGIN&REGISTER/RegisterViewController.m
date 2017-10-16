@@ -5,7 +5,7 @@
 //  Created by TheAppExperts on 10/6/17.
 //  Copyright © 2017 moshood. All rights reserved.
 //
-
+#import "usersAndChatViewController.h"
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
 #import "UserDetail+CoreDataClass.h"
@@ -19,7 +19,7 @@
 #import "SAMKeychain.h"
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
-#import "ViewController.h"
+
 
 @interface RegisterViewController ()
     {
@@ -61,7 +61,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
         LoginViewController *loginControl = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
         loginControl.title = @"REGISTER";
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginControl];
-        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         nav.navigationBar.barStyle = UIBarStyleBlack;
         [self presentViewController:nav animated:YES completion:nil];
         
@@ -118,7 +118,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
             ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
             profileView.title = @"PROFILE";
             [self.dataTransfer.userID setString:self.userIDTextField.text];
-            ViewController *View = [[ViewController alloc]initWithNibName:@"ViewController" bundle:nil];
+            usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
             View.title =@"CHAT ROOM";
             
             UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
@@ -127,15 +127,15 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
             UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
             UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:View];
 
-            nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav1.navigationBar.barStyle = UIBarStyleBlack;
-            nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav2.navigationBar.barStyle = UIBarStyleBlack;
-            nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav3.navigationBar.barStyle = UIBarStyleBlack;
-            nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav4.navigationBar.barStyle = UIBarStyleBlack;
-            nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Bradley Hand" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
             nav5.navigationBar.barStyle = UIBarStyleBlack;
             
             UITabBarController *tabBarController = [[UITabBarController alloc]init];

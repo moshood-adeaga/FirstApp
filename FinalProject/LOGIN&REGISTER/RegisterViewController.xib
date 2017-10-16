@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,9 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qRb-YS-KmW">
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qRb-YS-KmW">
                     <rect key="frame" x="105" y="72" width="172" height="29"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="LOGIN"/>
                         <segment title="REGISTER"/>
@@ -34,60 +34,56 @@
                         <action selector="segmentControl:" destination="-1" eventType="valueChanged" id="umx-GH-8ok"/>
                     </connections>
                 </segmentedControl>
-                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DeQ-D0-jII">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DeQ-D0-jII">
                     <rect key="frame" x="137" y="129" width="234" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <attributedString key="attributedText"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ata-L6-gkQ">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ata-L6-gkQ">
                     <rect key="frame" x="137" y="182" width="234" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <attributedString key="attributedText"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P86-aM-kuW">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P86-aM-kuW">
                     <rect key="frame" x="4" y="129" width="135" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <attributedString key="attributedText">
-                        <fragment content="Email/Username:">
+                        <fragment content="Username:">
                             <attributes>
                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" size="17" name="BradleyHandITCTT-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="17" name="AmericanTypewriter-Condensed"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUm-R3-d8N">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUm-R3-d8N">
                     <rect key="frame" x="4" y="182" width="135" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <attributedString key="attributedText">
                         <fragment content="Password:">
                             <attributes>
                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" size="17" name="BradleyHandITCTT-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="17" name="AmericanTypewriter-Condensed"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xL-TK-UMv">
-                    <rect key="frame" x="136" y="251" width="111" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xL-TK-UMv">
+                    <rect key="frame" x="120" y="254" width="135" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Mhw-Bo-1Mr"/>
+                    </constraints>
                     <state key="normal">
                         <attributedString key="attributedTitle">
                             <fragment content="LOGIN">
                                 <attributes>
                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="17" name="BradleyHandITCTT-Bold"/>
+                                    <font key="NSFont" size="17" name="AmericanTypewriter-Condensed"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -98,6 +94,28 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="nUm-R3-d8N" firstAttribute="trailing" secondItem="P86-aM-kuW" secondAttribute="trailing" id="1Mf-JZ-tII"/>
+                <constraint firstItem="ata-L6-gkQ" firstAttribute="leading" secondItem="DeQ-D0-jII" secondAttribute="leading" id="2gc-Ya-g40"/>
+                <constraint firstItem="DeQ-D0-jII" firstAttribute="leading" secondItem="P86-aM-kuW" secondAttribute="trailing" constant="-2" id="B2X-lV-Ecv"/>
+                <constraint firstItem="6xL-TK-UMv" firstAttribute="top" secondItem="nUm-R3-d8N" secondAttribute="bottom" constant="42" id="Dl2-TA-EhP"/>
+                <constraint firstItem="P86-aM-kuW" firstAttribute="top" secondItem="DeQ-D0-jII" secondAttribute="top" id="Ehr-3P-aw4"/>
+                <constraint firstItem="P86-aM-kuW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="4" id="GS3-gA-CQ3"/>
+                <constraint firstItem="nUm-R3-d8N" firstAttribute="leading" secondItem="P86-aM-kuW" secondAttribute="leading" id="Io9-T3-iWt"/>
+                <constraint firstItem="qRb-YS-KmW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="105" id="Iqc-yg-dTf"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="P86-aM-kuW" secondAttribute="trailing" constant="236" id="K4Y-ZK-JKs"/>
+                <constraint firstItem="nUm-R3-d8N" firstAttribute="top" secondItem="ata-L6-gkQ" secondAttribute="top" id="Usy-Dj-efp"/>
+                <constraint firstItem="6xL-TK-UMv" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="120" id="W9k-bf-qu3"/>
+                <constraint firstItem="nUm-R3-d8N" firstAttribute="bottom" secondItem="ata-L6-gkQ" secondAttribute="bottom" id="ZWm-z7-tNX"/>
+                <constraint firstItem="P86-aM-kuW" firstAttribute="bottom" secondItem="DeQ-D0-jII" secondAttribute="bottom" id="bXS-L8-mwV"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="qRb-YS-KmW" secondAttribute="trailing" constant="98" id="c1y-sY-d03"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="DeQ-D0-jII" secondAttribute="trailing" constant="4" id="c96-TY-d9L"/>
+                <constraint firstItem="nUm-R3-d8N" firstAttribute="top" secondItem="P86-aM-kuW" secondAttribute="bottom" constant="23" id="iXi-Hm-KZJ"/>
+                <constraint firstItem="P86-aM-kuW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="129" id="jTz-d2-Z5W"/>
+                <constraint firstItem="P86-aM-kuW" firstAttribute="top" secondItem="qRb-YS-KmW" secondAttribute="bottom" constant="29" id="kgl-5Z-owW"/>
+                <constraint firstItem="6xL-TK-UMv" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tRn-Z9-Prn"/>
+                <constraint firstItem="ata-L6-gkQ" firstAttribute="trailing" secondItem="DeQ-D0-jII" secondAttribute="trailing" id="wZY-CB-pLu"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>

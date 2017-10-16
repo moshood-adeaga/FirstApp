@@ -7,105 +7,244 @@
 //
 
 #import "usersAndChatViewController.h"
+#import "ChatView.h"
+#import "ImageCaching.h"
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface usersAndChatViewController ()
-
+{
+    NSUserDefaults *standardDefaults;
+}
+@property (strong,nonatomic) NSString *dataBasePath;
+@property (strong, nonatomic) ImageCaching *imageCache;
 @end
 
 @implementation usersAndChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
+    self.imageCache = [ImageCaching sharedInstance];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/retrieveusers.php";
+    [self initParse:self.dataBasePath];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+   
+   
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma Image Download
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ( !error )
+                               {
+                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   completionBlock(YES,image);
+                               } else{
+                                   completionBlock(NO,nil);
+                               }
+                           }];
 }
+
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 2;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    NSInteger rowsInSection;
+    rowsInSection = 0;
+    if (section == 0)
+        rowsInSection =1;
+    if(section == 1)
+        rowsInSection = [self.firstName count];
+    return rowsInSection;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+   
+    if(indexPath.section == 0)
+    {
+        [cell.textLabel setText:@"GLOBAL CHAT"];
+         cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+        [cell.detailTextLabel setText:@"Group Chat to talk to all Users"];
+         cell.detailTextLabel.font =[UIFont fontWithName:@"American Typewriter Condense" size:14];
+        [cell.imageView setImage:[UIImage imageNamed:@"globalChat"]];
+        
+        
+    }else if (indexPath.section == 1){
+        
+    NSString *usersFullName = [NSString stringWithFormat:@"%@ %@",self.firstName[indexPath.row],self.lastName[indexPath.row]];
+        cell.textLabel.text = usersFullName;
+        if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]])
+        {
+            cell.imageView.image =[[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]];
+        }else
+        {
+           cell.imageView.image = [UIImage imageNamed:@"noimage"];
+            // download the image asynchronously
+            NSURL *imageUrl = [NSURL URLWithString:[self.imageLink objectAtIndex:indexPath.row]];
+            [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
+                if (succeeded) {
+                    // change the image in the cell
+                    cell.imageView.image = image;
+                    // cache the image for use later (when scrolling up)
+                    [[ImageCaching sharedInstance]cacheImage:image forKey:[self.imageLink objectAtIndex:indexPath.row]];
+                }
+            }];
+        }
+    
+    }
+     cell.imageView.layer.cornerRadius = 40.0f;
+     cell.imageView.clipsToBounds =YES;
+    cell.imageView.autoresizingMask= UIViewAutoresizingNone;
+    [cell layoutSubviews];
+  return cell;
 }
 
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//   // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
+    ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
+  
+    chatsView.hidesBottomBarWhenPushed =YES;
+    if(indexPath.section == 0)
+    {
+      chatsView.title = @" GLOBAL CHAT";
+        [self.imageCache.selectedUsersName setString:[NSString stringWithFormat:@"%d",0]];
+        
+    }
+    else if (indexPath.section == 1)
+    {
+        chatsView.title = [self.userName objectAtIndex:indexPath.row];
+        [self.imageCache.selectedUsersName setString:[self.userName objectAtIndex:indexPath.row]];
+        [self.imageCache.selectedFirstName setString:[self.firstName objectAtIndex:indexPath.row]];
+        [self.imageCache.selectedLastName setString:[self.lastName objectAtIndex:indexPath.row]];
+        [self.imageCache.selectedEmail setString:[self.emailOfSelectedUser objectAtIndex:indexPath.row]];
+        [self.imageCache.selectedPhoneNumber setString:[self.phoneNumberOfSelectedUser objectAtIndex:indexPath.row]];
+        [self.imageCache.selectedImageLink setString:[self.imageLink objectAtIndex:indexPath.row]];
+   
+    }
     // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    [self.navigationController pushViewController:chatsView animated:YES];
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionHeader;
+    
+    if(section == 0)
+      sectionHeader= @"GLOBAL CHAT";
+    if(section == 1)
+      sectionHeader= @"USERS";
+    return sectionHeader;
 }
-*/
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.frame = CGRectMake(0, 0, 420, 20);
+    myLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:14];
+    myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    myLabel.backgroundColor =[ UIColor grayColor];
+    myLabel.textColor = [UIColor whiteColor];
+    
+    UIView *headerView = [[UIView alloc] init];
+    [headerView addSubview:myLabel];
+    
+    return headerView;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100.0f;
+}
+
+#pragma mark DATA PARSING
+-(void)initParse:(NSString*)link
+{
+    NSURL *URL = [NSURL URLWithString:link];
+    
+    
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:URL completionHandler:^(NSData  *_Nullable data, NSURLResponse * _Nullable response, NSError* _Nullable error) {
+        
+        
+        if (error) {
+            NSLog(@"Error!");
+        } else if(data){
+            [self parseJSONWithData:data];
+        } else {
+            NSLog(@"Big error!");
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.tableView reloadData];
+        });
+        
+    }];
+    
+    [dataTask resume];
+}
+
+-(void)parseJSONWithData:(NSData*)jsonData
+{
+    NSError *error;
+    NSDictionary *root = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    if (!error) {
+
+        NSString *compareFirstName =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
+        NSMutableArray *userFirstName = [[root valueForKey:@"firstname"]mutableCopy];
+        [userFirstName removeObject:compareFirstName];
+        self.firstName =userFirstName;
+       
+        NSString *compareLastName =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
+        NSMutableArray *userLastName = [[root valueForKey:@"lastname"]mutableCopy];
+        [userLastName removeObject:compareLastName];
+        self.lastName =userLastName;
+        
+        NSString *compareUserName =[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
+        NSMutableArray *users = [[root valueForKey:@"username"]mutableCopy];
+        [users removeObject:compareUserName];
+        self.userName =users;
+        
+        NSString *compareImage =[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"];
+        NSMutableArray *userImageLink = [[root valueForKey:@"image"]mutableCopy];
+        [userImageLink removeObject:compareImage];
+        self.imageLink = userImageLink;
+        
+        NSString *compareID = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+        NSMutableArray *userID = [[root valueForKey:@"id"]mutableCopy];
+        [userID removeObject:compareID];
+        self.idOfSelectedUser =userID;
+        
+        NSString *comparePhoneNumber = [[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
+        NSMutableArray *userPhoneNumber = [[root valueForKey:@"phone"]mutableCopy];
+        [userPhoneNumber removeObject:comparePhoneNumber];
+        self.phoneNumberOfSelectedUser = userPhoneNumber;
+        
+        NSString *comparedEmail = [[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
+        NSMutableArray *userEmail = [[root valueForKey:@"email"]mutableCopy];
+        [userEmail removeObject:comparedEmail];
+        self.emailOfSelectedUser =userEmail;
+        
+        
+    } else {
+        NSLog(@"Error: %@", [error localizedDescription]);
+    }
+}
+
 
 @end

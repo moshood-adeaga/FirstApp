@@ -23,7 +23,10 @@ static ImageCaching *sharedInstance;
 -(instancetype)init {
     self = [super init];
     if (self) {
+        //image caching
         self.imageCache = [[NSCache alloc] init];
+        
+        // data for Events detail View controller//
         self.userID = [[NSMutableString alloc]init];
         self.venueID = [[NSMutableString alloc]init];
         self.eventsDescription = [[NSMutableString alloc]init];
@@ -33,7 +36,14 @@ static ImageCaching *sharedInstance;
         self.eventName = [[NSMutableString alloc]init];
         self.eventPic = [[NSMutableString alloc]init];
          self.eventID = [[NSMutableString alloc]init];
-
+        
+        //Data for Friend View Controller//
+        self.selectedUsersName = [[NSMutableString alloc]init];
+        self.selectedFirstName = [[NSMutableString alloc]init];
+        self.selectedLastName = [[NSMutableString alloc]init];
+        self.selectedImageLink = [[NSMutableString alloc]init];
+        self.selectedEmail = [[NSMutableString alloc]init];
+        self.selectedPhoneNumber = [[NSMutableString alloc]init];
     }
     return self;
 }

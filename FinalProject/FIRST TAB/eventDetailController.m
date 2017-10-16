@@ -26,7 +26,7 @@
     NSString *country;
     NSString *ticketAmount;
     NSString *venueName;
-    NSString * ticketCost;
+    NSString *ticketCost;
     
     
 }
@@ -57,8 +57,12 @@
     
     self.imageCache = [ImageCaching sharedInstance];
     self.navigationItem.title =self.imageCache.eventName;
-    
+    self.eventImage.image = [UIImage imageNamed:@"noimage"];
+    if(![self.imageCache.eventPic isEqualToString: @""])
     self.eventImage.image = [[ImageCaching sharedInstance]getCachedImageForKey:self.imageCache.eventPic];
+    
+    
+    
     self.eventDescription.text = self.imageCache.eventsDescription;
     timeAndStart =self.imageCache.startTime;
     self.eventStartTime.text = [timeAndStart substringWithRange:NSMakeRange(11,8)];

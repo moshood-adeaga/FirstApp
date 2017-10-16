@@ -40,6 +40,9 @@
 		BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143C1F91131000D84F00 /* EventKit.framework */; };
 		BA18143F1F91131100D84F00 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143D1F91131000D84F00 /* EventKitUI.framework */; };
 		BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1814441F924E5E00D84F00 /* AVKit.framework */; };
+		BA1814501F93C6B100D84F00 /* UIFont+SystemFontOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18144F1F93C6B100D84F00 /* UIFont+SystemFontOverride.m */; };
+		BA1814551F94F34D00D84F00 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1814531F94F34800D84F00 /* FriendProfileViewController.m */; };
+		BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */; };
 		BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */; };
 		BA24F4201F90BC4100990D4E /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		BA24F4211F90BC4500990D4E /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD04F1F841421001F83A5 /* MediaController.m */; };
@@ -49,8 +52,6 @@
 		BABD9CC01F8CE77C009A97DA /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */; };
 		BABD9CC21F8CE789009A97DA /* FirebaseStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */; };
 		BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */; };
-		BABD9CC71F8D8CEC009A97DA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CC51F8D8CEC009A97DA /* ViewController.m */; };
-		BABD9CC81F8D8CEC009A97DA /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABD9CC61F8D8CEC009A97DA /* ViewController.xib */; };
 		BABD9CD11F8E5512009A97DA /* usersAndChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */; };
 		BABD9CD21F8E5512009A97DA /* usersAndChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */; };
 		BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CD41F8EC45C009A97DA /* mapViewController.m */; };
@@ -153,17 +154,18 @@
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		BA18143C1F91131000D84F00 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA18143D1F91131000D84F00 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		BA1814431F92472300D84F00 /* barButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barButton.png; sourceTree = "<group>"; };
 		BA1814441F924E5E00D84F00 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		BA18144E1F93C6B100D84F00 /* UIFont+SystemFontOverride.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+SystemFontOverride.h"; sourceTree = "<group>"; };
+		BA18144F1F93C6B100D84F00 /* UIFont+SystemFontOverride.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIFont+SystemFontOverride.m"; sourceTree = "<group>"; };
+		BA1814521F94F34800D84F00 /* FriendProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
+		BA1814531F94F34800D84F00 /* FriendProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
+		BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendProfileViewController.xib; sourceTree = "<group>"; };
 		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
 		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
 		BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
 		BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
 		BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorage.framework; path = Pods/FirebaseStorage/Frameworks/FirebaseStorage.framework; sourceTree = "<group>"; };
-		BABD9CC41F8D8CEC009A97DA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BABD9CC51F8D8CEC009A97DA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		BABD9CC61F8D8CEC009A97DA /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		BABD9CCE1F8E5512009A97DA /* usersAndChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = usersAndChatViewController.h; sourceTree = "<group>"; };
 		BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = usersAndChatViewController.m; sourceTree = "<group>"; };
 		BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = usersAndChatViewController.xib; sourceTree = "<group>"; };
@@ -232,6 +234,8 @@
 				706AD0401F840159001F83A5 /* ImageCaching.m */,
 				032DA26A1F879F3700E73F2F /* CoreDataManager.h */,
 				032DA26B1F879F3700E73F2F /* CoreDataManager.m */,
+				BA18144E1F93C6B100D84F00 /* UIFont+SystemFontOverride.h */,
+				BA18144F1F93C6B100D84F00 /* UIFont+SystemFontOverride.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -309,7 +313,6 @@
 				706ACFFF1F83F73E001F83A5 /* AppDelegate.h */,
 				706AD0001F83F73E001F83A5 /* AppDelegate.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
-				BA1814431F92472300D84F00 /* barButton.png */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
 				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
@@ -419,12 +422,12 @@
 				BAC02E461F8BB0F5006E9CB5 /* ChatView.h */,
 				BAC02E471F8BB0F5006E9CB5 /* ChatView.m */,
 				BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */,
-				BABD9CC41F8D8CEC009A97DA /* ViewController.h */,
-				BABD9CC51F8D8CEC009A97DA /* ViewController.m */,
-				BABD9CC61F8D8CEC009A97DA /* ViewController.xib */,
 				BABD9CCE1F8E5512009A97DA /* usersAndChatViewController.h */,
 				BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */,
 				BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */,
+				BA1814521F94F34800D84F00 /* FriendProfileViewController.h */,
+				BA1814531F94F34800D84F00 /* FriendProfileViewController.m */,
+				BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */,
 			);
 			path = "THIRD TAB";
 			sourceTree = "<group>";
@@ -557,9 +560,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BABD9CC81F8D8CEC009A97DA /* ViewController.xib in Resources */,
 				70841B9C1F842DE700238258 /* EventsCell.xib in Resources */,
 				706AD0521F841421001F83A5 /* MediaController.xib in Resources */,
+				BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */,
 				BABD9CE51F8FCB9F009A97DA /* eventDetailController.xib in Resources */,
 				03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */,
 				03E3532C1F878C59005539A2 /* RegisterViewController.xib in Resources */,
@@ -778,6 +781,7 @@
 			files = (
 				BAC02E491F8BB0F5006E9CB5 /* ChatView.m in Sources */,
 				03E3532B1F878C59005539A2 /* RegisterViewController.m in Sources */,
+				BA1814501F93C6B100D84F00 /* UIFont+SystemFontOverride.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
 				BA24F4201F90BC4100990D4E /* cameraView.m in Sources */,
 				BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */,
@@ -786,8 +790,8 @@
 				BABD9CE41F8FCB9F009A97DA /* eventDetailController.m in Sources */,
 				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
 				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
-				BABD9CC71F8D8CEC009A97DA /* ViewController.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
+				BA1814551F94F34D00D84F00 /* FriendProfileViewController.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
 				032DA26C1F879F3700E73F2F /* CoreDataManager.m in Sources */,
 				BA24F4211F90BC4500990D4E /* MediaController.m in Sources */,

@@ -68,15 +68,30 @@ static NSString * const reuseIdentifier = @"Cell";
    
     [self.collectionView reloadData];
     
-   
-    
+    //Adding Gesture Recognizer to resign firstResponder//
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
 }
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ( !error )
+                               {
+                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   completionBlock(YES,image);
+                               } else{
+                                   completionBlock(NO,nil);
+                               }
+                           }];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
+   
     [super viewWillAppear:YES];
     [self.collectionView reloadData];
 }
@@ -100,30 +115,27 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     EventsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[EventsCell cell_ID] forIndexPath:indexPath];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-    // Image Caching
-    if(![[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+   
+    if([[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:indexPath.row]])
     {
-    NSURL *imageURL = [NSURL URLWithString:[self.picOfEvent objectAtIndex:indexPath.row]];
-    
-    image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageURL]];
-    } else if([[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
-    {
-        image =[[UIImage alloc]initWithData:[NSData dataWithContentsOfFile:@"noimage.png"]];
-        //[UIImage imageWithContentsOfFile:@"noimage.png"];
-    }
-
-    if(image)
-    {
-        NSLog(@"Caching ....");
-        [[ImageCaching sharedInstance] cacheImage:image forKey:[self.picOfEvent objectAtIndex:indexPath.row]];
-    }
-       });
-    
-    
     [cell fillEvent:[self.nameOfEvent objectAtIndex:indexPath.row] eventImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:indexPath.row]]];
- 
+    }else
+    {
+        [cell fillEvent:[self.nameOfEvent objectAtIndex:indexPath.row] eventImage:[UIImage imageNamed:@"noimage"]];
+        // download the image asynchronously
+        if(![[self.picOfEvent objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]])
+        {
+        NSURL *imageUrl = [NSURL URLWithString:[self.picOfEvent objectAtIndex:indexPath.row]];
+        [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
+            if (succeeded) {
+                // change the image in the cell
+               [cell fillEvent:[self.nameOfEvent objectAtIndex:indexPath.row] eventImage:image];
+                // cache the image for use later (when scrolling up)
+                [[ImageCaching sharedInstance]cacheImage:image forKey:[self.picOfEvent objectAtIndex:indexPath.row]];
+            }
+        }];
+        }
+    }
     CGRect btnRect = CGRectMake(352,263, 45, 29);
     UIButton *cellBtn = [[UIButton alloc] initWithFrame:btnRect];
     [cellBtn setBackgroundImage:[UIImage imageNamed:@"myshare"] forState:UIControlStateNormal];
