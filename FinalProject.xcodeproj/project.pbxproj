@@ -43,6 +43,10 @@
 		BA1814501F93C6B100D84F00 /* UIFont+SystemFontOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18144F1F93C6B100D84F00 /* UIFont+SystemFontOverride.m */; };
 		BA1814551F94F34D00D84F00 /* FriendProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1814531F94F34800D84F00 /* FriendProfileViewController.m */; };
 		BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */; };
+		BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */; };
+		BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */; };
+		BA1814601F952CD800D84F00 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18145E1F952CD700D84F00 /* CustomCell.m */; };
+		BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145F1F952CD800D84F00 /* CustomCell.xib */; };
 		BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */; };
 		BA24F4201F90BC4100990D4E /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		BA24F4211F90BC4500990D4E /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD04F1F841421001F83A5 /* MediaController.m */; };
@@ -160,6 +164,12 @@
 		BA1814521F94F34800D84F00 /* FriendProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendProfileViewController.h; sourceTree = "<group>"; };
 		BA1814531F94F34800D84F00 /* FriendProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendProfileViewController.m; sourceTree = "<group>"; };
 		BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendProfileViewController.xib; sourceTree = "<group>"; };
+		BA1814581F951FE800D84F00 /* EventsUnderConsiderationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsUnderConsiderationController.h; sourceTree = "<group>"; };
+		BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsUnderConsiderationController.m; sourceTree = "<group>"; };
+		BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsUnderConsiderationController.xib; sourceTree = "<group>"; };
+		BA18145D1F952CD700D84F00 /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		BA18145E1F952CD700D84F00 /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		BA18145F1F952CD800D84F00 /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
 		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
@@ -274,6 +284,12 @@
 				03EF6EFD1F87E37D00128917 /* ProfileViewController.h */,
 				03EF6EFE1F87E37D00128917 /* ProfileViewController.m */,
 				03EF6EFF1F87E37D00128917 /* ProfileViewController.xib */,
+				BA1814581F951FE800D84F00 /* EventsUnderConsiderationController.h */,
+				BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */,
+				BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */,
+				BA18145D1F952CD700D84F00 /* CustomCell.h */,
+				BA18145E1F952CD700D84F00 /* CustomCell.m */,
+				BA18145F1F952CD800D84F00 /* CustomCell.xib */,
 			);
 			path = "FOURTH TAB";
 			sourceTree = "<group>";
@@ -564,11 +580,13 @@
 				706AD0521F841421001F83A5 /* MediaController.xib in Resources */,
 				BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */,
 				BABD9CE51F8FCB9F009A97DA /* eventDetailController.xib in Resources */,
+				BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */,
 				03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */,
 				03E3532C1F878C59005539A2 /* RegisterViewController.xib in Resources */,
 				706AD00F1F83F73F001F83A5 /* LaunchScreen.storyboard in Resources */,
 				706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */,
 				BABD9CD71F8EC45C009A97DA /* mapViewController.xib in Resources */,
+				BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */,
 				706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */,
 				BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */,
 				03E353211F87876E005539A2 /* LoginViewController.xib in Resources */,
@@ -787,11 +805,13 @@
 				BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */,
 				7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */,
 				7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */,
+				BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */,
 				BABD9CE41F8FCB9F009A97DA /* eventDetailController.m in Sources */,
 				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
 				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
 				BA1814551F94F34D00D84F00 /* FriendProfileViewController.m in Sources */,
+				BA1814601F952CD800D84F00 /* CustomCell.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
 				032DA26C1F879F3700E73F2F /* CoreDataManager.m in Sources */,
 				BA24F4211F90BC4500990D4E /* MediaController.m in Sources */,

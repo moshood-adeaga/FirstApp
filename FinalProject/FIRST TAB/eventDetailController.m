@@ -42,7 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.ref = [[[FIRDatabase database] reference] child:@"favourite"];
+    NSString *favouriteDatabase = [NSString stringWithFormat:@"%@%@database",[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],[[NSUserDefaults standardUserDefaults]objectForKey:@"email"]];
+    self.ref = [[[FIRDatabase database] reference] child:favouriteDatabase];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.scrollView.contentSize.height);
     [self.scrollView setContentOffset: CGPointMake(0, self.scrollView.contentOffset.y)];
     self.scrollView.directionalLockEnabled = YES;

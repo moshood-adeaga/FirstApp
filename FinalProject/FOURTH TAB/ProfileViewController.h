@@ -10,17 +10,20 @@
 
 @interface ProfileViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
-@property (strong, nonatomic) IBOutlet UILabel *firstName;
-@property (strong, nonatomic) IBOutlet UILabel *lastName;
-@property (strong, nonatomic) IBOutlet UILabel *sexLabel;
-@property (strong, nonatomic) IBOutlet UILabel *emailLabel;
 @property (strong, nonatomic) IBOutlet UIButton *logOutButton;
 @property (strong, nonatomic) IBOutlet UIImageView *profileImageViewer;
 - (IBAction)logOutButton:(UIButton *)sender;
 - (IBAction)profileImagePicker:(UIButton *)sender;
-@property (strong, nonatomic) IBOutlet UILabel *userName;
-@property (strong, nonatomic) IBOutlet UILabel *phoneNumberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *editProfile;
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+- (IBAction)profileEditButton:(id)sender;
+- (IBAction)bookmarkPageButton:(id)sender;
+
+
 
 
 @end

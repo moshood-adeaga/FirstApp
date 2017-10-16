@@ -10,6 +10,7 @@
 #import "RegisterViewController.h"
 #import "ImageCaching.h"
 #import <QuartzCore/QuartzCore.h>
+#import "EventsUnderConsiderationController.h"
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
 #import <FirebaseStorage/FirebaseStorage.h>
@@ -27,6 +28,7 @@
 @property (copy, nonatomic) NSString *filePath;
 @property (strong, nonatomic) ImageCaching *dataTransfer;
 @property (strong, nonatomic) NSString *dataBasePath;
+@property (strong, nonatomic) NSString *dataBasePath2;
 @property (strong, nonatomic) NSString *profilePicDownloadLink;
 @property (strong, nonatomic) NSString *profilePicLink;
 @property (strong, nonatomic) UIImage *image;
@@ -38,9 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"username:%@",self.userName.text);
     self.dataTransfer = [ImageCaching sharedInstance];
     self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
+    self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/profileupdate.php";
     
     
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
@@ -53,27 +55,51 @@
    // [self setupUserDirectory];
    // [self prepareData];
     
-    self.userName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
-    self.lastName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
-    self.firstName.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
-    self.emailLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
-    self.phoneNumberLabel.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
+    self.userNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
+    self.lastNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
+    self.firstNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
+    self.emailTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"email"];
+    self.phoneTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"];
     self.profilePicLink =[[NSUserDefaults standardUserDefaults]objectForKey:@"userImage"];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        // Image Caching
-        NSURL *imageURL = [NSURL URLWithString:self.profilePicLink];
-        self.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageURL]];
-       if(self.image)
+    
+    //Downloading Profile Picture
+    if([[ImageCaching sharedInstance] getCachedImageForKey:self.profilePicLink])
+    {
+        self.profilePicture.image =[[ImageCaching sharedInstance] getCachedImageForKey:self.profilePicLink];
+    }else
+    {
+    
+        // download the image asynchronously
+        if(![self.profilePicLink isKindOfClass:[NSNull class]])
         {
-            NSLog(@"Caching ....");
-            [[ImageCaching sharedInstance] cacheImage:self.image forKey:self.profilePicLink];
-            self.profilePicture.image=[[ImageCaching sharedInstance] getCachedImageForKey:self.profilePicLink];
-            [[NSUserDefaults standardUserDefaults]setObject:self.profilePicLink forKey:@"avatar"];
-            
-
+            NSURL *imageUrl = [NSURL URLWithString:self.profilePicLink];
+            [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
+                if (succeeded) {
+                    // change the image in the cell
+                   self.profilePicture.image= image;
+                    // cache the image for use later (when scrolling up)
+                    [[ImageCaching sharedInstance]cacheImage:image forKey:self.profilePicLink];
+                    
+                }
+            }];
         }
-    });
+    }
+    
+}
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ( !error )
+                               {
+                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   completionBlock(YES,image);
+                               } else{
+                                   completionBlock(NO,nil);
+                               }
+                           }];
 }
 - (IBAction)logOutButton:(UIButton *)sender
 {
@@ -151,7 +177,7 @@
     
     // Uploading user Profile pic to datbase//
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
-    FIRStorageReference *riversRef = [storageRef child:[NSString stringWithFormat:@"images/%@.jpg",self.userName.text]];
+    FIRStorageReference *riversRef = [storageRef child:[NSString stringWithFormat:@"images/%@.jpg",self.userNameTextField.text]];
     FIRStorageMetadata *metaData;
     metaData.contentType = @"image/jpg";
     FIRStorageUploadTask *uploadTask = [riversRef putData:imageData metadata:metaData completion:^(FIRStorageMetadata *metadata,NSError *error) {
@@ -193,107 +219,160 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
-
-#pragma Setting Up USER
-- (void)setupUserDirectory {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documents = [paths objectAtIndex:0];
-    self.filePath = [documents stringByAppendingPathComponent:self.userName.text];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+- (IBAction)profileEditButton:(UIButton*)sender
+{
+    if ( sender.selected ) {
+    [self.userNameTextField setUserInteractionEnabled:YES];
+    [self.firstNameTextField setUserInteractionEnabled:YES];
+    [self.lastNameTextField setUserInteractionEnabled:YES];
+    [self.emailTextField setUserInteractionEnabled:YES];
+    [self.phoneTextField setUserInteractionEnabled:YES];
     
-    if ([fileManager fileExistsAtPath:self.filePath]) {
-        NSLog(@"Directory already present.");
-        
+    [self.userNameTextField becomeFirstResponder];
+    self.editProfile.titleLabel.text =@"SAVE";
+    
+        sender.highlighted = NO;
+        sender.selected = NO;
     } else {
-        NSError *error = nil;
-        [fileManager createDirectoryAtPath:self.filePath withIntermediateDirectories:YES attributes:nil error:&error];
+        self.editProfile.titleLabel.text =@"Edit Profile";
+        sender.highlighted = YES;
+        sender.selected = YES;
+        NSDictionary *databaseParameter2= @{@"id":[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
+                                           @"firstname":self.firstNameTextField.text,
+                                           @"lastname":self.lastNameTextField.text,
+                                           @"username":self.userNameTextField.text,
+                                           @"email":self.emailTextField.text,
+                                           @"phone":self.phoneTextField.text
+                                           };
         
-        if (error) {
-            NSLog(@"Unable to create directory for user.");
-        }
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        [manager POST:self.dataBasePath parameters:databaseParameter2 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"JSON Successsss: %@", responseObject);
+            NSLog(@"operation Successsss: %@", operation);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error laaa: %@", error);
+        }];
+        
     }
+    
+
+    
 }
 
-- (void)prepareData {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+- (IBAction)bookmarkPageButton:(id)sender
+{
+    EventsUnderConsiderationController *eventsBookmark = [[EventsUnderConsiderationController alloc]initWithStyle:UITableViewStylePlain];
     
-    NSError *error = nil;
-    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.filePath error:&error];
-    
-    if ([contents count] && !error){
-        NSLog(@"Contents of the user's directory. %@", contents);
-        // Reading USER profile image from Directory //
-        for (NSString *fileName in contents) {
-            if ([fileName rangeOfString:@".securedData"].length > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
-                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-                UIImage *image = [UIImage imageWithData:decryptedData];
-                self.profileImageViewer.image = image;
-                
-                
-            } else {
-                NSLog(@"This file is not secured.");
-            }
-        }
-        // Reading USER First Name from Directory //
-        for (NSString *fileName in contents) {
-            if ([fileName rangeOfString:@".securedFirstName"].length > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
-                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-                NSString *firstName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
-                self.firstName.text = firstName;
-                
-                
-            } else {
-                NSLog(@"This file is not secured.");
-            }
-        }
-        // Reading USER Last Name from Directory //
-        for (NSString *fileName in contents) {
-            if ([fileName rangeOfString:@".securedLastName"].length > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
-                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-                NSString *lastName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
-                self.lastName.text = lastName;
-                
-                
-            } else {
-                NSLog(@"This file is not secured.");
-            }
-        }
-        // Reading USER Email from Directory //
-        for (NSString *fileName in contents) {
-            if ([fileName rangeOfString:@".securedEmail"].length > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
-                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-                NSString *userEmail = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
-                self.emailLabel.text = userEmail;
-                
-                
-            } else {
-                NSLog(@"This file is not secured.");
-            }
-        }
-        // Reading USER Phone Number from Directory //
-        for (NSString *fileName in contents) {
-            if ([fileName rangeOfString:@".securedPhoneNumber"].length > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
-                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-                NSString *userPhoneNumber = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
-                self.phoneNumberLabel.text = userPhoneNumber;
-                
-                
-            } else {
-                NSLog(@"This file is not secured.");
-            }
-        }
-        
-    } else if (![contents count]) {
-        if (error) {
-            NSLog(@"Unable to read the contents of the user's directory.");
-        } else {
-            NSLog(@"The user's directory is empty.");
-        }
-    }
+    [self.navigationController pushViewController:eventsBookmark animated:YES];
 }
+
+//#pragma Setting Up USER
+//- (void)setupUserDirectory {
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documents = [paths objectAtIndex:0];
+//    self.filePath = [documents stringByAppendingPathComponent:self.userNameTextField.text];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//
+//    if ([fileManager fileExistsAtPath:self.filePath]) {
+//        NSLog(@"Directory already present.");
+//
+//    } else {
+//        NSError *error = nil;
+//        [fileManager createDirectoryAtPath:self.filePath withIntermediateDirectories:YES attributes:nil error:&error];
+//
+//        if (error) {
+//            NSLog(@"Unable to create directory for user.");
+//        }
+//    }
+//}
+//
+//- (void)prepareData {
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//
+//    NSError *error = nil;
+//    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.filePath error:&error];
+//
+//    if ([contents count] && !error){
+//        NSLog(@"Contents of the user's directory. %@", contents);
+//        // Reading USER profile image from Directory //
+//        for (NSString *fileName in contents) {
+//            if ([fileName rangeOfString:@".securedData"].length > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+//                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//                UIImage *image = [UIImage imageWithData:decryptedData];
+//                self.profileImageViewer.image = image;
+//
+//
+//            } else {
+//                NSLog(@"This file is not secured.");
+//            }
+//        }
+//        // Reading USER First Name from Directory //
+//        for (NSString *fileName in contents) {
+//            if ([fileName rangeOfString:@".securedFirstName"].length > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+//                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//                NSString *firstName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+//                self.firstNameTextField.text = firstName;
+//
+//
+//            } else {
+//                NSLog(@"This file is not secured.");
+//            }
+//        }
+//        // Reading USER Last Name from Directory //
+//        for (NSString *fileName in contents) {
+//            if ([fileName rangeOfString:@".securedLastName"].length > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+//                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//                NSString *lastName = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+//                self.lastNameTextField.text = lastName;
+//
+//
+//            } else {
+//                NSLog(@"This file is not secured.");
+//            }
+//        }
+//        // Reading USER Email from Directory //
+//        for (NSString *fileName in contents) {
+//            if ([fileName rangeOfString:@".securedEmail"].length > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+//                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//                NSString *userEmail = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+//                self.emailTextField.text = userEmail;
+//
+//
+//            } else {
+//                NSLog(@"This file is not secured.");
+//            }
+//        }
+//        // Reading USER Phone Number from Directory //
+//        for (NSString *fileName in contents) {
+//            if ([fileName rangeOfString:@".securedPhoneNumber"].length > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:[self.filePath stringByAppendingPathComponent:fileName]];
+//                NSData *decryptedData = [RNDecryptor decryptData:data withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//                NSString *userPhoneNumber = [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+//                self.phoneTextField.text = userPhoneNumber;
+//
+//
+//            } else {
+//                NSLog(@"This file is not secured.");
+//            }
+//        }
+//
+//    } else if (![contents count]) {
+//        if (error) {
+//            NSLog(@"Unable to read the contents of the user's directory.");
+//        } else {
+//            NSLog(@"The user's directory is empty.");
+//        }
+//    }
+//}
+
 @end
