@@ -9,6 +9,7 @@
 #import "eventDetailController.h"
 #import "ImageCaching.h"
 #import <EventKit/EventKit.h>
+#import <FirebaseDatabase/FirebaseDatabase.h>
 
 @interface eventDetailController ()
 {
@@ -32,6 +33,7 @@
 }
 
 @property(strong,nonatomic)ImageCaching *imageCache;
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 
 @end
 
@@ -40,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.ref = [[[FIRDatabase database] reference] child:@"favourite"];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.scrollView.contentSize.height);
     [self.scrollView setContentOffset: CGPointMake(0, self.scrollView.contentOffset.y)];
     self.scrollView.directionalLockEnabled = YES;
@@ -106,6 +108,16 @@
     
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Add To Events Consideration List " style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        FIRDatabaseReference *messageRef = _ref.childByAutoId;
+        NSDictionary *post = @{@"userId": [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
+                               @"user":  [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],
+                               @"Title": self.imageCache.eventName,
+                               @"Date":[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]],
+                               @"Description":self.imageCache.eventsDescription,
+                               @"ImageLink":self.imageCache.eventPic
+                               };
+        [messageRef setValue:post];
+        
         
     }]];
     

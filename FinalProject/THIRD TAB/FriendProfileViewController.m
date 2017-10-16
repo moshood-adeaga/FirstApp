@@ -20,7 +20,8 @@
     [super viewDidLoad];
     self.profileImageView.layer.cornerRadius = 50.0f;
     self.profileImageView.layer.borderWidth =5.0f;
-    self.profileImageView.layer.borderColor =[UIColor blueColor].CGColor;
+    self.profileImageView.layer.borderColor =[UIColor blackColor].CGColor;
+    self.profileImageView.clipsToBounds = YES;
     self.profileImageView.image = [[ImageCaching sharedInstance]getCachedImageForKey:[[ImageCaching sharedInstance]selectedImageLink]];
     
     self.userNameLabel.text = [[ImageCaching sharedInstance]selectedUsersName];

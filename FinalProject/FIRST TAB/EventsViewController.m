@@ -73,6 +73,49 @@ static NSString * const reuseIdentifier = @"Cell";
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
+    
+    // bar Button item to show users what to do //
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info"]
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self
+                                                                     action:@selector(infoButton:)];
+    self.navigationItem.rightBarButtonItem = barButtonItem;
+}
+-(void)infoButton:(UIBarButtonItem*)sender
+{
+    UIViewController *infoView =[[UIViewController alloc]init];
+    infoView.title =@"INFO";
+    UILabel *infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 40, 200, 50)];
+    infoLabel.numberOfLines =0;
+    infoLabel.font= [UIFont systemFontOfSize:13.0f];
+    infoLabel.text = @"-Enter Topic for Event your interested in the Search bar.";
+    [infoView.view addSubview:infoLabel];
+    /// -Tap once to view Details of Event - Long Press on a Event image to view its location on a map
+    UILabel *infoLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(5, 80, 200, 70)];
+    infoLabel2.numberOfLines =0;
+    infoLabel2.font= [UIFont systemFontOfSize:13.0f];
+    infoLabel2.text = @"-Tap once to view Details of Event.";
+    [infoView.view addSubview:infoLabel2];
+    
+    UILabel *infoLabel3 = [[UILabel alloc]initWithFrame:CGRectMake(5, 120, 200, 70)];
+    infoLabel3.numberOfLines =0;
+    infoLabel3.font= [UIFont systemFontOfSize:13.0f];
+    infoLabel3.text = @"-Long Press on a Event image to view its location on a map.";
+    [infoView.view addSubview:infoLabel3];
+    
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:infoView];
+    nav.modalPresentationStyle = UIModalPresentationPopover;
+    nav.popoverPresentationController.delegate =self;
+    nav.preferredContentSize = CGSizeMake(200, 200);
+    nav.popoverPresentationController.sourceRect =[[sender valueForKey:@"view"] bounds];
+    nav.popoverPresentationController.sourceView =self.view;
+    
+    UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
+    popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popoverController.delegate = self;
+    
+    
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {

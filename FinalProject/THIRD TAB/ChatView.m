@@ -31,6 +31,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 #import <math.h>
+#import "FriendProfileViewController.h"
 
 
 
@@ -71,14 +72,18 @@
     NSString *currentUser = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
     NSString *selectedUser =[[ImageCaching sharedInstance]selectedUsersName];
     NSString *chatIdentifier;
+    UIImage *barButtonImage=[[ImageCaching sharedInstance]getCachedImageForKey:[[ImageCaching sharedInstance]selectedImageLink]];
+    [barButtonImage drawInRect:CGRectMake(0, 0, 10, 10)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:barButtonImage
+                                                                        style:UIBarButtonItemStylePlain
+                                                                       target:self
+                                                                       action:@selector(optionButton:)];
+     self.navigationItem.rightBarButtonItem = barButtonItem;
+
+    self.navigationItem.title =[[ImageCaching sharedInstance]selectedUsersName];
     if(![selectedUser  isEqual: @"0"])
     {
-        UIBarButtonItem *optionBarButton = [[UIBarButtonItem alloc] initWithImage:[[ImageCaching sharedInstance]getCachedImageForKey:[[ImageCaching sharedInstance]selectedImageLink]]
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(optionButton:)];
-        
-        self.navigationItem.rightBarButtonItem = optionBarButton;
+       
         NSInteger String = [currentUser hash];
         NSInteger String2 = [selectedUser hash];
         
@@ -86,10 +91,12 @@
         NSInteger uniqueID = uniqueIDComp/100;
         chatIdentifier = [NSString stringWithFormat:@"%ld",(long)uniqueID];
         
+        
     } else{
         chatIdentifier = @"0";
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.title =@"GLOBAL CHAT";
     }
-   // NSString *chatIdentifier = [NSString stringWithFormat:@"%d",uniqueID];
     self.ref = [[[FIRDatabase database] reference] child:chatIdentifier];
     _colorBubble =[[JSQMessagesBubbleImageFactory alloc]init];
     
@@ -106,6 +113,10 @@ _outgoing=[ JSQMessagesAvatarImageFactory  avatarImageWithImage : [UIImage image
 }
 -(void)optionButton:(UIBarButtonItem*)sender
 {
+    FriendProfileViewController *friendView = [[FriendProfileViewController alloc]initWithNibName:@"FriendProfileViewController" bundle:nil];
+    
+    [self.navigationController pushViewController:friendView animated:YES];
+    
     
 }
 
