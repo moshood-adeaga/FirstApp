@@ -72,9 +72,8 @@
     NSString *currentUser = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
     NSString *selectedUser =[[ImageCaching sharedInstance]selectedUsersName];
     NSString *chatIdentifier;
-    UIImage *barButtonImage=[[ImageCaching sharedInstance]getCachedImageForKey:[[ImageCaching sharedInstance]selectedImageLink]];
-    [barButtonImage drawInRect:CGRectMake(0, 0, 10, 10)];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:barButtonImage
+
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile"]
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(optionButton:)];

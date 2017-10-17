@@ -115,54 +115,7 @@
 {
     [self.registrationLabel setHidden:!self.registrationLabel.hidden];
 }
-#pragma Setting Up USER
-- (void)setupUserDirectory {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documents = [paths objectAtIndex:0];
-    self.filePath = [documents stringByAppendingPathComponent:self.userNameTextField.text];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    if ([fileManager fileExistsAtPath:self.filePath]) {
-        NSLog(@"Directory already present.");
-        
-    } else {
-        NSError *error = nil;
-        [fileManager createDirectoryAtPath:self.filePath withIntermediateDirectories:YES attributes:nil error:&error];
-        
-        if (error) {
-            NSLog(@"Unable to create directory for user.");
-        }
-    }
-}
--(void)storeUserDetail
-{
-    NSData *firstNameData = [self.firstNameTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *userFirstName = @"userfirstName.securedFirstName";
-    NSData *encryptedFirstName = [RNEncryptor encryptData:firstNameData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-    [encryptedFirstName writeToFile:[self.filePath stringByAppendingPathComponent:userFirstName] atomically:YES];
-    
-    
-    NSData *lastNameData = [self.lastNameTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *userLastName = @"userlastName.securedLastName";
-    NSData *encryptedLastName = [RNEncryptor encryptData:lastNameData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-    [encryptedLastName writeToFile:[self.filePath stringByAppendingPathComponent:userLastName] atomically:YES];
-    
-    
-    NSData *emailData = [self.emailTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *userEmail = @"userEmail.securedEmail";
-    NSData *encryptedEmail = [RNEncryptor encryptData:emailData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-    [encryptedEmail writeToFile:[self.filePath stringByAppendingPathComponent:userEmail] atomically:YES];
-    
-    
-    NSData *phoneNumberData = [self.phoneNumberTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *userPhoneNumber = @"userPhoneNumber.securedPhoneNumber";
-    NSData *encryptedPhoneNumber = [RNEncryptor encryptData:phoneNumberData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-    [encryptedPhoneNumber writeToFile:[self.filePath stringByAppendingPathComponent:userPhoneNumber] atomically:YES];
-    
-    
-   
-    
-}
+
 -(void)dismissKeyboard {
     [self.userNameTextField resignFirstResponder];
     [self.passWordTextField resignFirstResponder];
@@ -172,4 +125,50 @@
     [self.phoneNumberTextField resignFirstResponder];
     
 }
+//#pragma Setting Up USER
+//- (void)setupUserDirectory {
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documents = [paths objectAtIndex:0];
+//    self.filePath = [documents stringByAppendingPathComponent:self.userNameTextField.text];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//
+//    if ([fileManager fileExistsAtPath:self.filePath]) {
+//        NSLog(@"Directory already present.");
+//
+//    } else {
+//        NSError *error = nil;
+//        [fileManager createDirectoryAtPath:self.filePath withIntermediateDirectories:YES attributes:nil error:&error];
+//
+//        if (error) {
+//            NSLog(@"Unable to create directory for user.");
+//        }
+//    }
+//}
+//-(void)storeUserDetail
+//{
+//    NSData *firstNameData = [self.firstNameTextField.text dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *userFirstName = @"userfirstName.securedFirstName";
+//    NSData *encryptedFirstName = [RNEncryptor encryptData:firstNameData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//    [encryptedFirstName writeToFile:[self.filePath stringByAppendingPathComponent:userFirstName] atomically:YES];
+//
+//
+//    NSData *lastNameData = [self.lastNameTextField.text dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *userLastName = @"userlastName.securedLastName";
+//    NSData *encryptedLastName = [RNEncryptor encryptData:lastNameData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//    [encryptedLastName writeToFile:[self.filePath stringByAppendingPathComponent:userLastName] atomically:YES];
+//
+//
+//    NSData *emailData = [self.emailTextField.text dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *userEmail = @"userEmail.securedEmail";
+//    NSData *encryptedEmail = [RNEncryptor encryptData:emailData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//    [encryptedEmail writeToFile:[self.filePath stringByAppendingPathComponent:userEmail] atomically:YES];
+//
+//
+//    NSData *phoneNumberData = [self.phoneNumberTextField.text dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *userPhoneNumber = @"userPhoneNumber.securedPhoneNumber";
+//    NSData *encryptedPhoneNumber = [RNEncryptor encryptData:phoneNumberData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
+//    [encryptedPhoneNumber writeToFile:[self.filePath stringByAppendingPathComponent:userPhoneNumber] atomically:YES];
+//
+//}
+
 @end

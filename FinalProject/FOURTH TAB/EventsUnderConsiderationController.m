@@ -22,9 +22,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *favouriteDatabase = [NSString stringWithFormat:@"%@%@database",[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],[[NSUserDefaults standardUserDefaults]objectForKey:@"email"]];
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+    self.titleArray = [NSMutableArray array];
+    self.descriptionArray = [NSMutableArray array];
+    self.imageArray = [NSMutableArray array];
+     
+    NSString *favouriteDatabase = [NSString stringWithFormat:@"%@%@database",[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"]];
     self.ref = [[[FIRDatabase database] reference] child:favouriteDatabase];
-  
+    [self observeMessages];
+    [self.tableView reloadData];
 }
 -(void)observeMessages
 {
@@ -34,9 +41,18 @@
         NSLog(@"%@",snapshot.value);
         [self.titleArray addObject:snapshot.value[@"Title"]];
         [self.imageArray addObject:snapshot.value[@"ImageLink"]];
-        [self.imageArray addObject:snapshot.value[@"Description"]];
+        [self.descriptionArray addObject:snapshot.value[@"Description"]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.tableView reloadData];
+        });
         
     }];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self.tableView reloadData];
 }
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {

@@ -19,6 +19,9 @@
 }
 @property (strong,nonatomic) NSString *dataBasePath;
 @property (strong, nonatomic) ImageCaching *imageCache;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+
 @end
 
 @implementation usersAndChatViewController
@@ -31,6 +34,14 @@
     
     self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/retrieveusers.php";
     [self initParse:self.dataBasePath];
+    
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor blueColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(getLatestUsers)
+                  forControlEvents:UIControlEventValueChanged];
     
    
    
@@ -245,6 +256,24 @@
         NSLog(@"Error: %@", [error localizedDescription]);
     }
 }
-
+- (void)getLatestUsers
+{
+    // Reload table data
+    [self.tableView reloadData];
+    
+    // End the refreshing
+    if (self.refreshControl) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MMM d, h:mm a"];
+        NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                    forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+        self.refreshControl.attributedTitle = attributedTitle;
+        
+        [self.refreshControl endRefreshing];
+    }
+}
 
 @end

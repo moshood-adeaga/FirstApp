@@ -40,9 +40,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.dataTransfer = [ImageCaching sharedInstance];
     self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
-    self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/profileupdate.php";
+    self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/updateprofile.php";
     
     
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
@@ -84,6 +85,9 @@
             }];
         }
     }
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
     
 }
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
@@ -221,22 +225,19 @@
 }
 - (IBAction)profileEditButton:(UIButton*)sender
 {
-    if ( sender.selected ) {
-    [self.userNameTextField setUserInteractionEnabled:YES];
+   sender.selected=!sender.selected;
+    if(sender.selected ) {
     [self.firstNameTextField setUserInteractionEnabled:YES];
     [self.lastNameTextField setUserInteractionEnabled:YES];
     [self.emailTextField setUserInteractionEnabled:YES];
     [self.phoneTextField setUserInteractionEnabled:YES];
+    [self.firstNameTextField becomeFirstResponder];
     
-    [self.userNameTextField becomeFirstResponder];
-    self.editProfile.titleLabel.text =@"SAVE";
-    
-        sender.highlighted = NO;
-        sender.selected = NO;
-    } else {
-        self.editProfile.titleLabel.text =@"Edit Profile";
-        sender.highlighted = YES;
-        sender.selected = YES;
+    [sender setTitle:@"SAVE" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [sender setTitle:@"Edit Profile" forState:UIControlStateSelected];
         NSDictionary *databaseParameter2= @{@"id":[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
                                            @"firstname":self.firstNameTextField.text,
                                            @"lastname":self.lastNameTextField.text,
@@ -249,15 +250,17 @@
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
-        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        
-        [manager POST:self.dataBasePath parameters:databaseParameter2 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"JSON Successsss: %@", responseObject);
+        [manager POST:self.dataBasePath2 parameters:databaseParameter2 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"JSON SUCCESS: %@", responseObject);
             NSLog(@"operation Successsss: %@", operation);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error laaa: %@", error);
         }];
+        [self.firstNameTextField setUserInteractionEnabled:NO];
+        [self.lastNameTextField setUserInteractionEnabled:NO];
+        [self.emailTextField setUserInteractionEnabled:NO];
+        [self.phoneTextField setUserInteractionEnabled:NO];
+        
         
     }
     
@@ -270,6 +273,14 @@
     EventsUnderConsiderationController *eventsBookmark = [[EventsUnderConsiderationController alloc]initWithStyle:UITableViewStylePlain];
     
     [self.navigationController pushViewController:eventsBookmark animated:YES];
+}
+-(void)dismissKeyboard {
+    [self.userNameTextField resignFirstResponder];
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
+    [self.phoneTextField resignFirstResponder];
+    
 }
 
 //#pragma Setting Up USER

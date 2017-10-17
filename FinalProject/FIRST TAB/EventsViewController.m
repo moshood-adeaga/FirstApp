@@ -94,7 +94,7 @@ static NSString * const reuseIdentifier = @"Cell";
     UILabel *infoLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(5, 80, 200, 70)];
     infoLabel2.numberOfLines =0;
     infoLabel2.font= [UIFont systemFontOfSize:13.0f];
-    infoLabel2.text = @"-Tap once to view Details of Event.";
+    infoLabel2.text = @"-Tap Event Image once to view Details of Event.";
     [infoView.view addSubview:infoLabel2];
     
     UILabel *infoLabel3 = [[UILabel alloc]initWithFrame:CGRectMake(5, 120, 200, 70)];

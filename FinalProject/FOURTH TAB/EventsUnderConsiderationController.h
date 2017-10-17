@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EventsUnderConsiderationController : UITableViewController
+@interface EventsUnderConsiderationController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 
 @end
