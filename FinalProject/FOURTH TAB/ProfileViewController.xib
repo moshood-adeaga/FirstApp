@@ -11,17 +11,30 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AmericanTypewriter.ttc">
+            <string>AmericanTypewriter-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
+                <outlet property="bookmarkProp" destination="IHE-8W-xc9" id="obt-tL-RHC"/>
                 <outlet property="editProfile" destination="lCT-xo-Rvd" id="PsB-Zy-m7x"/>
+                <outlet property="editProp" destination="lCT-xo-Rvd" id="XXV-j3-dFO"/>
+                <outlet property="emailProp" destination="lob-Yd-DEt" id="qhP-Gt-tgk"/>
                 <outlet property="emailTextField" destination="dsP-EY-L9e" id="pzY-gO-ooQ"/>
                 <outlet property="firstNameTextField" destination="XbP-h1-TNp" id="PaC-Ac-BrE"/>
+                <outlet property="firstnameProp" destination="tH5-xm-lPO" id="iQe-gn-cEg"/>
                 <outlet property="lastNameTextField" destination="Bwu-2Y-xo0" id="TAn-a8-9qO"/>
+                <outlet property="lastnameProp" destination="HjD-px-Gxw" id="S3e-mC-wMq"/>
                 <outlet property="logOutButton" destination="vvu-Tc-f1G" id="bog-XG-RJr"/>
+                <outlet property="logoutProp" destination="vvu-Tc-f1G" id="hym-we-MBT"/>
+                <outlet property="phoneProp" destination="mZU-tC-zBC" id="fil-iz-r0w"/>
                 <outlet property="phoneTextField" destination="Q65-gI-ItX" id="OBm-Cn-0Vl"/>
                 <outlet property="profileImageViewer" destination="inE-yL-Ywk" id="D95-VH-EWx"/>
                 <outlet property="profilePicture" destination="inE-yL-Ywk" id="yKv-ym-0JW"/>
+                <outlet property="userNameProp" destination="nEH-Oo-48n" id="wDs-Mm-1Gr"/>
                 <outlet property="userNameTextField" destination="EVn-Fl-Qci" id="ods-UB-Ey2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -34,22 +47,15 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSG-jg-wsC">
                     <rect key="frame" x="0.0" y="0.0" width="418" height="667"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lCT-xo-Rvd">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCT-xo-Rvd">
                             <rect key="frame" x="0.0" y="550" width="418" height="37"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="37" id="Pvl-gC-8bp"/>
                             </constraints>
-                            <state key="normal">
-                                <attributedString key="attributedTitle">
-                                    <fragment content="Edit Profile">
-                                        <attributes>
-                                            <color key="NSColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="AmericanTypewriter-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="15"/>
+                            <state key="normal" title="Edit Profile">
+                                <color key="titleColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="profileEditButton:" destination="-1" eventType="touchUpInside" id="qft-nq-uzp"/>
@@ -72,42 +78,29 @@
                                 <constraint firstAttribute="height" constant="168" id="iEj-wF-iub"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vvu-Tc-f1G">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvu-Tc-f1G">
                             <rect key="frame" x="0.0" y="607" width="418" height="37"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="37" id="QSZ-az-wdu"/>
                             </constraints>
-                            <state key="normal">
-                                <attributedString key="attributedTitle">
-                                    <fragment content="Log Out">
-                                        <attributes>
-                                            <color key="NSColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="AmericanTypewriter-Bold"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="15"/>
+                            <state key="normal" title="Log Out">
+                                <color key="titleColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="logOutButton:" destination="-1" eventType="touchUpInside" id="16T-FU-mSU"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHE-8W-xc9">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHE-8W-xc9">
                             <rect key="frame" x="0.0" y="491" width="418" height="37"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="37" id="12f-Vy-0e3"/>
                             </constraints>
-                            <state key="normal">
-                                <attributedString key="attributedTitle">
-                                    <fragment content="Bookmarked Events">
-                                        <attributes>
-                                            <color key="NSColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="AmericanTypewriter-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="15"/>
+                            <state key="normal" title="Bookmarked Events">
+                                <color key="titleColor" red="0.96837403246263276" green="0.98392086976572368" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="bookmarkPageButton:" destination="-1" eventType="touchUpInside" id="KtW-U8-3KI"/>
@@ -132,7 +125,7 @@
                             <rect key="frame" x="36" y="306" width="91" height="30"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <attributedString key="attributedText">
-                                <fragment content="lastname:">
+                                <fragment content="Lastname:">
                                     <attributes>
                                         <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <font key="NSFont" size="17" name="AmericanTypewriter-Condensed"/>

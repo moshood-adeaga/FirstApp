@@ -13,6 +13,7 @@
 #import "eventDetailController.h"
 #import <Social/Social.h>
 #import <QuartzCore/QuartzCore.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 
 
@@ -23,6 +24,9 @@
     NSUserDefaults *standardUserDefaults;
 }
 @property (strong,nonatomic) ImageCaching *imageCache;
+@property (strong, nonatomic) NSDictionary *colourDict;
+@property (nonatomic, strong) UIActivityViewController *activityViewController;
+
 @end
 
 @implementation EventsViewController
@@ -31,6 +35,19 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ///SETTING THEME COLOUR ///
+    standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
+    
    
     self.imageCache = [ImageCaching sharedInstance];
     image =[[UIImage alloc]init];
@@ -38,13 +55,8 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.dataSource =self;
     self.collectionView.allowsSelection=YES;
     [self.collectionView setExclusiveTouch:YES];
-    
-    //Setting Appearance.
-    self.collectionView.backgroundColor =[UIColor blackColor];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    [self.tabBarController.tabBar setBarTintColor:[UIColor blackColor]];
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+
     
     // Register Nib classes
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -54,7 +66,8 @@ static NSString * const reuseIdentifier = @"Cell";
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, 415, 44)];
     self.searchBar.placeholder = @"Enter Topic for Events";
     self.searchBar.delegate =self;
-    self.searchBar.barStyle = UIBarStyleBlack;
+    self.searchBar.tintColor =[self.colourDict objectForKey:[standardUserDefaults objectForKey:@"settingsColor"]];
+
      [self.collectionView addSubview:self.searchBar];
     
     //Adding constraint to SearchBar
@@ -81,6 +94,17 @@ static NSString * const reuseIdentifier = @"Cell";
                                                                      action:@selector(infoButton:)];
     self.navigationItem.rightBarButtonItem = barButtonItem;
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.searchBar setBackgroundColor:[self.colourDict objectForKey:[standardUserDefaults objectForKey:@"settingsColor"]]];
+    [self.searchBar setBarTintColor:[self.colourDict objectForKey:[standardUserDefaults objectForKey:@"settingsColor"]]];
+    
+    [super viewWillAppear:YES];
+    [self.collectionView reloadData];
+}
+
 -(void)infoButton:(UIBarButtonItem*)sender
 {
     UIViewController *infoView =[[UIViewController alloc]init];
@@ -132,12 +156,7 @@ static NSString * const reuseIdentifier = @"Cell";
                                }
                            }];
 }
--(void)viewWillAppear:(BOOL)animated
-{
-   
-    [super viewWillAppear:YES];
-    [self.collectionView reloadData];
-}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSString *searchString = self.searchBar.text;
@@ -179,9 +198,9 @@ static NSString * const reuseIdentifier = @"Cell";
         }];
         }
     }
-    CGRect btnRect = CGRectMake(352,263, 45, 29);
+    CGRect btnRect = CGRectMake(340,263, 45, 29);
     UIButton *cellBtn = [[UIButton alloc] initWithFrame:btnRect];
-    [cellBtn setBackgroundImage:[UIImage imageNamed:@"myshare"] forState:UIControlStateNormal];
+    [cellBtn setBackgroundImage:[UIImage imageNamed:@"myShare"] forState:UIControlStateNormal];
     cellBtn.layer.cornerRadius = 5.0f;
     cellBtn.clipsToBounds =YES;
     [cellBtn setTitle:@"" forState:UIControlStateNormal];
@@ -201,27 +220,35 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 -(void)shareButtonTapped:(UIButton*)sender
 {
-   // NSIndexPath *index = self.collectionView indexPathForCell:
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-    {
-        SLComposeViewController *postSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        NSString *post = [self.nameOfEvent objectAtIndex:sender.tag];
-        NSString *postString = [NSString stringWithFormat:@" I am Interested in Going to : %@ Check it Out:", post];
-        [postSheet setInitialText: postString];
-        [postSheet addImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:sender.tag]]];
-        NSURL *eventLink = [NSURL URLWithString:[self.urlOfEvent objectAtIndex:sender.tag]];
-        [postSheet addURL:eventLink];
-        [self presentViewController:postSheet animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Sorry" message:@"You Cant make a Post right now, make sure your device has an internet connection and you have at least one Facebook account setup" preferredStyle:UIAlertControllerStyleAlert];
-        [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        }]];
-        // Present action sheet.
-        [self presentViewController:actionSheet2 animated:YES completion:nil];
+//    FBSDKSharePhoto *photo = [FBSDKSharePhoto photoWithImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:sender.tag]] userGenerated:YES];
+//    FBSDKShareMediaContent *content = [[FBSDKShareMediaContent alloc] init];
+//    content.contentURL = [NSURL URLWithString:[self.urlOfEvent objectAtIndex:sender.tag]];
+//    content.media = @[photo];
+//    content.hashtag =[FBSDKHashtag hashtagWithString:@"#MoshoodsChatApp #EventsBrite #Events"];
+//    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+//    dialog.fromViewController = self;
+//    dialog.shareContent = content;
+//    dialog.mode = FBSDKShareDialogModeShareSheet;
+//    [dialog show];
+    NSMutableArray *activityItems = [NSMutableArray array];
+    [activityItems addObject:[NSURL URLWithString:[self.urlOfEvent objectAtIndex:sender.tag]]];
+    [activityItems addObject:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:sender.tag]]];
+    self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [self.activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
        
+    }];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self presentViewController:self.activityViewController animated:YES completion:nil];
     }
+    else { // iPad
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.activityViewController];
+        [popover presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)
+                                 inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny
+                               animated:YES];
+    }
+ 
+    
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -308,9 +335,6 @@ static NSString * const reuseIdentifier = @"Cell";
         NSMutableArray *idOfEvent = [root valueForKeyPath:@"events.id"];
         self.eventID =idOfEvent;
 
-
-        
-        
     } else {
         NSLog(@"Error: %@", [error localizedDescription]);
     }

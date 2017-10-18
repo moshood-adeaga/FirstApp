@@ -19,6 +19,8 @@
 #import "SAMKeychain.h"
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
+#import "RNDecryptor.h"
+#import "RNEncryptor.h"
 
 
 @interface RegisterViewController ()
@@ -45,6 +47,29 @@
 - (void)viewDidLoad
 {
 [super viewDidLoad];
+    //SETTING UP THEME//
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
+    [self.navigationController.navigationBar setBarTintColor: [self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.segmentedControl setTintColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.passwordProperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.userNameProperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.loginButtonproperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    
+    [self.passwordProperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+     [self.userNameProperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+     [self.loginButtonproperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    
+    
 self.myCoreManager = [CoreDataManager sharedManager];
 self.dataTransfer =[ImageCaching sharedInstance];
 self.dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
@@ -61,8 +86,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
         LoginViewController *loginControl = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
         loginControl.title = @"REGISTER";
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginControl];
-        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-        nav.navigationBar.barStyle = UIBarStyleBlack;
+        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         [self presentViewController:nav animated:YES completion:nil];
         
     }
@@ -107,8 +131,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
         int myErrorCode =[[self.userData valueForKeyPath:@"error"] intValue];
         if(myErrorCode == 0)
         {
-            UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"KeyChain" message:@"Incorrect UserName/Password Try Again !!!" preferredStyle:UIAlertControllerStyleAlert];
-            [actionSheet addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    
                 EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
                 eventsView.title = @"EVENTS";
                 MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
@@ -121,87 +144,45 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
                 usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
                 View.title =@"CHAT ROOM";
                 
-                UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
+                UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:eventsView];
                 UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
                 UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
                 UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
                 UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:View];
                 
-                nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav1.navigationBar.barStyle = UIBarStyleBlack;
-                nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav2.navigationBar.barStyle = UIBarStyleBlack;
-                nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav3.navigationBar.barStyle = UIBarStyleBlack;
-                nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav4.navigationBar.barStyle = UIBarStyleBlack;
-                nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav5.navigationBar.barStyle = UIBarStyleBlack;
-                
-                UITabBarController *tabBarController = [[UITabBarController alloc]init];
+                nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav1.navigationBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+            nav1.navigationBar.tintColor = [UIColor whiteColor];
+                nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav2.navigationBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+            nav2.navigationBar.tintColor = [UIColor whiteColor];
+                nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav3.navigationBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+            nav3.navigationBar.tintColor = [UIColor whiteColor];
+                nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav4.navigationBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+            nav4.navigationBar.tintColor = [UIColor whiteColor];
+                nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+            nav5.navigationBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+            nav5.navigationBar.tintColor = [UIColor whiteColor];
+            [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
+            UITabBarController *tabBarController = [[UITabBarController alloc]init];
                 [tabBarController setViewControllers:@[nav1,nav2,nav5,nav4]];
-                
+                tabBarController.tabBar.barTintColor =[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+                tabBarController.tabBar.tintColor =[UIColor whiteColor];
+            tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
                 UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
                 [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
-                UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
-                [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
+                UIImage *mediaTabImage = [UIImage imageNamed:@"Camera"];
+                [[tabBarController.tabBar.items objectAtIndex:1] setImage:mediaTabImage];
                 UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
-                [[tabBarController.tabBar.items objectAtIndex:2] setImage :chatsTabImage];
+                [[tabBarController.tabBar.items objectAtIndex:2] setImage:chatsTabImage];
                 UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
-                [[tabBarController.tabBar.items objectAtIndex:3] setImage :profileTabImage];
-                
+                [[tabBarController.tabBar.items objectAtIndex:3] setImage:profileTabImage];
+            
+            
                 [self presentViewController:tabBarController animated:YES completion:nil];
-            }]];
-            [actionSheet addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                
-                NSData *passWordData = [self.passWordTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-                
-                EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
-                eventsView.title = @"EVENTS";
-                MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
-                mediaView.title= @"CAMERA";
-                ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
-                chatsView.title = @"CHATS";
-                ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
-                profileView.title = @"PROFILE";
-                [self.dataTransfer.userID setString:self.userIDTextField.text];
-                usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
-                View.title =@"CHAT ROOM";
-                
-                UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
-                UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
-                UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
-                UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
-                UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:View];
-                
-                nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav1.navigationBar.barStyle = UIBarStyleBlack;
-                nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav2.navigationBar.barStyle = UIBarStyleBlack;
-                nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav3.navigationBar.barStyle = UIBarStyleBlack;
-                nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav4.navigationBar.barStyle = UIBarStyleBlack;
-                nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-                nav5.navigationBar.barStyle = UIBarStyleBlack;
-                
-                UITabBarController *tabBarController = [[UITabBarController alloc]init];
-                [tabBarController setViewControllers:@[nav1,nav2,nav5,nav4]];
-                
-                UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
-                [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
-                UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
-                [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
-                UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
-                [[tabBarController.tabBar.items objectAtIndex:2] setImage :chatsTabImage];
-                UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
-                [[tabBarController.tabBar.items objectAtIndex:3] setImage :profileTabImage];
-                
-                [self presentViewController:tabBarController animated:YES completion:nil];
-            }]];
-            // Present action sheet.
-            [self presentViewController:actionSheet animated:YES completion:nil];
-         
+           
             
         }
         else {
@@ -222,9 +203,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
         NSLog(@"Error: %@", error);
     }];
          });
-    
-//    if([[SAMKeychain passwordForService:@"FinalProject" account:self.userIDTextField.text] isEqualToString:self.passWordTextField.text])
-    
+        
     
     
 }

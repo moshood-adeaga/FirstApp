@@ -34,6 +34,10 @@
 
 @property(strong,nonatomic)ImageCaching *imageCache;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) NSUserDefaults *standardUserDefaults;
+@property (strong, nonatomic) NSDictionary *colourDict;
+
+
 
 @end
 
@@ -42,6 +46,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
+    
     NSString *favouriteDatabase = [NSString stringWithFormat:@"%@%@database",[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"]];
     self.ref = [[[FIRDatabase database] reference] child:favouriteDatabase];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.scrollView.contentSize.height);
@@ -49,14 +66,16 @@
     self.scrollView.directionalLockEnabled = YES;
     
     // customizing View //
+    UIColor *borderFrameColour =[self.colourDict objectForKey:[self.standardUserDefaults objectForKey:@"settingsColor"]];
     self.eventDescription.layer.borderWidth = 3.0f;
-    self.eventDescription.layer.borderColor = [UIColor blackColor].CGColor;
+    
+    self.eventDescription.layer.borderColor = borderFrameColour.CGColor;
     
     self.eventLocation.layer.borderWidth =3.0f;
-    self.eventLocation.layer.borderColor =[UIColor blackColor].CGColor;
+    self.eventLocation.layer.borderColor =borderFrameColour.CGColor;
     
     self.ticketLink.layer.borderWidth = 3.0f;
-    self.ticketLink.layer.borderColor = [UIColor blackColor].CGColor;
+    self.ticketLink.layer.borderColor =borderFrameColour.CGColor;
     
     self.imageCache = [ImageCaching sharedInstance];
     self.navigationItem.title =self.imageCache.eventName;

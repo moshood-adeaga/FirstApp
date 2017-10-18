@@ -35,7 +35,7 @@
 
 
 
-@interface ChatView ()
+@interface ChatView()
 {
     FIRDatabaseHandle refHandle;
     NSUserDefaults *standardDefault;

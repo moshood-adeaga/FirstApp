@@ -32,6 +32,8 @@
 @property (strong, nonatomic) NSString *profilePicDownloadLink;
 @property (strong, nonatomic) NSString *profilePicLink;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSUserDefaults *standardUserDefaults;
+@property (strong, nonatomic) NSDictionary *colourDict;
 
 @end
 
@@ -40,14 +42,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
+    
     
     self.dataTransfer = [ImageCaching sharedInstance];
     self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
     self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/updateprofile.php";
     
-    
+    UIColor *borderFrameColour = [self.colourDict objectForKey:[self.standardUserDefaults objectForKey:@"settingsColor"]];
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
-    self.profileImageViewer.layer.borderColor =[UIColor blackColor].CGColor;
+    self.profileImageViewer.layer.borderColor =borderFrameColour.CGColor;
     self.profileImageViewer.layer.borderWidth =5.0f;
     self.profileImageViewer.layer.cornerRadius =50.0f;
     self.profileImageViewer.clipsToBounds = YES;
@@ -87,8 +101,29 @@
     }
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    [self appear:YES];
     
+}
+- (NSArray*) getAllLabels
+{
     
+    NSArray *labels = [[NSArray alloc] initWithObjects:self.logoutProp, self.editProp, self.bookmarkProp, self.phoneProp, self.emailProp, self.lastnameProp,self.firstnameProp,self.userNameProp, nil];
+    
+    return labels;
+}
+
+- (void) appear:(BOOL)on
+{
+    for (UILabel *label in [self getAllLabels]) {
+        //label.alpha = 0.0;
+        label.backgroundColor=[self.colourDict objectForKey:[self.standardUserDefaults objectForKey:@"settingsColor"]];
+        label.font =[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0f];
+        [self.bookmarkProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.editProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.logoutProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+
+    }
+    // more code
 }
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {
@@ -226,18 +261,17 @@
 - (IBAction)profileEditButton:(UIButton*)sender
 {
    sender.selected=!sender.selected;
-    if(sender.selected ) {
+   if(sender.selected )
+   {
     [self.firstNameTextField setUserInteractionEnabled:YES];
     [self.lastNameTextField setUserInteractionEnabled:YES];
     [self.emailTextField setUserInteractionEnabled:YES];
     [self.phoneTextField setUserInteractionEnabled:YES];
     [self.firstNameTextField becomeFirstResponder];
-    
-    [sender setTitle:@"SAVE" forState:UIControlStateNormal];
-    }
-    else
+   [self.editProp setTitle:@"Save Changes" forState:UIControlStateNormal];
+   }else
     {
-        [sender setTitle:@"Edit Profile" forState:UIControlStateSelected];
+        [self.editProp setTitle:@"Edit Profile" forState:UIControlStateNormal];
         NSDictionary *databaseParameter2= @{@"id":[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"],
                                            @"firstname":self.firstNameTextField.text,
                                            @"lastname":self.lastNameTextField.text,

@@ -13,11 +13,15 @@
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 
 + (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
-    return [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:fontSize];
+    NSUserDefaults *standardUserDefaults;
+    standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"]size:fontSize];
 }
 
 + (UIFont *)systemFontOfSize:(CGFloat)fontSize {
-    return [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:fontSize];
+    NSUserDefaults *standardUserDefaults;
+    standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"] size:fontSize];
 }
 
 #pragma clang diagnostic pop

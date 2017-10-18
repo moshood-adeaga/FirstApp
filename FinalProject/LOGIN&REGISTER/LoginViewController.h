@@ -20,5 +20,17 @@
 - (IBAction)registerButton:(UIButton *)sender;
 @property (strong, nonatomic) IBOutlet UILabel *registrationLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberTextField;
+@property (strong, nonatomic) NSDictionary *colourDict;
+@property (weak, nonatomic) IBOutlet UILabel *confirm;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UILabel *passLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastnameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstnameLabel;
+
+
+
 
 @end

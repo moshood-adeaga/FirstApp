@@ -80,7 +80,7 @@
         <string>fbshareextension</string>
     </array>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>CAN i Access your Photos</string>
+    <string>Can i Access your Photos</string>
     <key>NSCameraUsageDescription</key>
     <string>Final Project needs access to use your camera</string>
     

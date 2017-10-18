@@ -15,4 +15,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *passWordTextField;
 - (IBAction)logInButton:(UIButton *)sender;
 @property (strong, nonatomic) NSDictionary *userData;
+@property (weak, nonatomic) IBOutlet UIButton *loginButtonproperty;
+@property (weak, nonatomic) IBOutlet UILabel *passwordProperty;
+@property (weak, nonatomic) IBOutlet UILabel *userNameProperty;
+
+@property (strong, nonatomic) NSUserDefaults *defaults;
+@property (strong, nonatomic) NSDictionary *colourDict;
+
 @end

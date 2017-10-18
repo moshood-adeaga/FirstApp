@@ -15,6 +15,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    NSUserDefaults *standardUserDefaults;
+    standardUserDefaults =[NSUserDefaults standardUserDefaults];
+    [self.eventTitleLabel setFont:[UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
     self.eventsImageView.layer.cornerRadius = 60.0f;
     self.eventsImageView.clipsToBounds = YES;
   

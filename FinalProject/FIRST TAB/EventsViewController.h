@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface EventsViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate>
+@interface EventsViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate,FBSDKSharingDelegate>
 @property (strong,nonatomic) UISearchBar *searchBar;
 @property (strong,nonatomic) NSMutableArray *nameOfEvent;
 @property (strong,nonatomic) NSMutableArray *picOfEvent;

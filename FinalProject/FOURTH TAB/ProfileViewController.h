@@ -22,6 +22,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 - (IBAction)profileEditButton:(id)sender;
 - (IBAction)bookmarkPageButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *logoutProp;
+@property (weak, nonatomic) IBOutlet UIButton *editProp;
+@property (weak, nonatomic) IBOutlet UIButton *bookmarkProp;
+@property (weak, nonatomic) IBOutlet UILabel *phoneProp;
+@property (weak, nonatomic) IBOutlet UILabel *emailProp;
+@property (weak, nonatomic) IBOutlet UILabel *lastnameProp;
+@property (weak, nonatomic) IBOutlet UILabel *firstnameProp;
+@property (weak, nonatomic) IBOutlet UILabel *userNameProp;
 
 
 

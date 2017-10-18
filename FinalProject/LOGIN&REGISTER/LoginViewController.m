@@ -24,6 +24,8 @@
 
 
 @interface LoginViewController ()
+
+@property (strong, nonatomic) NSUserDefaults *defaults;
 @property (strong, nonatomic) CoreDataManager *myCoreManager;
 @property (copy, nonatomic) NSString *filePath;
 @property (copy, nonatomic) NSString *dataBasePath;
@@ -34,8 +36,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.myCoreManager = [CoreDataManager sharedManager];
+    //SETTING UP THEME//
+ self.defaults = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
+     [self.navigationController.navigationBar setBarTintColor: [self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.segmentedControl setTintColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self appear:YES];
+  self.myCoreManager = [CoreDataManager sharedManager];
     [self.registrationLabel setHidden:!self.registrationLabel.hidden];
     self.passWordTextField.secureTextEntry =YES;
     self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/register.php";
@@ -43,6 +59,26 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
+   
+   ;
+    
+}
+- (NSArray*) getAllLabels
+{
+    
+    NSArray *labels = [[NSArray alloc] initWithObjects:self.confirm, self.registerButton, self.passLabel, self.userLabel, self.emailLabel, self.lastnameLabel,self.firstnameLabel,self.phoneLabel, nil];
+    
+    return labels;
+}
+
+- (void) appear:(BOOL)on
+{
+    for (UILabel *label in [self getAllLabels]) {
+        //label.alpha = 0.0;
+        label.backgroundColor=[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
+        label.font =[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0f];
+
+    }
     
 }
 
@@ -55,6 +91,7 @@
 - (IBAction)segmentControl:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
+        
         RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
         registerControl.title = @"LOG-IN";
         self.segmentedControl.selected =NO;

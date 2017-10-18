@@ -110,10 +110,7 @@ typedef NS_ENUM( NSInteger, AVCamDepthDataDeliveryMode ) {
     self.livePhotoModeButton.enabled = NO;
     self.captureModeControl.enabled = NO;
     self.depthDataDeliveryButton.enabled = NO;
-    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-
+    
     
     // Create the AVCaptureSession.
     self.session = [[AVCaptureSession alloc] init];

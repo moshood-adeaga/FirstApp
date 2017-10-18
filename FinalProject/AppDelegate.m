@@ -13,6 +13,7 @@
 #import <Firebase.h>
 #import "ChatView.h"
 #import "usersAndChatViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
 
@@ -29,49 +30,60 @@
     RegisterViewController *loginView = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
     loginView.title = @"LOG-IN";
     
-    EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
-    eventsView.title = @"EVENTS";
-    MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
-    mediaView.title= @"Camera";
-    ChatView *chatView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
-    chatView.title= @"Chats";
-    
-    usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
-    View.title =@"CHAT ROOM";
-    
-    
-    
-    UINavigationController *nav1 =  [[UINavigationController alloc]initWithRootViewController:eventsView];
-    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
-    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:loginView];
-    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav3.navigationBar.barStyle = UIBarStyleBlack;
-    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:chatView];
-    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
-    nav4.navigationBar.barStyle = UIBarStyleBlack;
-   
-    
-    
-    UITabBarController *tabBarController = [[UITabBarController alloc]init];
-    [tabBarController setViewControllers:@[nav1]];
-    
-    UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
-    [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
-    
-//    UIImage *mediaTabImage = [UIImage imageNamed:@"myCamera.png"];
-//    [[tabBarController.tabBar.items objectAtIndex:1] setImage :mediaTabImage];
-    
-    
-    
-    
     self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
     [self.window setRootViewController:loginView];
     [self.window makeKeyAndVisible];
+    
+    //Firebase configuration//
     [FIRApp configure];
-   
+    
+    ///Facebook configuratiom///
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+    
+    /// NSUserDefaults Configuration for Setttings Bundle//
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"text_preference"])
+    {
+        [self registerDefaultsFromSettingsBundle];
+    }
+  
     return YES;
 }
-
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                  openURL:url
+                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+                    ];
+    return handled;
+}
+-(void)registerDefaultsFromSettingsBundle{
+    NSString *settingsBundle =[[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
+    {
+        NSLog(@"could not find settings.bundle");
+        return;
+    }
+    NSDictionary *settings=[NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    for(NSDictionary *prefSpecification in preferences)
+    {
+        NSString *key= [prefSpecification objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+            NSLog(@"writing as default %@ to the key %@",[prefSpecification objectForKey:@"DefaultValue"],key);
+        }
+        
+    }
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultToRegister];
+    
+}
 
 
 
@@ -93,6 +105,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBSDKAppEvents activateApp];
    
 }
 

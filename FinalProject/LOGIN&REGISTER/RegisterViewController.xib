@@ -9,12 +9,20 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AmericanTypewriter.ttc">
+            <string>AmericanTypewriter-Condensed</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
             <connections>
+                <outlet property="loginButtonproperty" destination="6xL-TK-UMv" id="rlA-Eg-pcN"/>
                 <outlet property="passWordTextField" destination="ata-L6-gkQ" id="vuu-0W-XnB"/>
+                <outlet property="passwordProperty" destination="nUm-R3-d8N" id="dBb-p5-mHk"/>
                 <outlet property="segmentedControl" destination="qRb-YS-KmW" id="Poo-Qu-at5"/>
                 <outlet property="userIDTextField" destination="DeQ-D0-jII" id="WXc-EI-v2f"/>
+                <outlet property="userNameProperty" destination="P86-aM-kuW" id="jtX-iO-5pQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,14 +42,16 @@
                         <action selector="segmentControl:" destination="-1" eventType="valueChanged" id="umx-GH-8ok"/>
                     </connections>
                 </segmentedControl>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DeQ-D0-jII">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DeQ-D0-jII">
                     <rect key="frame" x="137" y="129" width="234" height="30"/>
-                    <attributedString key="attributedText"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ata-L6-gkQ">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ata-L6-gkQ">
                     <rect key="frame" x="137" y="182" width="234" height="30"/>
-                    <attributedString key="attributedText"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P86-aM-kuW">
@@ -72,28 +82,22 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xL-TK-UMv">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xL-TK-UMv">
                     <rect key="frame" x="120" y="254" width="135" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Mhw-Bo-1Mr"/>
                     </constraints>
-                    <state key="normal">
-                        <attributedString key="attributedTitle">
-                            <fragment content="LOGIN">
-                                <attributes>
-                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="17" name="AmericanTypewriter-Condensed"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                    <fontDescription key="fontDescription" name="AmericanTypewriter-Condensed" family="American Typewriter" pointSize="17"/>
+                    <state key="normal" title="LOGIN">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="logInButton:" destination="-1" eventType="touchUpInside" id="LEt-DE-K1e"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="nUm-R3-d8N" firstAttribute="trailing" secondItem="P86-aM-kuW" secondAttribute="trailing" id="1Mf-JZ-tII"/>
                 <constraint firstItem="ata-L6-gkQ" firstAttribute="leading" secondItem="DeQ-D0-jII" secondAttribute="leading" id="2gc-Ya-g40"/>

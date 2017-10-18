@@ -50,6 +50,9 @@
 		BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */; };
 		BA24F4201F90BC4100990D4E /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
 		BA24F4211F90BC4500990D4E /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD04F1F841421001F83A5 /* MediaController.m */; };
+		BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA6ACE161F963708009BBA2A /* Settings.bundle */; };
+		BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */; };
+		BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */; };
 		BABD9CBA1F8CE708009A97DA /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */; };
 		BABD9CBC1F8CE746009A97DA /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */; };
 		BABD9CBE1F8CE770009A97DA /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */; };
@@ -170,6 +173,11 @@
 		BA18145D1F952CD700D84F00 /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		BA18145E1F952CD700D84F00 /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		BA18145F1F952CD800D84F00 /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		BA6ACE161F963708009BBA2A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		BA898A2A1F975F0B000B1190 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
+		BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDKs/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDKs/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
 		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
@@ -200,6 +208,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */,
+				BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */,
 				BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */,
 				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */,
@@ -319,13 +329,13 @@
 		706ACFFE1F83F73E001F83A5 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
-				BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */,
-				03EF6EFC1F87E2EC00128917 /* FOURTH TAB */,
-				032DA2691F879EAE00E73F2F /* Managers */,
 				70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */,
 				03E353221F878776005539A2 /* LOGIN&REGISTER */,
 				706AD0341F83F7B9001F83A5 /* FIRST TAB */,
 				706AD0431F841353001F83A5 /* SECOND TAB */,
+				BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */,
+				03EF6EFC1F87E2EC00128917 /* FOURTH TAB */,
+				032DA2691F879EAE00E73F2F /* Managers */,
 				706ACFFF1F83F73E001F83A5 /* AppDelegate.h */,
 				706AD0001F83F73E001F83A5 /* AppDelegate.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
@@ -334,6 +344,7 @@
 				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
 				706AD0111F83F73F001F83A5 /* main.m */,
 				706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */,
+				BA6ACE161F963708009BBA2A /* Settings.bundle */,
 				03EB2FBF1F8687A900FE539D /* Others */,
 			);
 			path = FinalProject;
@@ -393,6 +404,10 @@
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA898A2A1F975F0B000B1190 /* Bolts.framework */,
+				BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */,
+				BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */,
+				BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */,
 				BA1814441F924E5E00D84F00 /* AVKit.framework */,
 				BA18143C1F91131000D84F00 /* EventKit.framework */,
 				BA18143D1F91131000D84F00 /* EventKitUI.framework */,
@@ -576,6 +591,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */,
 				70841B9C1F842DE700238258 /* EventsCell.xib in Resources */,
 				706AD0521F841421001F83A5 /* MediaController.xib in Resources */,
 				BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */,
@@ -987,6 +1003,7 @@
 					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseStorage/Frameworks",
+					"~/Documents/FacebookSDKs",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)${PODS_ROOT}/Firebase/Core/Sources",
@@ -1034,6 +1051,7 @@
 					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseStorage/Frameworks",
+					"~/Documents/FacebookSDKs",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)${PODS_ROOT}/Firebase/Core/Sources",
