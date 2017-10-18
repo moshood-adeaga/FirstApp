@@ -31,7 +31,6 @@
 		706AD03D1F83F831001F83A5 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD03B1F83F831001F83A5 /* EventsViewController.m */; };
 		706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706AD03C1F83F831001F83A5 /* EventsViewController.xib */; };
 		706AD0411F840159001F83A5 /* ImageCaching.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0401F840159001F83A5 /* ImageCaching.m */; };
-		706AD0521F841421001F83A5 /* MediaController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706AD0501F841421001F83A5 /* MediaController.xib */; };
 		70841B9B1F842DE700238258 /* EventsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70841B991F842DE700238258 /* EventsCell.m */; };
 		70841B9C1F842DE700238258 /* EventsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70841B9A1F842DE700238258 /* EventsCell.xib */; };
 		70841BA11F84E27700238258 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BA01F84E27700238258 /* Social.framework */; };
@@ -47,12 +46,13 @@
 		BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */; };
 		BA1814601F952CD800D84F00 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18145E1F952CD700D84F00 /* CustomCell.m */; };
 		BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145F1F952CD800D84F00 /* CustomCell.xib */; };
-		BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */; };
-		BA24F4201F90BC4100990D4E /* cameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB2FC11F86934A00FE539D /* cameraView.m */; };
-		BA24F4211F90BC4500990D4E /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD04F1F841421001F83A5 /* MediaController.m */; };
 		BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA6ACE161F963708009BBA2A /* Settings.bundle */; };
 		BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */; };
 		BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */; };
+		BA898A301F977CDA000B1190 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2F1F977CD8000B1190 /* CoreImage.framework */; };
+		BA898A321F977CEE000B1190 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A311F977CEE000B1190 /* OpenGLES.framework */; };
+		BA898A3B1F977D65000B1190 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA898A391F977D65000B1190 /* CameraViewController.m */; };
+		BA898A3C1F977D65000B1190 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA898A3A1F977D65000B1190 /* CameraViewController.xib */; };
 		BABD9CBA1F8CE708009A97DA /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */; };
 		BABD9CBC1F8CE746009A97DA /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */; };
 		BABD9CBE1F8CE770009A97DA /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */; };
@@ -93,8 +93,6 @@
 		032DA26A1F879F3700E73F2F /* CoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
 		032DA26B1F879F3700E73F2F /* CoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 		032DA26D1F87CE4B00E73F2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		03E353171F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCamPhotoCaptureDelegate.h; sourceTree = "<group>"; };
-		03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCamPhotoCaptureDelegate.m; sourceTree = "<group>"; };
 		03E3531D1F87876E005539A2 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		03E3531E1F87876E005539A2 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		03E3531F1F87876E005539A2 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -103,8 +101,6 @@
 		03E3532A1F878C59005539A2 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		03EB2FB41F8648F200FE539D /* icons8-Camera-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-Camera-100.png"; sourceTree = "<group>"; };
 		03EB2FBD1F867F5F00FE539D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		03EB2FC01F86934900FE539D /* cameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cameraView.h; sourceTree = "<group>"; };
-		03EB2FC11F86934A00FE539D /* cameraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cameraView.m; sourceTree = "<group>"; };
 		03EF6EFD1F87E37D00128917 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		03EF6EFE1F87E37D00128917 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		03EF6EFF1F87E37D00128917 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -135,9 +131,6 @@
 		706AD03F1F840159001F83A5 /* ImageCaching.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCaching.h; sourceTree = "<group>"; };
 		706AD0401F840159001F83A5 /* ImageCaching.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCaching.m; sourceTree = "<group>"; };
 		706AD0421F840EE5001F83A5 /* status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status.png; sourceTree = "<group>"; };
-		706AD04E1F841421001F83A5 /* MediaController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
-		706AD04F1F841421001F83A5 /* MediaController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
-		706AD0501F841421001F83A5 /* MediaController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaController.xib; sourceTree = "<group>"; };
 		706AD0531F841558001F83A5 /* myCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myCamera.png; sourceTree = "<group>"; };
 		706AD0541F84167F001F83A5 /* viewCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewCamera.png; sourceTree = "<group>"; };
 		70841B981F842DE700238258 /* EventsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsCell.h; sourceTree = "<group>"; };
@@ -178,6 +171,11 @@
 		BA898A2A1F975F0B000B1190 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
 		BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDKs/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDKs/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		BA898A2F1F977CD8000B1190 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		BA898A311F977CEE000B1190 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		BA898A381F977D65000B1190 /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		BA898A391F977D65000B1190 /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		BA898A3A1F977D65000B1190 /* CameraViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		BABD9CB71F8CE6F3009A97DA /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Pods/FirebaseAuth/Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
 		BABD9CB91F8CE708009A97DA /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		BABD9CBB1F8CE746009A97DA /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Pods/FirebaseCore/Frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
@@ -199,6 +197,7 @@
 		BAC02E471F8BB0F5006E9CB5 /* ChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
 		BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
 		BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BAE718E91F9794DE00C29C09 /* camcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camcircle.png; sourceTree = "<group>"; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -208,6 +207,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA898A321F977CEE000B1190 /* OpenGLES.framework in Frameworks */,
+				BA898A301F977CDA000B1190 /* CoreImage.framework in Frameworks */,
 				BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */,
 				BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */,
 				BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */,
@@ -332,13 +333,14 @@
 				70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */,
 				03E353221F878776005539A2 /* LOGIN&REGISTER */,
 				706AD0341F83F7B9001F83A5 /* FIRST TAB */,
-				706AD0431F841353001F83A5 /* SECOND TAB */,
+				BA898A3D1F978A70000B1190 /* SECOND TAB */,
 				BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */,
 				03EF6EFC1F87E2EC00128917 /* FOURTH TAB */,
 				032DA2691F879EAE00E73F2F /* Managers */,
 				706ACFFF1F83F73E001F83A5 /* AppDelegate.h */,
 				706AD0001F83F73E001F83A5 /* AppDelegate.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
+				BAE718E91F9794DE00C29C09 /* camcircle.png */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
 				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
@@ -387,23 +389,11 @@
 			path = "FIRST TAB";
 			sourceTree = "<group>";
 		};
-		706AD0431F841353001F83A5 /* SECOND TAB */ = {
-			isa = PBXGroup;
-			children = (
-				706AD04E1F841421001F83A5 /* MediaController.h */,
-				706AD04F1F841421001F83A5 /* MediaController.m */,
-				706AD0501F841421001F83A5 /* MediaController.xib */,
-				03EB2FC01F86934900FE539D /* cameraView.h */,
-				03EB2FC11F86934A00FE539D /* cameraView.m */,
-				03E353171F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.h */,
-				03E353181F86AF0F005539A2 /* AVCamPhotoCaptureDelegate.m */,
-			);
-			path = "SECOND TAB";
-			sourceTree = "<group>";
-		};
 		70841B9F1F84E27700238258 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA898A311F977CEE000B1190 /* OpenGLES.framework */,
+				BA898A2F1F977CD8000B1190 /* CoreImage.framework */,
 				BA898A2A1F975F0B000B1190 /* Bolts.framework */,
 				BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */,
 				BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */,
@@ -445,6 +435,16 @@
 				70C4397E1F88F8EE0054288D /* RNEncryptor.m */,
 			);
 			path = "ENCRYPTOR&DECRYPTOR";
+			sourceTree = "<group>";
+		};
+		BA898A3D1F978A70000B1190 /* SECOND TAB */ = {
+			isa = PBXGroup;
+			children = (
+				BA898A381F977D65000B1190 /* CameraViewController.h */,
+				BA898A391F977D65000B1190 /* CameraViewController.m */,
+				BA898A3A1F977D65000B1190 /* CameraViewController.xib */,
+			);
+			path = "SECOND TAB";
 			sourceTree = "<group>";
 		};
 		BAC02E451F8BB0BA006E9CB5 /* THIRD TAB */ = {
@@ -593,13 +593,13 @@
 			files = (
 				BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */,
 				70841B9C1F842DE700238258 /* EventsCell.xib in Resources */,
-				706AD0521F841421001F83A5 /* MediaController.xib in Resources */,
 				BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */,
 				BABD9CE51F8FCB9F009A97DA /* eventDetailController.xib in Resources */,
 				BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */,
 				03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */,
 				03E3532C1F878C59005539A2 /* RegisterViewController.xib in Resources */,
 				706AD00F1F83F73F001F83A5 /* LaunchScreen.storyboard in Resources */,
+				BA898A3C1F977D65000B1190 /* CameraViewController.xib in Resources */,
 				706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */,
 				BABD9CD71F8EC45C009A97DA /* mapViewController.xib in Resources */,
 				BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */,
@@ -817,11 +817,11 @@
 				03E3532B1F878C59005539A2 /* RegisterViewController.m in Sources */,
 				BA1814501F93C6B100D84F00 /* UIFont+SystemFontOverride.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
-				BA24F4201F90BC4100990D4E /* cameraView.m in Sources */,
 				BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */,
 				7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */,
 				7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */,
 				BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */,
+				BA898A3B1F977D65000B1190 /* CameraViewController.m in Sources */,
 				BABD9CE41F8FCB9F009A97DA /* eventDetailController.m in Sources */,
 				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
 				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
@@ -830,10 +830,8 @@
 				BA1814601F952CD800D84F00 /* CustomCell.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
 				032DA26C1F879F3700E73F2F /* CoreDataManager.m in Sources */,
-				BA24F4211F90BC4500990D4E /* MediaController.m in Sources */,
 				706AD03D1F83F831001F83A5 /* EventsViewController.m in Sources */,
 				706AD0121F83F73F001F83A5 /* main.m in Sources */,
-				BA24F41F1F90BC3A00990D4E /* AVCamPhotoCaptureDelegate.m in Sources */,
 				BABD9CD11F8E5512009A97DA /* usersAndChatViewController.m in Sources */,
 				03EF6F001F87E37D00128917 /* ProfileViewController.m in Sources */,
 				706AD0411F840159001F83A5 /* ImageCaching.m in Sources */,

@@ -198,7 +198,7 @@ static NSString * const reuseIdentifier = @"Cell";
         }];
         }
     }
-    CGRect btnRect = CGRectMake(340,263, 45, 29);
+    CGRect btnRect = CGRectMake(340,263, 30, 20);
     UIButton *cellBtn = [[UIButton alloc] initWithFrame:btnRect];
     [cellBtn setBackgroundImage:[UIImage imageNamed:@"myShare"] forState:UIControlStateNormal];
     cellBtn.layer.cornerRadius = 5.0f;
@@ -220,16 +220,6 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 -(void)shareButtonTapped:(UIButton*)sender
 {
-//    FBSDKSharePhoto *photo = [FBSDKSharePhoto photoWithImage:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:sender.tag]] userGenerated:YES];
-//    FBSDKShareMediaContent *content = [[FBSDKShareMediaContent alloc] init];
-//    content.contentURL = [NSURL URLWithString:[self.urlOfEvent objectAtIndex:sender.tag]];
-//    content.media = @[photo];
-//    content.hashtag =[FBSDKHashtag hashtagWithString:@"#MoshoodsChatApp #EventsBrite #Events"];
-//    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
-//    dialog.fromViewController = self;
-//    dialog.shareContent = content;
-//    dialog.mode = FBSDKShareDialogModeShareSheet;
-//    [dialog show];
     NSMutableArray *activityItems = [NSMutableArray array];
     [activityItems addObject:[NSURL URLWithString:[self.urlOfEvent objectAtIndex:sender.tag]]];
     [activityItems addObject:[[ImageCaching sharedInstance] getCachedImageForKey:[self.picOfEvent objectAtIndex:sender.tag]]];
@@ -241,11 +231,19 @@ static NSString * const reuseIdentifier = @"Cell";
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self presentViewController:self.activityViewController animated:YES completion:nil];
     }
-    else { // iPad
-        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.activityViewController];
-        [popover presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)
-                                 inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny
-                               animated:YES];
+    else {
+        // iPad
+        self.activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        self.activityViewController.popoverPresentationController.delegate =self;
+        self.activityViewController.preferredContentSize = CGSizeMake(self.view.frame.size.width/2, self.view.frame.size.height/4);
+        self.activityViewController.popoverPresentationController.sourceRect =[[sender valueForKey:@"view"] bounds];
+        self.activityViewController.popoverPresentationController.sourceView =self.view;
+        
+        UIPopoverPresentationController *popoverController = self.activityViewController.popoverPresentationController;
+        popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverController.delegate = self;
+        
+        
     }
  
     

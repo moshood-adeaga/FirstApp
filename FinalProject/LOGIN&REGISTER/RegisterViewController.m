@@ -6,13 +6,13 @@
 //  Copyright © 2017 moshood. All rights reserved.
 //
 #import "usersAndChatViewController.h"
+#import "CameraViewController.h"
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
 #import "UserDetail+CoreDataClass.h"
 #import "CoreDataManager.h"
 #import "ImageCaching.h"
 #import "EventsViewController.h"
-#import "MediaController.h"
 #import "ChatView.h"
 #import "ProfileViewController.h"
 #import "SAMKeychainQuery.h"
@@ -134,7 +134,7 @@ UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:sel
     
                 EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
                 eventsView.title = @"EVENTS";
-                MediaController *mediaView = [[MediaController alloc]initWithNibName:@"MediaController" bundle:nil];
+                CameraViewController *mediaView = [[CameraViewController alloc]initWithNibName:@"CameraViewController" bundle:nil];
                 mediaView.title= @"CAMERA";
                 ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
                 chatsView.title = @"CHATS";

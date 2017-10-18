@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "EventsViewController.h"
-#import "MediaController.h"
 #import "RegisterViewController.h"
 #import <Firebase.h>
 #import "ChatView.h"
