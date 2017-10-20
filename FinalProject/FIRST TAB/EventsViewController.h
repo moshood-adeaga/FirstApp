@@ -2,14 +2,14 @@
 //  EventsViewController.h
 //  FinalProject
 //
-//  Created by Shegz on 2017/10/03.
+//  Created by Moshood Adeaga on 2017/10/03.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface EventsViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate,FBSDKSharingDelegate>
+@interface EventsViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong,nonatomic) UISearchBar *searchBar;
 @property (strong,nonatomic) NSMutableArray *nameOfEvent;
 @property (strong,nonatomic) NSMutableArray *picOfEvent;

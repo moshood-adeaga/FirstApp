@@ -2,7 +2,7 @@
 //  ProfileViewController.m
 //  FinalProject
 //
-//  Created by TheAppExperts on 10/6/17.
+//  Created by Moshood Adeaga on 10/6/17.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
@@ -14,11 +14,7 @@
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
 #import <FirebaseStorage/FirebaseStorage.h>
-
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "RNDecryptor.h"
-#import "RNEncryptor.h"
-
 
 
 @interface ProfileViewController ()
@@ -34,7 +30,6 @@
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSUserDefaults *standardUserDefaults;
 @property (strong, nonatomic) NSDictionary *colourDict;
-
 @end
 
 @implementation ProfileViewController
@@ -43,6 +38,9 @@
 {
     [super viewDidLoad];
     self.standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    self.dataTransfer = [ImageCaching sharedInstance];
+    
+    // Setting up the Colour Dictionary , this will be used to set the colour theme of the view Controller.
     self.colourDict = @{
                         @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
                         @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
@@ -54,22 +52,26 @@
                         @"BLACK":[UIColor blackColor]
                         };
     
-    
-    self.dataTransfer = [ImageCaching sharedInstance];
-    self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
-    self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/updateprofile.php";
-    
+
     UIColor *borderFrameColour = [self.colourDict objectForKey:[self.standardUserDefaults objectForKey:@"settingsColor"]];
     self.profileImageViewer.image =[UIImage imageNamed:@"addimage"];
     self.profileImageViewer.layer.borderColor =borderFrameColour.CGColor;
     self.profileImageViewer.layer.borderWidth =5.0f;
     self.profileImageViewer.layer.cornerRadius =50.0f;
     self.profileImageViewer.clipsToBounds = YES;
-   // self.userName.text = self.dataTransfer.userID;
     
-   // [self setupUserDirectory];
-   // [self prepareData];
+    [self.userNameTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
     
+    //Calling the function to update all colour and fonts of the labels in the view controller.
+    [self appear:YES];
+    
+    
+    // Database Links for Updating the profile of the current User.
+    self.dataBasePath =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/imageupload.php";
+    self.dataBasePath2 =@"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/updateprofile.php";
+    
+    //Retreiving and Viewing the Details of the Users from the NSUserDefaults, this data is parse from the
+    // data received from the server upon login on , into the App.
     self.userNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"];
     self.lastNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
     self.firstNameTextField.text =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
@@ -99,19 +101,24 @@
             }];
         }
     }
+    //Tap Gesture to resign the responder by tapping anywhere
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-    [self appear:YES];
+   
+    
+    // self.userName.text = self.dataTransfer.userID;
+    // [self setupUserDirectory];
+    // [self prepareData];
     
 }
+// Gets all Label Propertys and stores them in an array.
 - (NSArray*) getAllLabels
 {
-    
     NSArray *labels = [[NSArray alloc] initWithObjects:self.logoutProp, self.editProp, self.bookmarkProp, self.phoneProp, self.emailProp, self.lastnameProp,self.firstnameProp,self.userNameProp, nil];
-    
     return labels;
 }
 
+// Updates the Colour and Font of all the Labels on the View by using the data it receives from the settings.
 - (void) appear:(BOOL)on
 {
     for (UILabel *label in [self getAllLabels]) {
@@ -121,10 +128,18 @@
         [self.bookmarkProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
         [self.editProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
         [self.logoutProp.titleLabel setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.userNameTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        
+        [self.userNameTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.firstNameTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.lastNameTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.emailTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.phoneTextField setFont:[UIFont fontWithName:[self.standardUserDefaults objectForKey:@"settingsFont"] size:17.0]];
+
 
     }
-    // more code
 }
+// Function to Download Profile Picture.
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -140,16 +155,23 @@
                                }
                            }];
 }
+
+// This function is Called By the LogOut Button , it will allow the user to log out out of the data and
+// clear all their data of the app
 - (IBAction)logOutButton:(UIButton *)sender
 {
     RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
     registerControl.title = @"LOG-IN";
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:registerControl];
-    nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial" size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+    nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standardDefault objectForKey:@"settingsFont"] size:13.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     nav.navigationBar.barStyle = UIBarStyleBlack;
+    [self.standardUserDefaults removeObjectForKey:@"CurrentUserName"];
+    [self.standardUserDefaults removeObjectForKey:@"CurrentUserPassword"];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+// This will Allow the Users to be able to Update their Profile Picture by using the Image Picker Delegates
+// of picking Pictures from your gallery or taking a new picture.
 - (IBAction)profileImagePicker:(UIButton *)sender
 {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Select Profile Picture" message:@"Using Your Camera or Gallery" preferredStyle:UIAlertControllerStyleActionSheet];
@@ -202,6 +224,10 @@
     [self presentViewController:actionSheet animated:YES completion:nil];
 }
 #pragma ImagePicker Delegate
+
+// This delegate is how the image upload for the users Profile Picture is done, this fuction works by uploading
+// a picture on to the firebase storage server using a unique id specified for each user and then the App gets
+// a donwload link which it then uses to dowload the  profile pic to be view on the app.
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
@@ -209,9 +235,7 @@
         [info objectForKey: UIImagePickerControllerOriginalImage];
     }
     NSData *imageData = UIImagePNGRepresentation(chosenImage);
-    NSString *imageName =@"profileImage.securedData";
-    NSData *encryptedImage = [RNEncryptor encryptData:imageData withSettings:kRNCryptorAES256Settings password:@"A_SECRET_PASSWORD" error:nil];
-    [encryptedImage writeToFile:[self.filePath stringByAppendingPathComponent:imageName] atomically:YES];
+    
     self.profilePicture.image = chosenImage;
     
     // Uploading user Profile pic to datbase//
@@ -258,6 +282,8 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
+// This Button will put the profile in edit Mode and tehn will allow the users to change and update details about
+// themselves and will then update the data on the server.
 - (IBAction)profileEditButton:(UIButton*)sender
 {
    sender.selected=!sender.selected;
@@ -294,14 +320,11 @@
         [self.lastNameTextField setUserInteractionEnabled:NO];
         [self.emailTextField setUserInteractionEnabled:NO];
         [self.phoneTextField setUserInteractionEnabled:NO];
-        
-        
     }
-    
-
-    
 }
 
+// This Function is called by its respective button and will allow users to see a list of Events which they have
+// bookmarked.
 - (IBAction)bookmarkPageButton:(id)sender
 {
     EventsUnderConsiderationController *eventsBookmark = [[EventsUnderConsiderationController alloc]initWithStyle:UITableViewStylePlain];

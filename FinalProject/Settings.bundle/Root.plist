@@ -23,14 +23,14 @@
 			<string>AmericanTypewriter-Condensed</string>
 			<key>Titles</key>
 			<array>
-				<string>AmericanTypewriter-Condensed</string>
+				<string>AmericanTypewriter</string>
 				<string>ArialHebrew</string>
-				<string>BradleyHandITCTT-Bold</string>
+				<string>BradleyHandITCTT</string>
 				<string>Chalkduster</string>
-				<string>Papyrus-Condensed </string>
-				<string>Verdana-Italic</string>
-				<string>TimesNewRomanPSMT</string>
-				<string>MarkerFelt-Thin </string>
+				<string>HoeflerText</string>
+				<string>Verdana</string>
+				<string>TimesNewRoman</string>
+				<string>Papyrus</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -38,10 +38,10 @@
 				<string>ArialHebrew</string>
 				<string>BradleyHandITCTT-Bold</string>
 				<string>Chalkduster</string>
-				<string>Papyrus-Condensed </string>
+				<string>HoeflerText-Italic</string>
 				<string>Verdana-Italic</string>
 				<string>TimesNewRomanPSMT</string>
-				<string>MarkerFelt-Thin </string>
+				<string>Papyrus</string>
 			</array>
 		</dict>
 		<dict>

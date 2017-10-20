@@ -15,7 +15,6 @@
 @property (strong, nonatomic) NSMutableArray *titleArray;
 @property (strong, nonatomic) NSMutableArray *imageArray;
 @property (strong, nonatomic) NSMutableArray *descriptionArray;
-
 @end
 
 @implementation EventsUnderConsiderationController
@@ -27,15 +26,23 @@
     self.titleArray = [NSMutableArray array];
     self.descriptionArray = [NSMutableArray array];
     self.imageArray = [NSMutableArray array];
-     
+    
+    // As the Bookmarked event is stored on a databse and its going to be retrieved from this view controller,
+    // and as the reference was created using  a identifier unique to the user , the reference for the datbase
+    // is then recreated.
     NSString *favouriteDatabase = [NSString stringWithFormat:@"%@%@database",[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"],[[NSUserDefaults standardUserDefaults]objectForKey:@"phoneNumber"]];
     self.ref = [[[FIRDatabase database] reference] child:favouriteDatabase];
+    
+    // Calling the Function the retrieve the stored data from the server.
     [self observeMessages];
     [self.tableView reloadData];
 }
+
+// This Function will retrieve from the events bookmark database of the current user,
+// the data is retreived from them database created from the events detail view controller
+// through the events tab(first Tab).
 -(void)observeMessages
 {
-    //FIRDatabaseQuery *recentPostsQuery = [[self.ref child:@"posts"] queryLimitedToFirst:10];
     [_ref observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot *snapshot) {
         if(!snapshot.exists){return;}
         NSLog(@"%@",snapshot.value);
@@ -82,8 +89,6 @@
 {
     return @"EVENTS AM THINKING ABOUT";
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -108,73 +113,24 @@
                     cell.imageView.image = image;
                     // cache the image for use later (when scrolling up)
                     [[ImageCaching sharedInstance]cacheImage:image forKey:[self.imageArray objectAtIndex:indexPath.row]];
-                    
                 }
             }];
         }
     }
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    // Pass the selected object to the new view controller.
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.frame = CGRectMake(0, 0, 4200, 20);
+    myLabel.font = [UIFont fontWithName:@"American Typewriter Condensed" size:14];
+    myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    myLabel.backgroundColor =[self.navigationController.navigationBar barTintColor];
+    myLabel.textColor = [UIColor whiteColor];
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    UIView *headerView = [[UIView alloc] init];
+    [headerView addSubview:myLabel];
+    
+    return headerView;
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

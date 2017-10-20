@@ -17,10 +17,6 @@
 		03EF6F001F87E37D00128917 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EF6EFE1F87E37D00128917 /* ProfileViewController.m */; };
 		03EF6F011F87E37D00128917 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03EF6EFF1F87E37D00128917 /* ProfileViewController.xib */; };
 		6E97294A67476CAA41A3AB38 /* libPods-FinalProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */; };
-		7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397F1F88F8EF0054288D /* RNCryptor.m */; };
-		7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C439841F88F8EF0054288D /* RNCryptorEngine.m */; };
-		7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397C1F88F8EE0054288D /* RNDecryptor.m */; };
-		7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C4397E1F88F8EE0054288D /* RNEncryptor.m */; };
 		706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0001F83F73E001F83A5 /* AppDelegate.m */; };
 		706AD00A1F83F73F001F83A5 /* FinalProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */; };
 		706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706AD00B1F83F73F001F83A5 /* Assets.xcassets */; };
@@ -44,8 +40,6 @@
 		BA1814561F94F34D00D84F00 /* FriendProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA1814541F94F34800D84F00 /* FriendProfileViewController.xib */; };
 		BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */; };
 		BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */; };
-		BA1814601F952CD800D84F00 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18145E1F952CD700D84F00 /* CustomCell.m */; };
-		BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145F1F952CD800D84F00 /* CustomCell.xib */; };
 		BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA6ACE161F963708009BBA2A /* Settings.bundle */; };
 		BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */; };
 		BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */; };
@@ -141,17 +135,9 @@
 		70C439771F882FE00054288D /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		70C439781F883BE90054288D /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		70C439791F88ED5E0054288D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		70C4397C1F88F8EE0054288D /* RNDecryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
-		70C4397D1F88F8EE0054288D /* RNEncryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
-		70C4397E1F88F8EE0054288D /* RNEncryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
-		70C4397F1F88F8EF0054288D /* RNCryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptor.m; sourceTree = "<group>"; };
-		70C439801F88F8EF0054288D /* RNCryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
-		70C439811F88F8EF0054288D /* RNCryptor+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
-		70C439821F88F8EF0054288D /* RNCryptorEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNCryptorEngine.h; sourceTree = "<group>"; };
-		70C439831F88F8EF0054288D /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNCryptor-Prefix.pch"; sourceTree = "<group>"; };
-		70C439841F88F8EF0054288D /* RNCryptorEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
-		70C439851F88F8EF0054288D /* RNDecryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
+		BA0882DD1F97ACD100B0B190 /* camcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camcircle.png; sourceTree = "<group>"; };
+		BA0882DE1F97FE4500B0B190 /* FinalProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FinalProject.entitlements; sourceTree = "<group>"; };
 		BA18143C1F91131000D84F00 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA18143D1F91131000D84F00 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		BA1814441F924E5E00D84F00 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -163,9 +149,6 @@
 		BA1814581F951FE800D84F00 /* EventsUnderConsiderationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsUnderConsiderationController.h; sourceTree = "<group>"; };
 		BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsUnderConsiderationController.m; sourceTree = "<group>"; };
 		BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsUnderConsiderationController.xib; sourceTree = "<group>"; };
-		BA18145D1F952CD700D84F00 /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
-		BA18145E1F952CD700D84F00 /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
-		BA18145F1F952CD800D84F00 /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		BA6ACE161F963708009BBA2A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		BA898A2A1F975F0B000B1190 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
@@ -197,7 +180,6 @@
 		BAC02E471F8BB0F5006E9CB5 /* ChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
 		BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
 		BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		BAE718E91F9794DE00C29C09 /* camcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camcircle.png; sourceTree = "<group>"; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -277,6 +259,7 @@
 		03EB2FBF1F8687A900FE539D /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				BA0882DD1F97ACD100B0B190 /* camcircle.png */,
 				70C439781F883BE90054288D /* addImage.png */,
 				70C439771F882FE00054288D /* share.png */,
 				03EF6F021F88045400128917 /* person.png */,
@@ -298,9 +281,6 @@
 				BA1814581F951FE800D84F00 /* EventsUnderConsiderationController.h */,
 				BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */,
 				BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */,
-				BA18145D1F952CD700D84F00 /* CustomCell.h */,
-				BA18145E1F952CD700D84F00 /* CustomCell.m */,
-				BA18145F1F952CD800D84F00 /* CustomCell.xib */,
 			);
 			path = "FOURTH TAB";
 			sourceTree = "<group>";
@@ -330,7 +310,7 @@
 		706ACFFE1F83F73E001F83A5 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
-				70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */,
+				BA0882DE1F97FE4500B0B190 /* FinalProject.entitlements */,
 				03E353221F878776005539A2 /* LOGIN&REGISTER */,
 				706AD0341F83F7B9001F83A5 /* FIRST TAB */,
 				BA898A3D1F978A70000B1190 /* SECOND TAB */,
@@ -340,7 +320,6 @@
 				706ACFFF1F83F73E001F83A5 /* AppDelegate.h */,
 				706AD0001F83F73E001F83A5 /* AppDelegate.m */,
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
-				BAE718E91F9794DE00C29C09 /* camcircle.png */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
 				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
@@ -418,23 +397,6 @@
 				5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		70C4397B1F88F8250054288D /* ENCRYPTOR&DECRYPTOR */ = {
-			isa = PBXGroup;
-			children = (
-				70C439831F88F8EF0054288D /* RNCryptor-Prefix.pch */,
-				70C439801F88F8EF0054288D /* RNCryptor.h */,
-				70C4397F1F88F8EF0054288D /* RNCryptor.m */,
-				70C439811F88F8EF0054288D /* RNCryptor+Private.h */,
-				70C439821F88F8EF0054288D /* RNCryptorEngine.h */,
-				70C439841F88F8EF0054288D /* RNCryptorEngine.m */,
-				70C439851F88F8EF0054288D /* RNDecryptor.h */,
-				70C4397C1F88F8EE0054288D /* RNDecryptor.m */,
-				70C4397D1F88F8EE0054288D /* RNEncryptor.h */,
-				70C4397E1F88F8EE0054288D /* RNEncryptor.m */,
-			);
-			path = "ENCRYPTOR&DECRYPTOR";
 			sourceTree = "<group>";
 		};
 		BA898A3D1F978A70000B1190 /* SECOND TAB */ = {
@@ -553,6 +515,11 @@
 					706ACFFB1F83F73E001F83A5 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 					706AD0161F83F73F001F83A5 = {
 						CreatedOnToolsVersion = 9.0;
@@ -602,7 +569,6 @@
 				BA898A3C1F977D65000B1190 /* CameraViewController.xib in Resources */,
 				706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */,
 				BABD9CD71F8EC45C009A97DA /* mapViewController.xib in Resources */,
-				BA1814611F952CD800D84F00 /* CustomCell.xib in Resources */,
 				706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */,
 				BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */,
 				03E353211F87876E005539A2 /* LoginViewController.xib in Resources */,
@@ -818,16 +784,11 @@
 				BA1814501F93C6B100D84F00 /* UIFont+SystemFontOverride.m in Sources */,
 				70841B9B1F842DE700238258 /* EventsCell.m in Sources */,
 				BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */,
-				7005C9C71F89005300AD0659 /* RNCryptorEngine.m in Sources */,
-				7005C9C81F89005700AD0659 /* RNDecryptor.m in Sources */,
 				BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */,
 				BA898A3B1F977D65000B1190 /* CameraViewController.m in Sources */,
 				BABD9CE41F8FCB9F009A97DA /* eventDetailController.m in Sources */,
-				7005C9C61F89004F00AD0659 /* RNCryptor.m in Sources */,
-				7005C9C91F89005A00AD0659 /* RNEncryptor.m in Sources */,
 				706AD0011F83F73E001F83A5 /* AppDelegate.m in Sources */,
 				BA1814551F94F34D00D84F00 /* FriendProfileViewController.m in Sources */,
-				BA1814601F952CD800D84F00 /* CustomCell.m in Sources */,
 				03E353201F87876E005539A2 /* LoginViewController.m in Sources */,
 				032DA26C1F879F3700E73F2F /* CoreDataManager.m in Sources */,
 				706AD03D1F83F831001F83A5 /* EventsViewController.m in Sources */,

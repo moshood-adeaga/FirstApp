@@ -94,5 +94,7 @@
     <string>This application requires location services to work</string>
     <key>NSCalendarsUsageDescription</key>
     <string>FinalProject would like to access Your calendar</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>FinalProject would like to access Your Photo Album</string>
 </dict>
 </plist>

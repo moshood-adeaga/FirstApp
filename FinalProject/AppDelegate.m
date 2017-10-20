@@ -2,13 +2,21 @@
 //  AppDelegate.m
 //  FinalProject
 //
-//  Created by Shegz on 2017/10/03.
+//  Created by Moshood Adeaga on 2017/10/03.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "EventsViewController.h"
+#import "usersAndChatViewController.h"
+#import "CameraViewController.h"
 #import "RegisterViewController.h"
+#import "LoginViewController.h"
+#import "ImageCaching.h"
+#import "EventsViewController.h"
+#import "ChatView.h"
+#import "ProfileViewController.h"
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
 #import <Firebase.h>
 #import "ChatView.h"
 #import "usersAndChatViewController.h"
@@ -18,6 +26,20 @@
 
 
 @interface AppDelegate ()
+{
+    NSUserDefaults *standard;
+    int userID;
+    NSString *userName;
+    NSString *firstName;
+    NSString *lastName;
+    NSString *email;
+    NSString *phoneNumber;
+    NSString *userImageLink;
+    
+}
+@property (strong, nonatomic) NSDictionary *userData;
+@property (strong, nonatomic) ImageCaching *dataTransfer;
+@property (strong, nonatomic) NSDictionary *colourDict;
 
 @end
 
@@ -25,18 +47,142 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    standard = [NSUserDefaults standardUserDefaults];
+    self.colourDict = @{
+                        @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
+                        @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
+                        @"GREEN":[UIColor colorWithRed:0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"RED":[UIColor colorWithRed:204.0/255.0 green:0 blue:0 alpha:1.0],
+                        @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
+                        @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
+                        @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"BLACK":[UIColor blackColor]
+                        };
     
+    NSString *dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
+
+    if ([standard objectForKey:@"CurrentUserName"] != nil)
+    {
+        NSDictionary *databaseParameter= @{
+                                           @"username":[standard objectForKey:@"CurrentUserName"],
+                                           @"password":[standard objectForKey:@"CurrentUserPassword"]
+                                           };
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [manager POST:dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"HTTP Success: %@", responseObject);
+                self.userData = responseObject;
+                userName = [self.userData valueForKeyPath:@"user.username"];
+                [standard setObject:userName forKey:@"userName"];
+                
+                firstName = [self.userData valueForKeyPath:@"user.firstname"];
+                [standard setObject:firstName forKey:@"firstName"];
+                
+                lastName = [self.userData valueForKeyPath:@"user.lastname"];
+                [standard setObject:lastName forKey:@"lastName"];
+                
+                email = [self.userData valueForKeyPath:@"user.email"];
+                [standard setObject:email forKey:@"email"];
+                
+                phoneNumber = [self.userData valueForKeyPath:@"user.phone"];
+                [standard setObject:phoneNumber forKey:@"phoneNumber"];
+                
+                userImageLink = [self.userData valueForKeyPath:@"user.image"];
+                [standard setObject:userImageLink forKey:@"userImage"];
+                
+                userID =[[self.userData valueForKeyPath:@"user.id"]intValue];
+                [standard setObject:[NSString stringWithFormat:@"%d",userID] forKey:@"userID"];
+                
+                [standard synchronize];
+                int myErrorCode =[[self.userData valueForKeyPath:@"error"] intValue];
+                if(myErrorCode == 0)
+                {
+                    
+                    
+                    EventsViewController *eventsView = [[EventsViewController alloc]initWithNibName:@"EventsViewController" bundle:nil];
+                    eventsView.title = @"EVENTS";
+                    CameraViewController *mediaView = [[CameraViewController alloc]initWithNibName:@"CameraViewController" bundle:nil];
+                    mediaView.title= @"CAMERA";
+                    ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
+                    chatsView.title = @"CHATS";
+                    ProfileViewController *profileView = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:nil];
+                    profileView.title = @"PROFILE";
+                   // [self.dataTransfer.userID setString:self.userIDTextField.text];
+                    usersAndChatViewController *View = [[usersAndChatViewController alloc]initWithStyle:UITableViewStylePlain];
+                    View.title =@"CHAT ROOM";
+                    
+                    UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:eventsView];
+                    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:mediaView];
+                    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:chatsView];
+                    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:profileView];
+                    UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:View];
+                    
+                    nav1.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                    nav1.navigationBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    nav1.navigationBar.tintColor = [UIColor whiteColor];
+                    nav2.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                    nav2.navigationBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    nav2.navigationBar.tintColor = [UIColor whiteColor];
+                    nav3.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                    nav3.navigationBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    nav3.navigationBar.tintColor = [UIColor whiteColor];
+                    nav4.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                    nav4.navigationBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    nav4.navigationBar.tintColor = [UIColor whiteColor];
+                    nav5.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                    nav5.navigationBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    nav5.navigationBar.tintColor = [UIColor whiteColor];
+                    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
+                    UITabBarController *tabBarController = [[UITabBarController alloc]init];
+                    [tabBarController setViewControllers:@[nav1,nav2,nav5,nav4]];
+                    tabBarController.tabBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
+                    tabBarController.tabBar.tintColor =[UIColor whiteColor];
+                    tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
+                    UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
+                    [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
+                    UIImage *mediaTabImage = [UIImage imageNamed:@"Camera"];
+                    [[tabBarController.tabBar.items objectAtIndex:1] setImage:mediaTabImage];
+                    UIImage *chatsTabImage = [UIImage imageNamed:@"chat.png"];
+                    [[tabBarController.tabBar.items objectAtIndex:2] setImage:chatsTabImage];
+                    UIImage *profileTabImage = [UIImage imageNamed:@"person.png"];
+                    [[tabBarController.tabBar.items objectAtIndex:3] setImage:profileTabImage];
+                    
+                    
+                    self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
+                    [self.window setRootViewController:tabBarController];
+                    [self.window makeKeyAndVisible];
+                    
+                    
+                }
+                NSLog(@"operation Success: %@", operation);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+        });
+        
+        
+    }
+    
+    if ([standard objectForKey:@"CurrentUserName"] == nil)
+    {
     RegisterViewController *loginView = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
     loginView.title = @"LOG-IN";
     
-    self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
-    [self.window setRootViewController:loginView];
-    [self.window makeKeyAndVisible];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginView];
+    nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[standard objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
     
+    self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
+    [self.window setRootViewController:nav];
+    [self.window makeKeyAndVisible];
+    }
     //Firebase configuration//
     [FIRApp configure];
     
-    ///Facebook configuratiom///
+    ///Facebook configuration///
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
     
@@ -45,7 +191,7 @@
     {
         [self registerDefaultsFromSettingsBundle];
     }
-  
+    
     return YES;
 }
 - (BOOL)application:(UIApplication *)application
@@ -105,7 +251,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [FBSDKAppEvents activateApp];
-   
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -136,7 +282,7 @@
                      * The device is out of space.
                      * The store could not be migrated to the current model version.
                      Check the error message to determine what the actual problem was.
-                    */
+                     */
                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                     abort();
                 }

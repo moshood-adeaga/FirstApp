@@ -12,8 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraViewController">
             <connections>
+                <outlet property="cancelButton" destination="Yv9-lh-LYo" id="k49-ap-Ckl"/>
                 <outlet property="captureImage" destination="r3x-D7-lb0" id="hNk-AY-3dd"/>
                 <outlet property="pictureImageView" destination="tfy-gF-Lju" id="AiF-Ww-w5V"/>
+                <outlet property="saveButtonProperty" destination="wAv-8S-mdq" id="MY3-W6-43t"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,9 +32,25 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3x-D7-lb0">
                     <rect key="frame" x="147" y="535" width="80" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button" image="camcircle.png"/>
+                    <state key="normal" image="camcircle.png"/>
                     <connections>
                         <action selector="imageCaptureButton:" destination="-1" eventType="touchUpInside" id="vdN-oE-X8i"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yv9-lh-LYo">
+                    <rect key="frame" x="321" y="64" width="54" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="cross"/>
+                    <connections>
+                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="vjn-G2-bVh"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wAv-8S-mdq">
+                    <rect key="frame" x="0.0" y="64" width="54" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="save"/>
+                    <connections>
+                        <action selector="saveButton:" destination="-1" eventType="touchUpInside" id="x7F-8o-0XN"/>
                     </connections>
                 </button>
             </subviews>
@@ -43,5 +61,7 @@
     </objects>
     <resources>
         <image name="camcircle.png" width="80" height="80"/>
+        <image name="cross" width="50" height="50"/>
+        <image name="save" width="50" height="50"/>
     </resources>
 </document>

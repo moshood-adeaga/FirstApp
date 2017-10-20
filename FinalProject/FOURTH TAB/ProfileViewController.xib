@@ -214,6 +214,10 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QT7-Ou-v2N">
+                            <rect key="frame" x="147" y="-4" width="110" height="200"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="nEH-Oo-48n" firstAttribute="bottom" secondItem="EVn-Fl-Qci" secondAttribute="bottom" id="0Ai-Vy-Abx"/>

@@ -2,7 +2,7 @@
 //  ImageCaching.h
 //  FinalProject
 //
-//  Created by Shegz on 2017/10/03.
+//  Created by Moshood Adeaga on 2017/10/03.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 -(void)cacheImage:(UIImage*)image forKey:(NSString*)key;
 -(UIImage*)getCachedImageForKey:(NSString*)key;
 
-/////EVENTS////
+//EVENTS TAB DATA
 @property(strong,nonatomic) NSMutableString *eventName;
 @property(strong,nonatomic) NSMutableString *userID;
 @property(strong,nonatomic) NSMutableString *venueID;
@@ -25,7 +25,7 @@
 @property(strong,nonatomic) NSMutableString *eventPic;
 @property(strong,nonatomic) NSMutableString *eventID;
 
-//////PROFILE/////
+//PROFILE FILE TAB
 @property(strong,nonatomic) NSMutableString *selectedUsersName;
 @property(strong,nonatomic) NSMutableString *selectedFirstName;
 @property(strong,nonatomic) NSMutableString *selectedLastName;

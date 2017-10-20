@@ -2,7 +2,7 @@
 //  EventsCell.h
 //  FinalProject
 //
-//  Created by Shegz on 2017/10/03.
+//  Created by Moshood Adeaga on 2017/10/03.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 

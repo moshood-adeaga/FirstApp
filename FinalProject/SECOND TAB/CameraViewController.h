@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CameraViewController : UIViewController
+@interface CameraViewController : UIViewController <UIPopoverPresentationControllerDelegate>
+- (IBAction)saveButton:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveButtonProperty;
+
+- (IBAction)cancelAction:(UIButton *)sender;
 
 @end

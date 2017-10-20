@@ -2,7 +2,7 @@
 //  LoginViewController.m
 //  FinalProject
 //
-//  Created by TheAppExperts on 10/6/17.
+//  Created by Moshood Adeaga on 10/6/17.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
@@ -10,14 +10,9 @@
 #import "RegisterViewController.h"
 #import "CoreDataManager.h"
 #import "UserDetail+CoreDataClass.h"
-#import "SAMKeychainQuery.h"
-#import "SAMKeychain.h"
 #import "AFNetworking.h"
 #import "AFHTTPSessionManager.h"
-
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "RNDecryptor.h"
-#import "RNEncryptor.h"
 
 
 
@@ -26,9 +21,10 @@
 @interface LoginViewController ()
 
 @property (strong, nonatomic) NSUserDefaults *defaults;
-@property (strong, nonatomic) CoreDataManager *myCoreManager;
 @property (copy, nonatomic) NSString *filePath;
 @property (copy, nonatomic) NSString *dataBasePath;
+
+@property (strong, nonatomic) CoreDataManager *myCoreManager;
 
 @end
 
@@ -36,8 +32,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //SETTING UP THEME//
- self.defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    self.myCoreManager = [CoreDataManager sharedManager];
+    self.passWordTextField.secureTextEntry =YES;
+    
+    //Setting Up Colour Dictionary.
     self.colourDict = @{
                         @"AQUA":[UIColor colorWithRed:0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0],
                         @"BLUE":[UIColor colorWithRed:0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0],
@@ -48,111 +48,121 @@
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
-     [self.navigationController.navigationBar setBarTintColor: [self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.navigationController.navigationBar setBarTintColor: [self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
     [self.segmentedControl setTintColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
     [self appear:YES];
-  self.myCoreManager = [CoreDataManager sharedManager];
-    [self.registrationLabel setHidden:!self.registrationLabel.hidden];
-    self.passWordTextField.secureTextEntry =YES;
+    
+    //Database Path To connect to Registration Path.
     self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/register.php";
     
+    //Adding Tap Gesture to Resign responders.
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
-   
-   ;
-    
 }
+///Function to Store Labels In View in to an Array
 - (NSArray*) getAllLabels
 {
-    
     NSArray *labels = [[NSArray alloc] initWithObjects:self.confirm, self.registerButton, self.passLabel, self.userLabel, self.emailLabel, self.lastnameLabel,self.firstnameLabel,self.phoneLabel, nil];
-    
     return labels;
 }
 
+// Function to Change the Colour&Fonts of all Labels in the View
 - (void) appear:(BOOL)on
 {
     for (UILabel *label in [self getAllLabels]) {
-        //label.alpha = 0.0;
         label.backgroundColor=[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
         label.font =[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0f];
+        
+        [self.userNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.firstNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.lastNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.emailTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.phoneNumberTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+        [self.passWordTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
 
+        
     }
-    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 - (IBAction)segmentControl:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
-        
+        //Changing Between the Register and Log-Out View.
         RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
         registerControl.title = @"LOG-IN";
         self.segmentedControl.selected =NO;
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:registerControl];
-        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+        nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
         nav.navigationBar.barStyle = UIBarStyleBlack;
-         [self presentViewController:nav animated:YES completion:nil];
+        [self presentViewController:nav animated:YES completion:nil];
         //[self presentModalViewController:registerControl animated:YES];
     }
 }
 - (IBAction)registerButton:(UIButton *)sender {
-//    //Adding Users to CoreData//
-//    UserDetail *newUser = [[UserDetail alloc] initWithContext:[[self.myCoreManager persistentContainer] viewContext]];
-//    [newUser setFirstName:self.firstNameTextField.text];
-//    [newUser setLastName:self.lastNameTextField.text];
-//    [newUser setEmail:self.emailTextField.text];
-//    [newUser setPassword:self.passWordTextField.text];
     
-   // [SAMKeychain setPassword:self.passWordTextField.text forService:@"FinalProject" account:self.userNameTextField.text];
-   // NSLog(@"READING VALUE %@", [SAMKeychain passwordForService:@"FinalProject" account:self.userNameTextField.text]);
-//    [self setupUserDirectory];
-//    [self storeUserDetail];
-   
-    //Saving the User//
-//    [self.myCoreManager saveContext];
-   
+    //Registering a New user to the system with the Details the Enter to textfields in the View.
+    NSDictionary *databaseParameter= @{@"username":self.userNameTextField.text,
+                                       @"password":self.passWordTextField.text,
+                                       @"email":self.emailTextField.text,
+                                       @"firstname":self.firstNameTextField.text,
+                                       @"lastname":self.lastNameTextField.text,
+                                       @"phone":self.phoneNumberTextField.text
+                                       };
     
-    
-    [self.registrationLabel setEnabled:YES];
-    [self.registrationLabel setText:@"REGISTRATION COMPLETE"];
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0
-                                     target:self
-                                   selector:@selector(labelMethod:)
-                                   userInfo:nil
-                                    repeats:NO];
-    //Saving to database
-    
-   NSDictionary *databaseParameter= @{@"username":self.userNameTextField.text,
-                                        @"password":self.passWordTextField.text,
-                                        @"email":self.emailTextField.text,
-                                        @"firstname":self.firstNameTextField.text,
-                                        @"lastname":self.lastNameTextField.text,
-                                        @"phone":self.phoneNumberTextField.text
-                                        };
-    
+    //Making a Post Request to the Database Path for Registration, the Path is shown In the View Did Load Fuction Above.
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON Successsss: %@", responseObject);
-        NSLog(@"operation Successsss: %@", operation);
+        NSString *errorString = [responseObject valueForKey:@"message"];
+        
+        //Checking to see if user has been Created  and if there is any Error by using the Error message which is provided by the Server.
+        if ([errorString isEqualToString:@"User created successfully"]) {
+            UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Success" message:@"Registration Completed" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                RegisterViewController *registerControl =[[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
+                registerControl.title = @"LOG-IN";
+                self.segmentedControl.selected =NO;
+                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:registerControl];
+                nav.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0],NSFontAttributeName,[UIColor whiteColor], NSForegroundColorAttributeName,nil];
+                nav.navigationBar.barStyle = UIBarStyleBlack;
+                [self presentViewController:nav animated:YES completion:nil];
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet2 animated:YES completion:nil];
+        } else if ([errorString isEqualToString:@"User already exist"])
+        {
+            UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Error" message:@"User Exists Already" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet2 animated:YES completion:nil];
+        } else if ([errorString isEqualToString:@"Some error occurred"])
+        {
+            UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Error" message:@"Something Went Wrong, Check Details and Try Again" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet2 animated:YES completion:nil];
+        }else if ([errorString isEqualToString:@"Required parameters are missing"])
+        {
+            UIAlertController *actionSheet2 = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check That You Have Entered All Your Details Correctly" preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet2 addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet2 animated:YES completion:nil];
+        }
+        
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error laaa: %@", error);
+        NSLog(@"Error: %@", [error localizedDescription]);
     }];
 }
--(void)labelMethod:(NSTimer*)timer
-{
-    [self.registrationLabel setHidden:!self.registrationLabel.hidden];
-}
 
+///This Dismiss the Key Board When any where else is Tapped, using the Tap gesture recognizer.
 -(void)dismissKeyboard {
     [self.userNameTextField resignFirstResponder];
     [self.passWordTextField resignFirstResponder];

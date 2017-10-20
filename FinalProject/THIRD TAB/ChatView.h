@@ -10,6 +10,4 @@
 #import <JSQMessagesViewController.h>
 
 @interface ChatView : JSQMessagesViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate>
-
-
 @end

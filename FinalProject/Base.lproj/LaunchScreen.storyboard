@@ -28,7 +28,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="LETS CHAT ">
                                         <attributes>
-                                            <font key="NSFont" size="32" name="Zapfino"/>
+                                            <font key="NSFont" size="43" name="Chalkduster"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>

@@ -17,34 +17,30 @@
 {
     NSUserDefaults *standardDefaults;
 }
-@property (strong,nonatomic) NSString *dataBasePath;
+@property (strong, nonatomic)  NSString *dataBasePath;
 @property (strong, nonatomic) ImageCaching *imageCache;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
-
-
 @end
 
 @implementation usersAndChatViewController
-
+@dynamic refreshControl;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     self.imageCache = [ImageCaching sharedInstance];
     
-    self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/retrieveusers.php";
-    [self initParse:self.dataBasePath];
-    
-    // Initialize the refresh control.
+    // Initializing the Refresh control.
     self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor blueColor];
+    self.refreshControl.backgroundColor = [self.navigationController.navigationBar barTintColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(getLatestUsers)
-                  forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(getLatestUsers)forControlEvents:UIControlEventValueChanged];
     
-   
-   
+    // A Link to the Apps User database which will give a response in Json contain the details of all Users on the database.
+    self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/retrieveusers.php";
+    
+    [self initParse:self.dataBasePath];
 }
 
 #pragma Image Download
@@ -54,7 +50,7 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ( !error )
+                               if (!error)
                                {
                                    UIImage *image = [[UIImage alloc] initWithData:data];
                                    completionBlock(YES,image);
@@ -65,13 +61,11 @@
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - Table view Delegate & Datasource.
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowsInSection;
     rowsInSection = 0;
@@ -81,33 +75,32 @@
         rowsInSection = [self.firstName count];
     return rowsInSection;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-   
+    
     if(indexPath.section == 0)
     {
         [cell.textLabel setText:@"GLOBAL CHAT"];
-         cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+        cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
         [cell.detailTextLabel setText:@"Group Chat to talk to all Users"];
-         cell.detailTextLabel.font =[UIFont fontWithName:@"American Typewriter Condense" size:14];
+        cell.detailTextLabel.font =[UIFont fontWithName:@"American Typewriter Condense" size:14];
         [cell.imageView setImage:[UIImage imageNamed:@"globalChat"]];
         
         
     }else if (indexPath.section == 1){
         
-    NSString *usersFullName = [NSString stringWithFormat:@"%@ %@",self.firstName[indexPath.row],self.lastName[indexPath.row]];
+        NSString *usersFullName = [NSString stringWithFormat:@"%@ %@",self.firstName[indexPath.row],self.lastName[indexPath.row]];
         cell.textLabel.text = usersFullName;
         if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]])
         {
             cell.imageView.image =[[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]];
         }else
         {
-           cell.imageView.image = [UIImage imageNamed:@"noimage"];
+            cell.imageView.image = [UIImage imageNamed:@"noimage"];
             // download the image asynchronously
             NSURL *imageUrl = [NSURL URLWithString:[self.imageLink objectAtIndex:indexPath.row]];
             [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
@@ -119,13 +112,13 @@
                 }
             }];
         }
-    
+        
     }
-     cell.imageView.layer.cornerRadius = 40.0f;
-     cell.imageView.clipsToBounds =YES;
+    cell.imageView.layer.cornerRadius = 40.0f;
+    cell.imageView.clipsToBounds =YES;
     cell.imageView.autoresizingMask= UIViewAutoresizingNone;
     [cell layoutSubviews];
-  return cell;
+    return cell;
 }
 
 
@@ -133,16 +126,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatView *chatsView = [[ChatView alloc]initWithNibName:@"ChatView" bundle:nil];
-  
+    
     chatsView.hidesBottomBarWhenPushed =YES;
     if(indexPath.section == 0)
     {
-      chatsView.title = @" GLOBAL CHAT";
+        chatsView.title = @" GLOBAL CHAT";
         [self.imageCache.selectedUsersName setString:[NSString stringWithFormat:@"%d",0]];
         
     }
     else if (indexPath.section == 1)
     {
+        // The Detail of the which ever users selected for chatting is stored in a singleton so that it
+        // can be used later.
         chatsView.title = [self.userName objectAtIndex:indexPath.row];
         [self.imageCache.selectedUsersName setString:[self.userName objectAtIndex:indexPath.row]];
         [self.imageCache.selectedFirstName setString:[self.firstName objectAtIndex:indexPath.row]];
@@ -150,7 +145,7 @@
         [self.imageCache.selectedEmail setString:[self.emailOfSelectedUser objectAtIndex:indexPath.row]];
         [self.imageCache.selectedPhoneNumber setString:[self.phoneNumberOfSelectedUser objectAtIndex:indexPath.row]];
         [self.imageCache.selectedImageLink setString:[self.imageLink objectAtIndex:indexPath.row]];
-   
+        
     }
     // Push the view controller.
     [self.navigationController pushViewController:chatsView animated:YES];
@@ -160,18 +155,18 @@
     NSString *sectionHeader;
     
     if(section == 0)
-      sectionHeader= @"GLOBAL CHAT";
+        sectionHeader= @"GLOBAL CHAT";
     if(section == 1)
-      sectionHeader= @"USERS";
+        sectionHeader= @"USERS";
     return sectionHeader;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     UILabel *myLabel = [[UILabel alloc] init];
-    myLabel.frame = CGRectMake(0, 0, 420, 20);
-    myLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:14];
+    myLabel.frame = CGRectMake(0, 0, 4200, 20);
+    myLabel.font = [UIFont fontWithName:@"American Typewriter Condensed" size:14];
     myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
-    myLabel.backgroundColor =[ UIColor grayColor];
+    myLabel.backgroundColor =[self.navigationController.navigationBar barTintColor];
     myLabel.textColor = [UIColor whiteColor];
     
     UIView *headerView = [[UIView alloc] init];
@@ -188,8 +183,6 @@
 -(void)initParse:(NSString*)link
 {
     NSURL *URL = [NSURL URLWithString:link];
-    
-    
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:URL completionHandler:^(NSData  *_Nullable data, NSURLResponse * _Nullable response, NSError* _Nullable error) {
         
         
@@ -215,12 +208,13 @@
     NSError *error;
     NSDictionary *root = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     if (!error) {
-
+        // The Detail of the all the user received from the server is parsed and stored in a respective for each
+        // data received from the server.
         NSString *compareFirstName =[[NSUserDefaults standardUserDefaults]objectForKey:@"firstName"];
         NSMutableArray *userFirstName = [[root valueForKey:@"firstname"]mutableCopy];
         [userFirstName removeObject:compareFirstName];
         self.firstName =userFirstName;
-       
+        
         NSString *compareLastName =[[NSUserDefaults standardUserDefaults]objectForKey:@"lastName"];
         NSMutableArray *userLastName = [[root valueForKey:@"lastname"]mutableCopy];
         [userLastName removeObject:compareLastName];

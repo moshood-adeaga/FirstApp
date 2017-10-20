@@ -24,12 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    [self.myMapView setDelegate: self];
     self.imageCache = [ImageCaching sharedInstance];
+    [self.myMapView setDelegate: self];
     venueID =self.imageCache.venueID;
-    NSLog(@"%@",self.imageCache.venueID);
+    
     NSString *venueLink =[NSString stringWithFormat:@"https://www.eventbriteapi.com/v3/venues/%@/?token=XU4CJHOK4JHP4VB3XY4B",venueID];
+    
     [self initParse:venueLink];
     
     
@@ -64,12 +64,15 @@
     NSError *error;
     NSDictionary *root = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     if (!error) {
-       NSString *eventLatitude1 = [root valueForKeyPath:@"address.latitude"];
-       eventLatitude = [eventLatitude1 doubleValue];
+        NSString *eventLatitude1 = [root valueForKeyPath:@"address.latitude"];
+        eventLatitude = [eventLatitude1 doubleValue];
         
-       NSString *eventLongtitude1 = [root valueForKeyPath:@"address.longitude"];
+        NSString *eventLongtitude1 = [root valueForKeyPath:@"address.longitude"];
         eventLongtitude = [eventLongtitude1 doubleValue];
-       
+        
+        //Plotting the data of the event Latitude and Logitude to the Map
+        // this is shown in the Event View Controller,and triggered by the
+        //Long press Gesture Recognizer.
         MKCoordinateRegion region;
         region.center.latitude = eventLatitude;
         region.center.longitude =eventLongtitude;

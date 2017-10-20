@@ -16,6 +16,7 @@
 @property AVCaptureDevice *videoDevice;
 @property AVCaptureSession *captureSession;
 @property dispatch_queue_t captureSessionQueue;
+@property  AVCaptureVideoDataOutput *videoDataOutput;
 
 @property GLKView *videoPreviewView;
 @property CIContext *ciContext;
@@ -25,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *captureImage;
 - (IBAction)imageCaptureButton:(UIButton *)sender;
 @property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
+@property (nonatomic, strong) UIActivityViewController *activityViewController;
+
 
 @end
 
@@ -32,7 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // remove the view's background color; this allows us not to use the opaque property (self.view.opaque = NO) since we remove the background color drawing altogether
+    [self.cancelButton setHidden:YES];
+    [self.saveButtonProperty setHidden:YES];
     self.view.backgroundColor = [UIColor clearColor];
     
     // setup the GLKView for video/image preview
@@ -45,7 +49,9 @@
     _videoPreviewView.transform = CGAffineTransformMakeRotation(M_PI_2);
     _videoPreviewView.frame = window.bounds;
     
-    // we make our video preview view a subview of the window, and send it to the back; this makes ViewController's view (and its UI elements) on top of the video preview, and also makes video preview unaffected by device rotation
+    // we make our video preview view a subview of the window, and send it to the back; this makes ViewController's view (and
+    //its UI elements) on top of the video preview, and also makes video preview unaffected by device rotation
+    
     [window addSubview:_videoPreviewView];
     [window sendSubviewToBack:_videoPreviewView];
     
@@ -57,9 +63,9 @@
     
     _ciContext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ];
     
+    //Check for Camera Device before starting the camera.
     if ([[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count] > 0)
     {
-        
         [self _start];
     }
     else
@@ -88,7 +94,7 @@
         NSLog(@"%@", [NSString stringWithFormat:@"Unable to obtain video device input, error: %@", error]);
         return;
     }
-    // obtain the preset and validate the preset
+    // This will Obtain the preset and validate the preset
     NSString *preset = AVCaptureSessionPresetMedium;
     if (![_videoDevice supportsAVCaptureSessionPreset:preset])
     {
@@ -96,7 +102,7 @@
         return;
     }
     
-    // create the capture session
+    // Create the capture session
     _captureSession = [[AVCaptureSession alloc] init];
     _captureSession.sessionPreset = preset;
     
@@ -104,38 +110,41 @@
     NSDictionary *outputSettings = @{ (id)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithInteger:kCVPixelFormatType_32BGRA]};
     
     // create and configure video data output
-    AVCaptureVideoDataOutput *videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    videoDataOutput.videoSettings = outputSettings;
+    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    self.videoDataOutput.videoSettings = outputSettings;
     
-    // create the dispatch queue for handling capture session delegate method calls
+    // Create the dispatch queue for handling capture session delegate method calls
     _captureSessionQueue = dispatch_queue_create("capture_session_queue", NULL);
-    [videoDataOutput setSampleBufferDelegate:self queue:_captureSessionQueue];
-    videoDataOutput.alwaysDiscardsLateVideoFrames = YES;
-    
+    [self.videoDataOutput setSampleBufferDelegate:self queue:_captureSessionQueue];
+    self.videoDataOutput.alwaysDiscardsLateVideoFrames = YES;
+
     // begin configure capture session
     [_captureSession beginConfiguration];
     
-    if (![_captureSession canAddOutput:videoDataOutput])
+    if (![_captureSession canAddOutput:self.videoDataOutput])
     {
         NSLog(@"Cannot add video data output");
         _captureSession = nil;
         return;
     }
     self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *outputSettings2 = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [self.stillImageOutput setOutputSettings:outputSettings];
+    NSDictionary *outputSettings2 = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, (id)kCVPixelBufferPixelFormatTypeKey,[NSNumber numberWithInteger:kCVPixelFormatType_32BGRA], nil];
+    [self.stillImageOutput setOutputSettings:outputSettings2];
     
-    // connect the video device input and video data and still image outputs
+    // Connect the video device input and video data and still image outputs
     [_captureSession addInput:videoDeviceInput];
-    [_captureSession addOutput:videoDataOutput];
+    [_captureSession addOutput:self.videoDataOutput];
+    [_captureSession addOutput:self.stillImageOutput];
     
     [_captureSession commitConfiguration];
     
-    // then start everything
+    // Start everything
     [_captureSession startRunning];
 
 }
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
+// The Purpose of this function/delegate is to apply the effect to the Pic that is been taken.
+// this is done using Core Image effects.
+- (void)captureOutput:(AVCaptureStillImageOutput*)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CIImage *sourceImage = [CIImage imageWithCVPixelBuffer:(CVPixelBufferRef)imageBuffer options:nil];
@@ -154,17 +163,17 @@
     CGFloat sourceAspect = sourceExtent.size.width / sourceExtent.size.height;
     CGFloat previewAspect = _videoPreviewViewBounds.size.width  / _videoPreviewViewBounds.size.height;
     
-    // we want to maintain the aspect radio of the screen size, so we clip the video image
+    // This will maintain the aspect radio of the screen size, so we clip the video image
     CGRect drawRect = sourceExtent;
     if (sourceAspect > previewAspect)
     {
-        // use full height of the video image, and center crop the width
+        // Use full height of the video image, and center crop the width
         drawRect.origin.x += (drawRect.size.width - drawRect.size.height * previewAspect) / 2.0;
         drawRect.size.width = drawRect.size.height * previewAspect;
     }
     else
     {
-        // use full width of the video image, and center crop the height
+        // Use full width of the video image, and center crop the height
         drawRect.origin.y += (drawRect.size.height - drawRect.size.width / previewAspect) / 2.0;
         drawRect.size.height = drawRect.size.width / previewAspect;
     }
@@ -191,6 +200,7 @@
 
 
 - (IBAction)imageCaptureButton:(UIButton *)sender {
+    //Using the still Image Output, a still image is Captured
     AVCaptureConnection *videoConnection = nil;
     for (AVCaptureConnection *connection in self.stillImageOutput.connections)
     {
@@ -209,12 +219,12 @@
     }
     
     NSLog(@"about to request a capture from: %@", self.stillImageOutput);
+  
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
-         CFDictionaryRef exifAttachments = CMGetAttachment( imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
+         CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
          if (exifAttachments)
          {
-             // Do something with the attachments.
              NSLog(@"attachements: %@", exifAttachments);
          } else {
              NSLog(@"no attachments");
@@ -223,9 +233,58 @@
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          UIImage *image = [[UIImage alloc] initWithData:imageData];
          
-         self.pictureImageView.image = image;
          
-         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+         
+         self.pictureImageView.image = image;
      }];
+    [self.cancelButton setHidden:NO];
+    [self.saveButtonProperty setHidden:NO];
+    [self.captureImage setHidden:YES];
+}
+- (IBAction)saveButton:(UIButton *)sender {
+    
+    //Users can then either share the image taken by social media, email, message or simply save to device
+    // this is done witht help of the Activity Controller.
+    NSMutableArray *activityItems = [NSMutableArray array];
+    [activityItems addObject:self.pictureImageView.image];
+    self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [self.activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        
+    }];
+    // Creating An Interface whereby it can be used on an iPad.
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self presentViewController:self.activityViewController animated:YES completion:nil];
+    }
+    else {
+        
+        // iPad
+        self.activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        self.activityViewController.popoverPresentationController.delegate =self;
+        self.activityViewController.preferredContentSize = CGSizeMake(self.view.frame.size.width/2, self.view.frame.size.height/4);
+        self.activityViewController.popoverPresentationController.sourceRect =[[sender valueForKey:@"view"] bounds];
+        self.activityViewController.popoverPresentationController.sourceView =self.view;
+        
+        UIPopoverPresentationController *popoverController = self.activityViewController.popoverPresentationController;
+        popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popoverController.delegate = self;
+  
+    }
+
+}
+- (IBAction)cancelAction:(UIButton *)sender
+{
+     self.pictureImageView.image =nil;
+    [self.cancelButton setHidden:YES];
+    [self.saveButtonProperty setHidden:YES];
+    [self.captureImage setHidden:NO];
+
+}
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    
+    return UIModalPresentationNone;
+}
+- (UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    return navController;
 }
 @end

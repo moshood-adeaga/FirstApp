@@ -2,7 +2,7 @@
 //  LoginViewController.h
 //  FinalProject
 //
-//  Created by TheAppExperts on 10/6/17.
+//  Created by Moshood Adeaga on 10/6/17.
 //  Copyright © 2017 moshood. All rights reserved.
 //
 
@@ -18,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passWordTextField;
 - (IBAction)registerButton:(UIButton *)sender;
-@property (strong, nonatomic) IBOutlet UILabel *registrationLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberTextField;
 @property (strong, nonatomic) NSDictionary *colourDict;
 @property (weak, nonatomic) IBOutlet UILabel *confirm;
