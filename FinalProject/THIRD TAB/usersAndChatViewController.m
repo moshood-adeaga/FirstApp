@@ -42,6 +42,12 @@
     
     [self initParse:self.dataBasePath];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self initParse:self.dataBasePath];
+    [self.tableView reloadData];
+}
 
 #pragma Image Download
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
@@ -95,13 +101,18 @@
         
         NSString *usersFullName = [NSString stringWithFormat:@"%@ %@",self.firstName[indexPath.row],self.lastName[indexPath.row]];
         cell.textLabel.text = usersFullName;
+        cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+        cell.detailTextLabel.text = [self.messageOfSelectedUser objectAtIndex:indexPath.row];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+
+        //cell.detailTextLabel.text;
         if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]])
         {
             cell.imageView.image =[[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]];
         }else
         {
             cell.imageView.image = [UIImage imageNamed:@"noimage"];
-            // download the image asynchronously
+            // Downloading the Image Asynchronously
             NSURL *imageUrl = [NSURL URLWithString:[self.imageLink objectAtIndex:indexPath.row]];
             [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
                 if (succeeded) {
@@ -244,6 +255,11 @@
         NSMutableArray *userEmail = [[root valueForKey:@"email"]mutableCopy];
         [userEmail removeObject:comparedEmail];
         self.emailOfSelectedUser =userEmail;
+        
+        NSString *comparedMessage = [[NSUserDefaults standardUserDefaults]objectForKey:@"userMessage"];
+        NSMutableArray *userMessage = [[root valueForKey:@"lastMessage"]mutableCopy];
+        [userMessage removeObject:comparedMessage];
+        self.messageOfSelectedUser = userMessage;
         
         
     } else {

@@ -16,5 +16,6 @@
 @property(strong, nonatomic) NSMutableArray *idOfSelectedUser;
 @property(strong, nonatomic) NSMutableArray *emailOfSelectedUser;
 @property(strong, nonatomic) NSMutableArray *phoneNumberOfSelectedUser;
+@property(strong, nonatomic) NSMutableArray *messageOfSelectedUser;
 @property(strong, nonatomic) NSDictionary *usersDataFromServer;
 @end

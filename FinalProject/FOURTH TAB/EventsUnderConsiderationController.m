@@ -96,7 +96,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
     cell.detailTextLabel.text = [self.descriptionArray objectAtIndex:indexPath.row];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:5];
+
     if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageArray objectAtIndex:indexPath.row]])
     {
         cell.imageView.image =[[ImageCaching sharedInstance] getCachedImageForKey:[self.imageArray objectAtIndex:indexPath.row]];

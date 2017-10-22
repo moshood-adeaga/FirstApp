@@ -35,6 +35,7 @@
     NSString *email;
     NSString *phoneNumber;
     NSString *userImageLink;
+    NSString *userLastMessage;
     
 }
 @property (strong, nonatomic) NSDictionary *userData;
@@ -58,7 +59,6 @@
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
-    
     NSString *dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
 
     if ([standard objectForKey:@"CurrentUserName"] != nil)
@@ -96,6 +96,9 @@
                 
                 userID =[[self.userData valueForKeyPath:@"user.id"]intValue];
                 [standard setObject:[NSString stringWithFormat:@"%d",userID] forKey:@"userID"];
+                
+                userLastMessage =[self.userData valueForKeyPath:@"user.lastMessage"];
+                [standard setObject:userLastMessage forKey:@"userMessage"];
                 
                 [standard synchronize];
                 int myErrorCode =[[self.userData valueForKeyPath:@"error"] intValue];
@@ -152,7 +155,7 @@
                     [[tabBarController.tabBar.items objectAtIndex:3] setImage:profileTabImage];
                     
                     
-                    self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
+                    self.window =[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];;
                     [self.window setRootViewController:tabBarController];
                     [self.window makeKeyAndVisible];
                     
@@ -160,7 +163,14 @@
                 }
                 NSLog(@"operation Success: %@", operation);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error: %@", error);
+                NSLog(@"Error: %@", [error localizedFailureReason]);
+                UIAlertController *actionSheet3 = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check Your Connection and Try Again " preferredStyle:UIAlertControllerStyleAlert];
+                [actionSheet3 addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                }]];
+                // Present action sheet.
+                self.window =[[UIWindow alloc] initWithFrame:CGRectMake(54, 200, 100, 120)];
+                [self.window setRootViewController:actionSheet3];
+                [self.window makeKeyAndVisible];
             }];
         });
         

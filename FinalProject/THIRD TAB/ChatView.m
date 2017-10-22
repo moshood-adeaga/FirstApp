@@ -8,6 +8,8 @@
 
 #import "ChatView.h"
 #import "ImageCaching.h"
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
 #import <JSQMessagesViewController.h>
 #import <JSQMessage.h>
 #import <JSQMessagesCollectionViewCell.h>
@@ -47,6 +49,7 @@
 @property (nonatomic, strong) JSQMessagesBubbleImageFactory *colorBubble;
 @property (nonatomic, strong) FIRDatabaseReference *ref;
 @property (nonatomic, strong) NSString *imageDownloadLink;
+@property (nonatomic, strong) NSString *dataBasePath;
 @end
 @implementation ChatView
 
@@ -99,6 +102,7 @@
     // Creating a Bubble for Messages, two bubble types one for OUTGOING messages and the other  for INCOMING messages.
     _colorBubble =[[JSQMessagesBubbleImageFactory alloc]init];
     _sendingBubble = [_colorBubble outgoingMessagesBubbleImageWithColor:[self.navigationController.navigationBar barTintColor]];
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:[standardDefault objectForKey:@"settingsFont"] size:17];
     _receivingBubble = [_colorBubble incomingMessagesBubbleImageWithColor:[UIColor grayColor]];
     
     // Creating an avatar image for User.
@@ -161,17 +165,23 @@
         _incoming=[ JSQMessagesAvatarImageFactory  avatarImageWithImage:incomingAvatar diameter:70];
         
     }
+    //Database Path to update last message from/to user.
+    self.dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/lastmessage.php";
+
     // Function to observe Incoming & Outgoing messages.
-    [self observeMessages];
+       [self observeMessages];
 }
+
 
 #pragma - JSQMessages CollectionView DataSource & Delegate
 
 // The will print the messages being sent and being received onto the collectionview
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     return [self.messages objectAtIndex:indexPath.item];
 }
+
 // This will determine the number of secetions for the collection view.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -184,7 +194,6 @@
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-    
     if (message.senderId == self.senderId) {
         return self.sendingBubble;
     }
@@ -382,6 +391,23 @@
         if ([snapshot.value[@"Data-Type"] isEqual:@"TEXT"])
         {
             JSQMessage *messageContent = [[JSQMessage alloc]initWithSenderId:snapshot.value[@"userId"] senderDisplayName:snapshot.value[@"user"]  date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] text:snapshot.value[@"message"]];
+            NSDictionary *databaseParameter= @{@"username":[[ImageCaching sharedInstance]selectedUsersName],
+                                               @"lastMessage":snapshot.value[@"message"]
+                                               };
+            
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+            
+            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+            [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+            [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"JSON Successsss: %@", responseObject);
+                NSLog(@"operation Successsss: %@", operation);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error laaa: %@", error);
+            }];
             [self.messages addObject:messageContent];
         }else
             // Photo Messages is acquired  and then inserted in to the jsq messages array.
@@ -392,6 +418,23 @@
                 UIImage *imageFromServer = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:urlWithString]];
                 JSQPhotoMediaItem *jsqImage = [[JSQPhotoMediaItem alloc]initWithImage:imageFromServer];
                 JSQMessage *messageContent =[[JSQMessage alloc]initWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] senderDisplayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] media:jsqImage];
+                NSDictionary *databaseParameter= @{@"username":[[ImageCaching sharedInstance]selectedUsersName],
+                                                   @"lastMessage":@"Image"
+                                                   };
+                
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+                
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+                [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+                [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"JSON Successsss: %@", responseObject);
+                    NSLog(@"operation Successsss: %@", operation);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error laaa: %@", error);
+                }];
                 [self.messages addObject:messageContent];
                 
             }else
@@ -402,6 +445,23 @@
                     NSURL *urlWithString = [NSURL URLWithString:urlString];
                     JSQVideoMediaItem *jsqVideo =  [[JSQVideoMediaItem alloc]initWithFileURL:urlWithString isReadyToPlay:YES];
                     JSQMessage *messageContent =[[JSQMessage alloc]initWithSenderId:[[NSUserDefaults standardUserDefaults]objectForKey:@"userID"] senderDisplayName:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] date:[NSDate dateWithTimeIntervalSince1970:[snapshot.value[@"Time"]intValue]] media:jsqVideo];
+                    NSDictionary *databaseParameter= @{@"username":[[ImageCaching sharedInstance]selectedUsersName],
+                                                       @"lastMessage":@"Video"
+                                                       };
+                    
+                    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+                    
+                    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+                    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+                    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+                    [manager POST:self.dataBasePath parameters:databaseParameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSLog(@"JSON Successsss: %@", responseObject);
+                        NSLog(@"operation Successsss: %@", operation);
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        NSLog(@"Error laaa: %@", error);
+                    }];
                     [self.messages addObject:messageContent];
                 }
         [self finishReceivingMessageAnimated:YES];

@@ -28,6 +28,7 @@
     NSString *email;
     NSString *phoneNumber;
     NSString *userImageLink;
+    NSString *userLastMessage;
     
     NSUserDefaults *standardUserDefaults;
 }
@@ -138,6 +139,10 @@
             
             userID =[[self.userData valueForKeyPath:@"user.id"]intValue];
             [standardUserDefaults setObject:[NSString stringWithFormat:@"%d",userID] forKey:@"userID"];
+            
+            userLastMessage =[self.userData valueForKeyPath:@"user.lastMessage"];
+            [standardUserDefaults setObject:userLastMessage forKey:@"userMessage"];
+
             
             [standardUserDefaults synchronize];
             
@@ -282,7 +287,12 @@
             
             NSLog(@"operation Success: %@", operation);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+            NSLog(@"Error: %@", [error localizedFailureReason]);
+            UIAlertController *actionSheet3 = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check Your Connection and Try Again " preferredStyle:UIAlertControllerStyleAlert];
+            [actionSheet3 addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            // Present action sheet.
+            [self presentViewController:actionSheet3 animated:YES completion:nil];
         }];
     });
     

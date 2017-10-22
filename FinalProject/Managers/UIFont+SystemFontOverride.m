@@ -15,13 +15,13 @@
 + (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
     NSUserDefaults *standardUserDefaults;
     standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"]size:fontSize];
+    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"]size:10];
 }
 
 + (UIFont *)systemFontOfSize:(CGFloat)fontSize {
     NSUserDefaults *standardUserDefaults;
     standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"] size:fontSize];
+    return [UIFont fontWithName:[standardUserDefaults objectForKey:@"settingsFont"] size:10];
 }
 
 #pragma clang diagnostic pop

@@ -80,10 +80,6 @@
     [navigationBarsQuery.buttons[@"EVENTS"] tap];
     
 }
--(void)testCameraTab
-{
-
-}
 -(void)testChatTab
 {
     
