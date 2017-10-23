@@ -20,8 +20,6 @@
 #import <Firebase.h>
 #import "ChatView.h"
 #import "usersAndChatViewController.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-
 
 
 
@@ -192,9 +190,7 @@
     //Firebase configuration//
     [FIRApp configure];
     
-    ///Facebook configuration///
-    [[FBSDKApplicationDelegate sharedInstance] application:application
-                             didFinishLaunchingWithOptions:launchOptions];
+    
     
     /// NSUserDefaults Configuration for Setttings Bundle//
     if(![[NSUserDefaults standardUserDefaults]objectForKey:@"text_preference"])
@@ -204,17 +200,7 @@
     
     return YES;
 }
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    
-    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                  openURL:url
-                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-                    ];
-    return handled;
-}
+
 -(void)registerDefaultsFromSettingsBundle{
     NSString *settingsBundle =[[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
     if(!settingsBundle)
@@ -260,7 +246,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [FBSDKAppEvents activateApp];
     
 }
 

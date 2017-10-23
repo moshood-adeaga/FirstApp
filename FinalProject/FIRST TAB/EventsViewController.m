@@ -13,7 +13,6 @@
 #import "eventDetailController.h"
 #import <Social/Social.h>
 #import <QuartzCore/QuartzCore.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
 
 
 

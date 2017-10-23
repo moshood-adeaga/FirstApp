@@ -41,8 +41,6 @@
 		BA18145B1F951FE900D84F00 /* EventsUnderConsiderationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */; };
 		BA18145C1F951FE900D84F00 /* EventsUnderConsiderationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */; };
 		BA6ACE171F963708009BBA2A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA6ACE161F963708009BBA2A /* Settings.bundle */; };
-		BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */; };
-		BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */; };
 		BA898A301F977CDA000B1190 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A2F1F977CD8000B1190 /* CoreImage.framework */; };
 		BA898A321F977CEE000B1190 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA898A311F977CEE000B1190 /* OpenGLES.framework */; };
 		BA898A3B1F977D65000B1190 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA898A391F977D65000B1190 /* CameraViewController.m */; };
@@ -150,10 +148,6 @@
 		BA1814591F951FE800D84F00 /* EventsUnderConsiderationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsUnderConsiderationController.m; sourceTree = "<group>"; };
 		BA18145A1F951FE800D84F00 /* EventsUnderConsiderationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsUnderConsiderationController.xib; sourceTree = "<group>"; };
 		BA6ACE161F963708009BBA2A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		BA898A2A1F975F0B000B1190 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Documents/FacebookSDKs/Bolts.framework; sourceTree = "<group>"; };
-		BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDKs/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDKs/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		BA898A2F1F977CD8000B1190 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		BA898A311F977CEE000B1190 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BA898A381F977D65000B1190 /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
@@ -191,8 +185,6 @@
 			files = (
 				BA898A321F977CEE000B1190 /* OpenGLES.framework in Frameworks */,
 				BA898A301F977CDA000B1190 /* CoreImage.framework in Frameworks */,
-				BA898A2D1F9763FF000B1190 /* FBSDKCoreKit.framework in Frameworks */,
-				BA898A2E1F9763FF000B1190 /* FBSDKShareKit.framework in Frameworks */,
 				BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */,
 				03EB2FBE1F867F5F00FE539D /* AVFoundation.framework in Frameworks */,
 				BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */,
@@ -373,10 +365,6 @@
 			children = (
 				BA898A311F977CEE000B1190 /* OpenGLES.framework */,
 				BA898A2F1F977CD8000B1190 /* CoreImage.framework */,
-				BA898A2A1F975F0B000B1190 /* Bolts.framework */,
-				BA898A291F975F0A000B1190 /* FBSDKCoreKit.framework */,
-				BA898A2B1F975F0B000B1190 /* FBSDKLoginKit.framework */,
-				BA898A2C1F975F0B000B1190 /* FBSDKShareKit.framework */,
 				BA1814441F924E5E00D84F00 /* AVKit.framework */,
 				BA18143C1F91131000D84F00 /* EventKit.framework */,
 				BA18143D1F91131000D84F00 /* EventKitUI.framework */,

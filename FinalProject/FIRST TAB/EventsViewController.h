@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
 
 @interface EventsViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong,nonatomic) UISearchBar *searchBar;
