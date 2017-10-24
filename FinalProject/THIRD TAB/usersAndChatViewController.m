@@ -102,11 +102,13 @@
         NSString *usersFullName = [NSString stringWithFormat:@"%@ %@",self.firstName[indexPath.row],self.lastName[indexPath.row]];
         cell.textLabel.text = usersFullName;
         cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
-        cell.detailTextLabel.text = [self.messageOfSelectedUser objectAtIndex:indexPath.row];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+        
+//        if([self.messageOfSelectedUser objectAtIndex:indexPath.row]!=nil)
+//        cell.detailTextLabel.text = [self.messageOfSelectedUser objectAtIndex:indexPath.row];
+//        cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
 
         //cell.detailTextLabel.text;
-        if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]])
+        if([[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]]!=nil)
         {
             cell.imageView.image =[[ImageCaching sharedInstance] getCachedImageForKey:[self.imageLink objectAtIndex:indexPath.row]];
         }else
@@ -117,8 +119,10 @@
             [self downloadImageWithURL:imageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
                 if (succeeded) {
                     // change the image in the cell
+                    if(image != nil)
                     cell.imageView.image = image;
                     // cache the image for use later (when scrolling up)
+                    if(image != nil)
                     [[ImageCaching sharedInstance]cacheImage:image forKey:[self.imageLink objectAtIndex:indexPath.row]];
                 }
             }];

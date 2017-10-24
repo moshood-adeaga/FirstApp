@@ -32,6 +32,7 @@
 		70841BA11F84E27700238258 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70841BA01F84E27700238258 /* Social.framework */; };
 		70C4397A1F88ED5E0054288D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C439791F88ED5E0054288D /* MobileCoreServices.framework */; };
 		89294999A5724D8DE4D8AAD1 /* libPods-FinalProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8909A549B79CE25114846 /* libPods-FinalProject.a */; };
+		BA0DDB7E1F9EC3F600C6FE44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA0DDB7D1F9EC3F600C6FE44 /* GoogleService-Info.plist */; };
 		BA18143E1F91131100D84F00 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143C1F91131000D84F00 /* EventKit.framework */; };
 		BA18143F1F91131100D84F00 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA18143D1F91131000D84F00 /* EventKitUI.framework */; };
 		BA1814451F924E5E00D84F00 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1814441F924E5E00D84F00 /* AVKit.framework */; };
@@ -50,7 +51,6 @@
 		BABD9CBE1F8CE770009A97DA /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBD1F8CE770009A97DA /* FirebaseDatabase.framework */; };
 		BABD9CC01F8CE77C009A97DA /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CBF1F8CE77C009A97DA /* FirebaseInstanceID.framework */; };
 		BABD9CC21F8CE789009A97DA /* FirebaseStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BABD9CC11F8CE789009A97DA /* FirebaseStorage.framework */; };
-		BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */; };
 		BABD9CD11F8E5512009A97DA /* usersAndChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CCF1F8E5512009A97DA /* usersAndChatViewController.m */; };
 		BABD9CD21F8E5512009A97DA /* usersAndChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABD9CD01F8E5512009A97DA /* usersAndChatViewController.xib */; };
 		BABD9CD61F8EC45C009A97DA /* mapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABD9CD41F8EC45C009A97DA /* mapViewController.m */; };
@@ -136,6 +136,7 @@
 		8E341854FC1A3E5D3E74E15B /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		BA0882DD1F97ACD100B0B190 /* camcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camcircle.png; sourceTree = "<group>"; };
 		BA0882DE1F97FE4500B0B190 /* FinalProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FinalProject.entitlements; sourceTree = "<group>"; };
+		BA0DDB7D1F9EC3F600C6FE44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA18143C1F91131000D84F00 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA18143D1F91131000D84F00 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		BA1814441F924E5E00D84F00 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -173,7 +174,6 @@
 		BAC02E461F8BB0F5006E9CB5 /* ChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatView.h; sourceTree = "<group>"; };
 		BAC02E471F8BB0F5006E9CB5 /* ChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
 		BAC02E481F8BB0F5006E9CB5 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
-		BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA1A587BCCCB398F98A26165 /* Pods-FinalProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3E44ABDF55BBA001129911A /* libPods-FinalProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -314,9 +314,9 @@
 				706AD00B1F83F73F001F83A5 /* Assets.xcassets */,
 				706AD00D1F83F73F001F83A5 /* LaunchScreen.storyboard */,
 				706AD0101F83F73F001F83A5 /* Info.plist */,
-				BAC02E4D1F8CC6EE006E9CB5 /* GoogleService-Info.plist */,
 				706AD0111F83F73F001F83A5 /* main.m */,
 				706AD0081F83F73F001F83A5 /* FinalProject.xcdatamodeld */,
+				BA0DDB7D1F9EC3F600C6FE44 /* GoogleService-Info.plist */,
 				BA6ACE161F963708009BBA2A /* Settings.bundle */,
 				03EB2FBF1F8687A900FE539D /* Others */,
 			);
@@ -555,10 +555,10 @@
 				03E3532C1F878C59005539A2 /* RegisterViewController.xib in Resources */,
 				706AD00F1F83F73F001F83A5 /* LaunchScreen.storyboard in Resources */,
 				BA898A3C1F977D65000B1190 /* CameraViewController.xib in Resources */,
+				BA0DDB7E1F9EC3F600C6FE44 /* GoogleService-Info.plist in Resources */,
 				706AD03E1F83F831001F83A5 /* EventsViewController.xib in Resources */,
 				BABD9CD71F8EC45C009A97DA /* mapViewController.xib in Resources */,
 				706AD00C1F83F73F001F83A5 /* Assets.xcassets in Resources */,
-				BABD9CC31F8CEBC7009A97DA /* GoogleService-Info.plist in Resources */,
 				03E353211F87876E005539A2 /* LoginViewController.xib in Resources */,
 				BAC02E4A1F8BB0F5006E9CB5 /* ChatView.xib in Resources */,
 				BABD9CD21F8E5512009A97DA /* usersAndChatViewController.xib in Resources */,

@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>615671680251-9dige1ccqaj37ol0vk3r6ijhcuf3mclm.apps.googleusercontent.com</string>
+	<string>766547219521-6c1ngpj345v6q4bejfu9a2o068l3k60f.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.615671680251-9dige1ccqaj37ol0vk3r6ijhcuf3mclm</string>
+	<string>com.googleusercontent.apps.766547219521-6c1ngpj345v6q4bejfu9a2o068l3k60f</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCV6KbB-Y1blyU_cnAHxG6oqp5qHZe2KgI</string>
+	<string>AIzaSyA8NdYtRcMKJ_vc1zh5tfgHP6DFxh7gCLM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>615671680251</string>
+	<string>766547219521</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>adeaga.FinalProject</string>
 	<key>PROJECT_ID</key>
-	<string>mychatapp-382a4</string>
+	<string>moshoodschatapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mychatapp-382a4.appspot.com</string>
+	<string>moshoodschatapp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:615671680251:ios:b274da66e19389a7</string>
+	<string>1:766547219521:ios:b274da66e19389a7</string>
 	<key>DATABASE_URL</key>
-	<string>https://mychatapp-382a4.firebaseio.com</string>
+	<string>https://moshoodschatapp.firebaseio.com</string>
 </dict>
 </plist>
