@@ -50,11 +50,17 @@
 @property (nonatomic, strong) FIRDatabaseReference *ref;
 @property (nonatomic, strong) NSString *imageDownloadLink;
 @property (nonatomic, strong) NSString *dataBasePath;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
 @end
 @implementation ChatView
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.activity= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.activity setCenter:CGPointMake(self.view.center.x,self.view.center.y)];
+    [self.collectionView addSubview:self.activity];
+
     
     self.collectionView.delegate =self;
     self.collectionView.dataSource= self;
@@ -383,6 +389,9 @@
 // is then made the data source for the collection view to view both the incoming and outgoing messages.
 -(void)observeMessages
 {
+     [self.activity startAnimating];
+ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+     
     [_ref observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot *snapshot) {
         if(!snapshot.exists){return;}
         NSLog(@"%@",snapshot.value);
@@ -466,11 +475,11 @@
                 }
         [self finishReceivingMessageAnimated:YES];
         [self.collectionView reloadData];
-        
-        
-        
-        
     }];
+     dispatch_async(dispatch_get_main_queue(), ^{
+         [self.activity stopAnimating];
+     });
+ });
 }
 
 //This function is called by the Send button, the button is self explanatory, and its purpose is to send text messages to the server.
