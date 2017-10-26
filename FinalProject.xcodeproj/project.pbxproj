@@ -103,7 +103,7 @@
 		5AB5D7839A9B04E3CD7CCFA7 /* libPods-FinalProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FinalProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6650EF94E7523E4FCBA1E80C /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
 		6ABADF84DBB28C427981FB33 /* Pods-FinalProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectTests/Pods-FinalProjectTests.release.xcconfig"; sourceTree = "<group>"; };
-		706ACFFC1F83F73E001F83A5 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		706ACFFC1F83F73E001F83A5 /* Let's Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Let's Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706ACFFF1F83F73E001F83A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		706AD0001F83F73E001F83A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		706AD0091F83F73F001F83A5 /* FinalProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FinalProject.xcdatamodel; sourceTree = "<group>"; };
@@ -137,6 +137,7 @@
 		BA0882DD1F97ACD100B0B190 /* camcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camcircle.png; sourceTree = "<group>"; };
 		BA0882DE1F97FE4500B0B190 /* FinalProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FinalProject.entitlements; sourceTree = "<group>"; };
 		BA0DDB7D1F9EC3F600C6FE44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BA14F7271FA0F0E900742131 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		BA18143C1F91131000D84F00 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BA18143D1F91131000D84F00 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		BA1814441F924E5E00D84F00 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -292,7 +293,7 @@
 		706ACFFD1F83F73E001F83A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				706ACFFC1F83F73E001F83A5 /* FinalProject.app */,
+				706ACFFC1F83F73E001F83A5 /* Let's Chat.app */,
 				706AD0171F83F73F001F83A5 /* FinalProjectTests.xctest */,
 				706AD0221F83F73F001F83A5 /* FinalProjectUITests.xctest */,
 			);
@@ -446,7 +447,7 @@
 			);
 			name = FinalProject;
 			productName = FinalProject;
-			productReference = 706ACFFC1F83F73E001F83A5 /* FinalProject.app */;
+			productReference = 706ACFFC1F83F73E001F83A5 /* Let's Chat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		706AD0161F83F73F001F83A5 /* FinalProjectTests */ = {
@@ -824,6 +825,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				706AD00E1F83F73F001F83A5 /* Base */,
+				BA14F7271FA0F0E900742131 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -978,7 +980,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adeaga.FinalProject;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Let's Chat";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1026,7 +1028,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adeaga.FinalProject;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Let's Chat";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

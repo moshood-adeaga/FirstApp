@@ -52,7 +52,7 @@
 			<key>Key</key>
 			<string>settingsColor</string>
 			<key>DefaultValue</key>
-			<string>BLACK</string>
+			<string>CYAN</string>
 			<key>Titles</key>
 			<array>
 				<string>BLACK</string>
@@ -63,6 +63,7 @@
 				<string>PURPLE</string>
 				<string>YELLOW</string>
 				<string>GREEN</string>
+				<string>CYAN</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -74,6 +75,7 @@
 				<string>PURPLE</string>
 				<string>YELLOW</string>
 				<string>GREEN</string>
+				<string>CYAN</string>
 			</array>
 		</dict>
 	</array>

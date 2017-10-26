@@ -55,6 +55,7 @@
                         @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
                         @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"CYAN":[UIColor colorWithRed:75.0/255.0 green:186/255.0 blue:231.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
     NSString *dataBasePath= @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/login.php";
@@ -142,7 +143,9 @@
                     [tabBarController setViewControllers:@[nav1,nav2,nav5,nav4]];
                     tabBarController.tabBar.barTintColor =[self.colourDict objectForKey:[standard objectForKey:@"settingsColor"]];
                     tabBarController.tabBar.tintColor =[UIColor whiteColor];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 100000
                     tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
+                    #endif
                     UIImage *eventsTabImage = [UIImage imageNamed:@"status.png"];
                     [[tabBarController.tabBar.items objectAtIndex:0] setImage:eventsTabImage];
                     UIImage *mediaTabImage = [UIImage imageNamed:@"Camera"];

@@ -21,5 +21,7 @@
 
 @property (strong, nonatomic) NSUserDefaults *defaults;
 @property (strong, nonatomic) NSDictionary *colourDict;
+@property (weak, nonatomic) IBOutlet UILabel *letschat;
+@property (weak, nonatomic) IBOutlet UIImageView *letschatImageView;
 
 @end

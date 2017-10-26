@@ -46,11 +46,37 @@
                         @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
                         @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"CYAN":[UIColor colorWithRed:75.0/255.0 green:186/255.0 blue:231.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
     [self.navigationController.navigationBar setBarTintColor: [self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    //Change the Colour of all Labels in the View
     [self.segmentedControl setTintColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
-    [self appear:YES];
+    [self.registerButton setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.firstnameLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.lastnameLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.emailLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.userLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.phoneLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.passLabel setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    
+    //Change the Fonts of all TextField in the View
+    [self.userNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.firstNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.lastNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.emailTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.phoneNumberTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.passWordTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    
+    //Change the Fonts of all TextField in the View
+    [self.userLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.firstnameLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.lastnameLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.emailLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.passLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.phoneLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.registerButton.titleLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+
     
     //Database Path To connect to Registration Path.
     self.dataBasePath = @"https://moshoodschatapp.000webhostapp.com/MyWebservice/MyWebservice/v1/register.php";
@@ -60,33 +86,6 @@
     [self.view addGestureRecognizer:tap];
     
 }
-///Function to Store Labels In View in to an Array
-- (NSArray*) getAllLabels
-{
-    NSArray *labels = [[NSArray alloc] initWithObjects:self.confirm, self.registerButton, self.passLabel, self.userLabel, self.emailLabel, self.lastnameLabel,self.firstnameLabel,self.phoneLabel, nil];
-    return labels;
-}
-
-// Function to Change the Colour&Fonts of all Labels in the View
-- (void) appear:(BOOL)on
-{
-    for (UILabel *label in [self getAllLabels]) {
-        label.backgroundColor=[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]];
-        label.font =[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0f];
-        
-        [self.userNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-        [self.firstNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-        [self.lastNameTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-        [self.emailTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-        [self.phoneNumberTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-        [self.passWordTextField setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-
-        
-    }
-}
-
-
-
 - (IBAction)segmentControl:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {

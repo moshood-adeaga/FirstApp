@@ -20,12 +20,18 @@
 @property (strong, nonatomic)  NSString *dataBasePath;
 @property (strong, nonatomic) ImageCaching *imageCache;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
+
 @end
 
 @implementation usersAndChatViewController
 @dynamic refreshControl;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activity= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.activity setCenter:CGPointMake(self.view.center.x,self.view.center.y)];
+    [self.tableView addSubview:self.activity];
+    [self.activity startAnimating];
     
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
@@ -104,11 +110,12 @@
         cell.textLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
         NSLog(@"My Array ---> %@",self.messageOfSelectedUser);
         
-        if([self.messageOfSelectedUser count]>[indexPath row])
-        {
-        cell.detailTextLabel.text = [self.messageOfSelectedUser objectAtIndex:indexPath.row];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
-        }
+//        //Showing last message sent/reecieved by user.
+//        if([self.messageOfSelectedUser count]>[indexPath row])
+//        {
+//        cell.detailTextLabel.text = [self.messageOfSelectedUser objectAtIndex:indexPath.row];
+//        cell.detailTextLabel.font = [UIFont fontWithName:@"American Typewriter Condense" size:17];
+//        }
         
         
         //cell.detailTextLabel.text;
@@ -275,6 +282,9 @@
     } else {
         NSLog(@"Error: %@", [error localizedDescription]);
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activity stopAnimating];
+    });
 }
 - (void)getLatestUsers
 {

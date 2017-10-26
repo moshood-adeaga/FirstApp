@@ -25,6 +25,8 @@
 @property (strong, nonatomic) ImageCaching *imageCache;
 @property (strong, nonatomic) NSDictionary *colourDict;
 @property (strong, nonatomic) UIActivityViewController *activityViewController;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
+
 
 @end
 
@@ -34,6 +36,10 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activity= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.activity setCenter:CGPointMake(self.view.center.x,self.view.center.y)];
+    [self.view addSubview:self.activity];
+
     
     standardUserDefaults = [NSUserDefaults standardUserDefaults];
     self.imageCache = [ImageCaching sharedInstance];
@@ -54,6 +60,7 @@ static NSString * const reuseIdentifier = @"Cell";
                         @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
                         @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"CYAN":[UIColor colorWithRed:75.0/255.0 green:186/255.0 blue:231.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
     
@@ -161,6 +168,7 @@ static NSString * const reuseIdentifier = @"Cell";
     NSString *eventLink = [NSString stringWithFormat:@"https://www.eventbriteapi.com/v3/events/search/?q=%@&token=XU4CJHOK4JHP4VB3XY4B",searchString];
     [self initParse:eventLink];
     [self.searchBar resignFirstResponder];
+    [self.activity startAnimating];
 }
 
 
@@ -300,9 +308,13 @@ static NSString * const reuseIdentifier = @"Cell";
         NSMutableArray *idOfEvent = [root valueForKeyPath:@"events.id"];
         self.eventID =idOfEvent;
         
+        
     } else {
         NSLog(@"Error: %@", [error localizedDescription]);
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activity stopAnimating];
+    });
 }
 #pragma Gesture Recognizer Delegate
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer

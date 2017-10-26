@@ -50,7 +50,7 @@
     NSLog(@"%@",[standardUserDefaults objectForKey:@"CurrentUserName"]);
     NSLog(@"%@",[standardUserDefaults objectForKey:@"CurrentUserPassword"]);
     
-  
+    
     
     //Setting up the Theme Colour Dictionary.
     self.colourDict = @{
@@ -61,6 +61,7 @@
                         @"PURPLE":[UIColor colorWithRed:102.0/255.0 green:0 blue:204.0/255.0 alpha:1.0],
                         @"YELLOW":[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:0 alpha:1.0],
                         @"ORANGE":[UIColor colorWithRed:204.0/255.0 green:0 blue:102.0/255.0 alpha:1.0],
+                        @"CYAN":[UIColor colorWithRed:75.0/255.0 green:186/255.0 blue:231.0/255.0 alpha:1.0],
                         @"BLACK":[UIColor blackColor]
                         };
     //Changing the Colour Theme of the View.
@@ -69,11 +70,14 @@
     [self.passwordProperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
     [self.userNameProperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
     [self.loginButtonproperty setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.letschat setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
+    [self.letschatImageView setBackgroundColor:[self.colourDict objectForKey:[self.defaults objectForKey:@"settingsColor"]]];
     
     //Changing the FOnt of the View.
     [self.passwordProperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
     [self.userNameProperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
-    [self.loginButtonproperty setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.loginButtonproperty.titleLabel setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:17.0]];
+    [self.letschat setFont:[UIFont fontWithName:[self.defaults objectForKey:@"settingsFont"] size:25.0]];
     
     //Initialising my Managers(Singletons).
     self.myCoreManager = [CoreDataManager sharedManager];
@@ -142,7 +146,7 @@
             
             userLastMessage =[self.userData valueForKeyPath:@"user.lastMessage"];
             [standardUserDefaults setObject:userLastMessage forKey:@"userMessage"];
-
+            
             
             [standardUserDefaults synchronize];
             
